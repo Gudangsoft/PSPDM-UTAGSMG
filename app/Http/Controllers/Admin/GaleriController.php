@@ -55,7 +55,7 @@ class GaleriController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            Storage::disk('public')->delete($galeri->gambar);
+            if ($galeri->gambar) Storage::disk('public')->delete($galeri->gambar);
             $validated['gambar'] = $request->file('gambar')->store('galeri', 'public');
         }
 
@@ -66,7 +66,7 @@ class GaleriController extends Controller
 
     public function destroy(Galeri $galeri)
     {
-        Storage::disk('public')->delete($galeri->gambar);
+        if ($galeri->gambar) Storage::disk('public')->delete($galeri->gambar);
         $galeri->delete();
 
         return back()->with('success', 'Foto berhasil dihapus.');

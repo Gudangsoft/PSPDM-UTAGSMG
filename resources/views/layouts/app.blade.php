@@ -1,6 +1,6 @@
 @php
     // Helper closure untuk membaca setting dengan fallback
-    $s = fn(string $key, string $default = '') => $site[$key]->value ?? $default;
+    $s = fn(string $key, string $default = '') => $site[$key]?->value ?? $default;
 
     $namaProdi   = $s('nama_prodi',  'Program Studi Manajemen Program Doktor');
     $singkatan   = $s('singkatan',   'PSMPD');
@@ -274,9 +274,9 @@
                     @endforeach
                 </ul>
                 @php
-                    $ctaAktif = ($site['cta_aktif']->value ?? '1') === '1';
-                    $ctaLabel = $site['cta_label']->value ?? 'Daftar Sekarang';
-                    $ctaRaw   = $site['cta_url']->value ?? '';
+                    $ctaAktif = ($site['cta_aktif']?->value ?? '1') === '1';
+                    $ctaLabel = $site['cta_label']?->value ?? 'Daftar Sekarang';
+                    $ctaRaw   = $site['cta_url']?->value ?? '';
                     try {
                         $ctaUrl = $ctaRaw ? (str_starts_with($ctaRaw, 'http') || str_starts_with($ctaRaw, '/') ? $ctaRaw : route($ctaRaw)) : route('akademik');
                     } catch (\Throwable $e) {

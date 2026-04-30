@@ -16,7 +16,7 @@ class GaleriController extends Controller
         }
 
         $galeri = $query->paginate(12);
-        $kategoris = Galeri::aktif()->distinct()->pluck('kategori');
+        $kategoris = Galeri::where('is_active', true)->select('kategori')->distinct()->orderBy('kategori')->pluck('kategori');
 
         return view('galeri', compact('galeri', 'kategoris'));
     }

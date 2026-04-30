@@ -122,13 +122,11 @@
                             <small class="text-muted d-block mt-1">PNG/JPG/WEBP, maks 2MB. Rasio 4:5 atau 3:4 (portrait) direkomendasikan.</small>
 
                             @if($fotoVal)
-                            <form action="{{ route('admin.sambutan.destroyFoto') }}" method="POST" class="d-inline mt-2">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-2 mt-2"
-                                        onclick="return confirm('Hapus foto ini?')">
-                                    <i class="bi bi-trash me-1"></i>Hapus Foto
-                                </button>
-                            </form>
+                            <button type="submit" form="destroyFotoForm"
+                                    class="btn btn-sm btn-outline-danger rounded-2 mt-2"
+                                    onclick="return confirm('Hapus foto ini?')">
+                                <i class="bi bi-trash me-1"></i>Hapus Foto
+                            </button>
                             @endif
                         </div>
                     </div>
@@ -144,6 +142,13 @@
                 </a>
             </div>
         </form>
+
+        {{-- Form hapus foto — di luar main form agar tidak nested --}}
+        @if($fotoVal)
+        <form id="destroyFotoForm" action="{{ route('admin.sambutan.destroyFoto') }}" method="POST">
+            @csrf @method('DELETE')
+        </form>
+        @endif
     </div>
 
     {{-- PREVIEW --}}

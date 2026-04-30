@@ -20,7 +20,7 @@ class BeritaController extends Controller
         }
 
         $berita = $query->paginate(9);
-        $kategoris = Berita::published()->distinct()->pluck('kategori');
+        $kategoris = Berita::published()->select('kategori')->distinct()->orderBy('kategori')->pluck('kategori');
 
         return view('berita.index', compact('berita', 'kategoris'));
     }

@@ -187,7 +187,7 @@
 
 @php
 // ── Local helpers (child views don't inherit parent @php scope) ───────────
-$s = fn(string $key, string $default = '') => $site[$key]->value ?? $default;
+$s = fn(string $key, string $default = '') => $site[$key]?->value ?? $default;
 $singkatan = $s('singkatan', 'PSMPD');
 
 // ── Helper: resolve URL (route name / path / absolute) ──────────────────

@@ -148,7 +148,7 @@
 
     {{-- PREVIEW --}}
     <div class="col-lg-4">
-        <div class="admin-card card mb-4" style="position:sticky; top:80px;">
+        <div class="admin-card card mb-4">
             <div class="card-header"><i class="bi bi-eye me-2"></i>Preview Sambutan</div>
             <div class="card-body p-4">
                 <div class="text-center mb-3">

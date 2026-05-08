@@ -39,7 +39,7 @@ Route::get('/pengumuman/{pengumuman}', [PengumumanController::class, 'show'])->n
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
-Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store');
+Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store')->middleware('throttle:5,1');
 Route::get('/halaman/{slug}', [HalamanController::class, 'show'])->name('halaman.show');
 
 // Admin Routes
@@ -81,7 +81,7 @@ Route::post('/login', function (\Illuminate\Http\Request $request) {
         return redirect()->intended(route('admin.dashboard'));
     }
     return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
-})->name('login.post')->middleware('guest');
+})->name('login.post')->middleware(['guest', 'throttle:5,1']);
 
 Route::post('/logout', function (\Illuminate\Http\Request $request) {
     \Illuminate\Support\Facades\Auth::logout();

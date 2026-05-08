@@ -30,6 +30,9 @@ class HalamanController extends Controller
             'urutan'         => 'required|integer|min:0',
         ]);
 
+        if (isset($data['konten'])) {
+            $data['konten'] = $this->sanitizeHtml($data['konten']);
+        }
         $data['slug']         = $this->uniqueSlug(Str::slug($data['judul']));
         $data['is_published'] = $request->boolean('is_published');
 
@@ -54,6 +57,9 @@ class HalamanController extends Controller
         ]);
 
         $newSlug = Str::slug($data['judul']);
+        if (isset($data['konten'])) {
+            $data['konten'] = $this->sanitizeHtml($data['konten']);
+        }
         if ($newSlug !== $halaman->slug) {
             $data['slug'] = $this->uniqueSlug($newSlug, $halaman->id);
         }
@@ -69,6 +75,17 @@ class HalamanController extends Controller
     {
         $halaman->delete();
         return back()->with('success', 'Halaman berhasil dihapus.');
+    }
+
+    private function sanitizeHtml(?string $html): ?string
+    {
+        if (empty($html)) return $html;
+        $html = preg_replace('/<script\b[^>]*>.*?<\/script>/is', '', $html);
+        $html = preg_replace('/<(iframe|object|embed|applet)\b[^>]*>.*?<\/\1>/is', '', $html);
+        $html = preg_replace('/<(iframe|object|embed|applet)\b[^>]*\/?>/i', '', $html);
+        $html = preg_replace('/\s+on[a-z]+\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html);
+        $html = preg_replace('/(href|src|action)\s*=\s*(["\'])\s*(?:javascript|vbscript)\s*:/i', '$1=$2#', $html);
+        return $html;
     }
 
     private function uniqueSlug(string $slug, int $excludeId = 0): string

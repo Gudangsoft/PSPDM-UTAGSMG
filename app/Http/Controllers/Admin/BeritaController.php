@@ -37,6 +37,9 @@ class BeritaController extends Controller
             $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
         }
 
+        if (isset($validated['konten'])) {
+            $validated['konten'] = $this->sanitizeHtml($validated['konten']);
+        }
         $validated['slug'] = Str::slug($validated['judul']);
         if ($request->boolean('is_published')) {
             $validated['published_at'] = now();
@@ -71,6 +74,9 @@ class BeritaController extends Controller
             $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
         }
 
+        if (isset($validated['konten'])) {
+            $validated['konten'] = $this->sanitizeHtml($validated['konten']);
+        }
         $validated['slug'] = Str::slug($validated['judul']);
         if ($request->boolean('is_published') && !$beritum->published_at) {
             $validated['published_at'] = now();
@@ -89,5 +95,19 @@ class BeritaController extends Controller
         $beritum->delete();
 
         return back()->with('success', 'Berita berhasil dihapus.');
+    }
+
+    private function sanitizeHtml(?string $html): ?string
+    {
+        if (empty($html)) return $html;
+        // Hapus tag berbahaya beserta isinya
+        $html = preg_replace('/<script\b[^>]*>.*?<\/script>/is', '', $html);
+        $html = preg_replace('/<(iframe|object|embed|applet)\b[^>]*>.*?<\/\1>/is', '', $html);
+        $html = preg_replace('/<(iframe|object|embed|applet)\b[^>]*\/?>/i', '', $html);
+        // Hapus event handler (onclick, onload, onerror, dll.)
+        $html = preg_replace('/\s+on[a-z]+\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html);
+        // Blokir javascript: dan vbscript: pada href/src
+        $html = preg_replace('/(href|src|action)\s*=\s*(["\'])\s*(?:javascript|vbscript)\s*:/i', '$1=$2#', $html);
+        return $html;
     }
 }

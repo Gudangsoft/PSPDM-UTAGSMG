@@ -23,25 +23,19 @@
                 <p class="text-muted" style="line-height:1.8;">Program Studi Manajemen Program Doktor (PSMPD) Fakultas Ekonomi dan Bisnis Universitas 17 Agustus 1945 Semarang hadir sebagai pusat unggulan riset dan pengembangan teori manajemen berbasis nilai-nilai Pancasila.</p>
                 <p class="text-muted" style="line-height:1.8;">Program ini berorientasi pada transformasi strategis organisasi dan kelembagaan, untuk melahirkan pemikiran manajemen Indonesia yang orisinal, inovatif, dan berdaya saing global.</p>
                 <div class="row g-3 mt-2">
-                    <div class="col-6">
-                        <div class="d-flex align-items-center gap-2 p-3 rounded-3" style="background:#fff5f5;">
-                            <i class="bi bi-calendar3 text-danger fs-5"></i>
-                            <div><small class="text-muted d-block">Berdiri Sejak</small><strong>2005</strong></div>
-                        </div>
-                    </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="d-flex align-items-center gap-2 p-3 rounded-3" style="background:#fff5f5;">
                             <i class="bi bi-award text-danger fs-5"></i>
                             <div><small class="text-muted d-block">Akreditasi</small><strong>Unggul (A)</strong></div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="d-flex align-items-center gap-2 p-3 rounded-3" style="background:#fff5f5;">
                             <i class="bi bi-clock text-danger fs-5"></i>
                             <div><small class="text-muted d-block">Durasi Studi</small><strong>6 Semester</strong></div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="d-flex align-items-center gap-2 p-3 rounded-3" style="background:#fff5f5;">
                             <i class="bi bi-book text-danger fs-5"></i>
                             <div><small class="text-muted d-block">Total SKS</small><strong>42 SKS</strong></div>

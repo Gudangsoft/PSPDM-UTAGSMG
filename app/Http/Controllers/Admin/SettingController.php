@@ -35,6 +35,7 @@ class SettingController extends Controller
             'nama_prodi', 'singkatan', 'alamat', 'telepon', 'email',
             'visi', 'misi', 'facebook', 'instagram', 'youtube', 'twitter',
             'whatsapp', 'deskripsi_singkat', 'cta_label', 'cta_url',
+            'info_akreditasi', 'info_durasi', 'info_sks',
         ];
 
         Setting::set('cta_aktif', $request->has('cta_aktif') ? '1' : '0');

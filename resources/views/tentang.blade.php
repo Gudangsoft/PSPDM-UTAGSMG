@@ -26,19 +26,19 @@
                     <div class="col-4">
                         <div class="d-flex align-items-center gap-2 p-3 rounded-3" style="background:#fff5f5;">
                             <i class="bi bi-award text-danger fs-5"></i>
-                            <div><small class="text-muted d-block">Akreditasi</small><strong>Unggul (A)</strong></div>
+                            <div><small class="text-muted d-block">Akreditasi</small><strong>{{ $site['info_akreditasi']?->value ?? 'Unggul (A)' }}</strong></div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="d-flex align-items-center gap-2 p-3 rounded-3" style="background:#fff5f5;">
                             <i class="bi bi-clock text-danger fs-5"></i>
-                            <div><small class="text-muted d-block">Durasi Studi</small><strong>6 Semester</strong></div>
+                            <div><small class="text-muted d-block">Durasi Studi</small><strong>{{ $site['info_durasi']?->value ?? '6 Semester' }}</strong></div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="d-flex align-items-center gap-2 p-3 rounded-3" style="background:#fff5f5;">
                             <i class="bi bi-book text-danger fs-5"></i>
-                            <div><small class="text-muted d-block">Total SKS</small><strong>42 SKS</strong></div>
+                            <div><small class="text-muted d-block">Total SKS</small><strong>{{ $site['info_sks']?->value ?? '42 SKS' }}</strong></div>
                         </div>
                     </div>
                 </div>

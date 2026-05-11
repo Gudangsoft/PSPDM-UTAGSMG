@@ -55,6 +55,29 @@
                         <textarea name="misi" rows="5" class="form-control" placeholder="Gunakan baris baru untuk setiap misi..." required>{{ $settings['misi']->value ?? '' }}</textarea>
                         <small class="text-muted">Pisahkan setiap poin misi dengan baris baru.</small>
                     </div>
+
+                    <hr class="my-3">
+                    <p class="fw-semibold mb-3" style="font-size:.85rem; color:#444;"><i class="bi bi-info-circle me-1 text-danger"></i>Info Singkat Program Studi (ditampilkan di halaman Tentang)</p>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Akreditasi</label>
+                            <input type="text" name="info_akreditasi" class="form-control"
+                                value="{{ $settings['info_akreditasi']?->value ?? 'Unggul (A)' }}"
+                                placeholder="Unggul (A)">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Durasi Studi</label>
+                            <input type="text" name="info_durasi" class="form-control"
+                                value="{{ $settings['info_durasi']?->value ?? '6 Semester' }}"
+                                placeholder="6 Semester">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Total SKS</label>
+                            <input type="text" name="info_sks" class="form-control"
+                                value="{{ $settings['info_sks']?->value ?? '42 SKS' }}"
+                                placeholder="42 SKS">
+                        </div>
+                    </div>
                 </div>
             </div>
 

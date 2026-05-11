@@ -44,13 +44,22 @@
                 </div>
             </div>
             <div class="col-lg-6" data-aos="fade-left">
+                @php $tentangGambar = $site['tentang_gambar']?->value ?? null; @endphp
+                @if($tentangGambar)
+                <div class="rounded-4 overflow-hidden shadow-sm mb-4" style="aspect-ratio:16/9;">
+                    <img src="{{ asset('storage/' . $tentangGambar) }}"
+                         alt="Tentang Program"
+                         style="width:100%;height:100%;object-fit:cover;display:block;">
+                </div>
+                @endif
+
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                     <div style="background:linear-gradient(135deg,var(--red-primary),var(--red-dark)); padding:30px; color:white;">
                         <h5 class="mb-0" style="font-family:'Inter',sans-serif; font-weight:700;"><i class="bi bi-eye me-2"></i>Visi Program Studi</h5>
                     </div>
                     <div class="card-body p-4">
                         <p style="font-size:1rem; line-height:1.8; font-style:italic; color:#444;">
-                            "Menjadi Program Studi Manajemen Doktor yang unggul, inovatif, dan berdaya saing global, berbasis nilai-nilai Pancasila dalam pengembangan ilmu manajemen untuk transformasi bangsa."
+                            "{{ $site['visi']?->value ?? 'Menjadi Program Studi Manajemen Doktor yang unggul, inovatif, dan berdaya saing global, berbasis nilai-nilai Pancasila dalam pengembangan ilmu manajemen untuk transformasi bangsa.' }}"
                         </p>
                     </div>
                 </div>
@@ -61,10 +70,20 @@
                     </div>
                     <div class="card-body p-4">
                         <ul class="list-unstyled mb-0" style="font-size:0.875rem; line-height:1.8; color:#444;">
-                            <li class="d-flex gap-2 mb-3"><i class="bi bi-check-circle-fill text-danger flex-shrink-0 mt-1"></i> Menyelenggarakan pendidikan doktoral yang berkualitas dan berbasis riset.</li>
-                            <li class="d-flex gap-2 mb-3"><i class="bi bi-check-circle-fill text-danger flex-shrink-0 mt-1"></i> Menghasilkan karya ilmiah bereputasi internasional yang inovatif.</li>
-                            <li class="d-flex gap-2 mb-3"><i class="bi bi-check-circle-fill text-danger flex-shrink-0 mt-1"></i> Mengembangkan kerjasama dengan industri, pemerintah, dan lembaga internasional.</li>
-                            <li class="d-flex gap-2"><i class="bi bi-check-circle-fill text-danger flex-shrink-0 mt-1"></i> Memberikan kontribusi nyata bagi pembangunan bangsa berbasis ilmu manajemen.</li>
+                            @php
+                                $misiList = array_filter(array_map('trim', explode("\n", $site['misi']?->value ?? '')));
+                                if (empty($misiList)) $misiList = [
+                                    'Menyelenggarakan pendidikan doktoral yang berkualitas dan berbasis riset.',
+                                    'Menghasilkan karya ilmiah bereputasi internasional yang inovatif.',
+                                    'Mengembangkan kerjasama dengan industri, pemerintah, dan lembaga internasional.',
+                                    'Memberikan kontribusi nyata bagi pembangunan bangsa berbasis ilmu manajemen.',
+                                ];
+                            @endphp
+                            @foreach($misiList as $loop2 => $m)
+                            <li class="d-flex gap-2 {{ !$loop->last ? 'mb-3' : '' }}">
+                                <i class="bi bi-check-circle-fill text-danger flex-shrink-0 mt-1"></i> {{ $m }}
+                            </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

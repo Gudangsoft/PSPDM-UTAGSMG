@@ -80,6 +80,10 @@ class KonsentrasiController extends Controller
             'deskripsi_lanjutan' => 'nullable|string',
             'urutan'             => 'required|integer|min:0|max:255',
             'is_active'          => 'boolean',
+        ], [
+            'gambar.max'   => 'Ukuran gambar maksimal 2 MB.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus JPG, PNG, atau WEBP.',
         ]);
         $data['is_active'] = $request->boolean('is_active');
         return $data;

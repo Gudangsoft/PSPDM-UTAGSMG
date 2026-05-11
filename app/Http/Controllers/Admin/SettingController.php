@@ -27,6 +27,7 @@ class SettingController extends Controller
             'misi'            => 'required|string',
             'logo'            => 'nullable|image|mimes:png,jpg,jpeg,svg,webp|max:2048',
             'favicon'         => 'nullable|image|mimes:png,jpg,jpeg,ico,svg|max:512',
+            'tentang_gambar'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
             'cta_label'       => 'nullable|string|max:60',
             'cta_url'         => 'nullable|string|max:500',
             'maps_embed'      => 'nullable|string|max:2000',
@@ -59,6 +60,13 @@ class SettingController extends Controller
             $old = Setting::get('favicon');
             if ($old) Storage::disk('public')->delete($old);
             Setting::set('favicon', $request->file('favicon')->store('settings', 'public'));
+        }
+
+        // Handle tentang_gambar upload
+        if ($request->hasFile('tentang_gambar')) {
+            $old = Setting::get('tentang_gambar');
+            if ($old) Storage::disk('public')->delete($old);
+            Setting::set('tentang_gambar', $request->file('tentang_gambar')->store('settings', 'public'));
         }
 
         return back()->with('success', 'Pengaturan website berhasil disimpan dan telah tersinkronisasi ke seluruh halaman.');

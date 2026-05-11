@@ -193,6 +193,29 @@
                 </div>
             </div>
 
+            {{-- Gambar Halaman Tentang --}}
+            <div class="admin-card card mb-4">
+                <div class="card-header"><i class="bi bi-image me-2"></i>Gambar Halaman Tentang</div>
+                <div class="card-body p-4 text-center">
+                    @php $tentangGambarVal = $settings['tentang_gambar']?->value ?? null; @endphp
+                    <div id="tentang-gambar-preview-wrap" style="width:100%;height:140px;border-radius:10px;overflow:hidden;background:#f0f2f5;display:flex;align-items:center;justify-content:center;margin-bottom:10px;border:2px dashed #ddd;">
+                        @if($tentangGambarVal)
+                            <img id="tentang-gambar-preview" src="{{ asset('storage/'.$tentangGambarVal) }}"
+                                 style="width:100%;height:100%;object-fit:cover;">
+                        @else
+                            <div id="tentang-gambar-placeholder" style="text-align:center;color:#aaa;">
+                                <i class="bi bi-image fs-2 d-block mb-1"></i>
+                                <span style="font-size:.72rem;">Belum ada gambar</span>
+                            </div>
+                            <img id="tentang-gambar-preview" src="" style="width:100%;height:100%;object-fit:cover;display:none;">
+                        @endif
+                    </div>
+                    <input type="file" name="tentang_gambar" id="tentang-gambar-input"
+                           class="form-control" accept="image/jpg,image/jpeg,image/png,image/webp">
+                    <small class="text-muted mt-2 d-block">JPG/PNG/WEBP, maks 3 MB. Ditampilkan di halaman <strong>Tentang Program</strong>.</small>
+                </div>
+            </div>
+
             {{-- Simpan --}}
             <div class="admin-card card">
                 <div class="card-body p-4">
@@ -224,6 +247,21 @@ document.getElementById('logo-input').addEventListener('change', function () {
     reader.onload = function (e) {
         const wrap = document.getElementById('logo-preview-wrap');
         wrap.innerHTML = '<img id="logo-preview" src="' + e.target.result + '" alt="Logo" style="max-width:120px;max-height:120px;object-fit:contain;display:block;margin-inline:auto;">';
+    };
+    reader.readAsDataURL(file);
+});
+
+// Live preview — tentang gambar
+document.getElementById('tentang-gambar-input').addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const preview = document.getElementById('tentang-gambar-preview');
+        const placeholder = document.getElementById('tentang-gambar-placeholder');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        if (placeholder) placeholder.style.display = 'none';
     };
     reader.readAsDataURL(file);
 });

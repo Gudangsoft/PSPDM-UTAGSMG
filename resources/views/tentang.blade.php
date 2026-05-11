@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden mt-4">
-                    <div style="background:var(--dark); padding:30px; color:white;">
+                    <div style="background:linear-gradient(135deg,var(--red-primary),var(--red-dark)); padding:30px; color:white;">
                         <h5 class="mb-0" style="font-family:'Inter',sans-serif; font-weight:700;"><i class="bi bi-bullseye me-2"></i>Misi Program Studi</h5>
                     </div>
                     <div class="card-body p-4">

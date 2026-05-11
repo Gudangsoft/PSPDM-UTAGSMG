@@ -59,6 +59,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::delete('pesan/{pesan}', [PesanController::class, 'destroy'])->name('pesan.destroy');
     Route::get('beranda', [AdminBerandaController::class, 'index'])->name('beranda.index');
     Route::post('beranda', [AdminBerandaController::class, 'update'])->name('beranda.update');
+    Route::delete('beranda/hero-gambar', [AdminBerandaController::class, 'destroyHeroGambar'])->name('beranda.destroyHeroGambar');
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
     Route::get('sambutan', [SambutanController::class, 'index'])->name('sambutan.index');

@@ -64,6 +64,11 @@
 .hero-accredit { background: #fff8f8; border-radius: 10px; padding: 14px 18px; }
 .hero-accredit .badge-a { background: var(--red-primary); color: white; font-size: 1.5rem; font-weight: 900; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
+/* Hero image */
+.hero-img-wrap { border-radius: 20px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.30); margin-bottom: 20px; }
+.hero-img { width: 100%; height: 240px; object-fit: cover; display: block; transition: transform 0.4s; }
+.hero-img-wrap:hover .hero-img { transform: scale(1.03); }
+
 /* ===== STATS BAR ===== */
 .stats-bar {
     background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -345,6 +350,12 @@ $ctaSeksiBtn2U  = $resolveUrl($s('cta_section_btn2_url',''), 'kontak');
                 </div>
             </div>
             <div class="col-lg-5" data-aos="fade-left" data-aos-delay="150">
+                @php $heroGambar = $site['hero_gambar']?->value ?? ''; @endphp
+                @if($heroGambar)
+                <div class="hero-img-wrap">
+                    <img src="{{ asset('storage/'.$heroGambar) }}" alt="{{ $singkatan }}" class="hero-img">
+                </div>
+                @endif
                 <div class="hero-card">
                     <div class="row g-0">
                         @foreach($heroStat as $idx => $stat)

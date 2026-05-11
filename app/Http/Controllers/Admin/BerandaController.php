@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BerandaController extends Controller
 {
@@ -63,10 +64,29 @@ class BerandaController extends Controller
 
     public function update(Request $request)
     {
+        $request->validate([
+            'hero_gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
+        ]);
+
+        if ($request->hasFile('hero_gambar')) {
+            $old = Setting::get('hero_gambar');
+            if ($old) Storage::disk('public')->delete($old);
+            Setting::set('hero_gambar', $request->file('hero_gambar')->store('beranda', 'public'));
+        }
+
         foreach ($this->keys as $key) {
             Setting::set($key, $request->input($key, ''));
         }
 
         return back()->with('success', 'Konten beranda berhasil disimpan dan langsung tampil di website.');
+    }
+
+    public function destroyHeroGambar()
+    {
+        $old = Setting::get('hero_gambar');
+        if ($old) Storage::disk('public')->delete($old);
+        Setting::set('hero_gambar', '');
+
+        return back()->with('success', 'Gambar hero berhasil dihapus.');
     }
 }

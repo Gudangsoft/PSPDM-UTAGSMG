@@ -3,7 +3,7 @@
 @section('page-title', 'Konten Beranda')
 
 @php
-$g = fn(string $key, string $default = '') => $settings[$key]->value ?? $default;
+$g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $default;
 @endphp
 
 @section('styles')
@@ -21,7 +21,7 @@ $g = fn(string $key, string $default = '') => $settings[$key]->value ?? $default
 
 @section('content')
 
-<form action="{{ route('admin.beranda.update') }}" method="POST">
+<form action="{{ route('admin.beranda.update') }}" method="POST" enctype="multipart/form-data">
 @csrf
 
 {{-- Tab Nav --}}
@@ -115,19 +115,59 @@ $g = fn(string $key, string $default = '') => $settings[$key]->value ?? $default
             </div>
         </div>
         <div class="col-lg-4">
+            {{-- Gambar Hero --}}
+            @php $heroGambar = $settings['hero_gambar']?->value ?? ''; @endphp
             <div class="admin-card card">
+                <div class="card-header"><i class="bi bi-image me-2"></i>Gambar Hero</div>
                 <div class="card-body p-4">
-                    <p class="fw-bold mb-2" style="font-size:.85rem; color:#444;"><i class="bi bi-info-circle me-1 text-primary"></i>Pratinjau Struktur Hero</p>
-                    <div style="background:linear-gradient(135deg,#952035,#C0304A);border-radius:12px;padding:20px;color:white;font-size:.78rem;line-height:1.7;">
-                        <div style="background:rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;display:inline-block;margin-bottom:8px;font-size:.7rem;">⭐ <em>Badge</em></div><br>
-                        <strong style="font-size:.9rem;"><em>Judul 1</em> <span style="color:#FFD700;"><em>Highlight</em></span><br><em>Judul 2</em></strong>
-                        <p style="margin:8px 0 12px;opacity:.85;font-size:.72rem;"><em>Deskripsi...</em></p>
-                        <div style="display:flex;gap:8px;">
-                            <span style="background:white;color:#C0304A;padding:6px 12px;border-radius:6px;font-size:.7rem;font-weight:700;"><em>Tombol 1</em></span>
-                            <span style="border:1px solid white;padding:6px 12px;border-radius:6px;font-size:.7rem;"><em>Tombol 2</em></span>
+                    @if($heroGambar)
+                    <div class="mb-3">
+                        <img src="{{ asset('storage/'.$heroGambar) }}" alt="Gambar Hero"
+                             class="img-fluid rounded-3 w-100"
+                             style="max-height:200px; object-fit:cover; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                        <div class="mt-2">
+                            <form action="{{ route('admin.beranda.destroyHeroGambar') }}" method="POST" class="d-inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-2"
+                                        onclick="return confirm('Hapus gambar hero ini?')">
+                                    <i class="bi bi-trash me-1"></i>Hapus Gambar
+                                </button>
+                            </form>
                         </div>
                     </div>
-                    <p class="text-muted mt-3 mb-0" style="font-size:.75rem;"><i class="bi bi-eye me-1"></i>Pratinjau hanya ilustrasi. Simpan untuk melihat hasil nyata.</p>
+                    @endif
+
+                    <div>
+                        <label class="form-label fw-semibold" style="font-size:.85rem;">
+                            {{ $heroGambar ? 'Ganti Gambar' : 'Upload Gambar' }}
+                        </label>
+                        <input type="file" name="hero_gambar" id="heroGambarInput"
+                               class="form-control" accept="image/jpeg,image/png,image/webp">
+                        <small class="text-muted d-block mt-1">JPG / PNG / WebP · Maks 3 MB.<br>Ditampilkan di sisi kanan hero beranda.</small>
+                    </div>
+
+                    <div id="heroGambarPreview" class="mt-3" style="display:none;">
+                        <p class="text-muted mb-1" style="font-size:.78rem;"><i class="bi bi-eye me-1"></i>Pratinjau:</p>
+                        <img id="heroGambarPreviewImg" src="" alt=""
+                             class="img-fluid rounded-3 w-100"
+                             style="max-height:180px; object-fit:cover;">
+                    </div>
+                </div>
+            </div>
+
+            {{-- Struktur Hero mini --}}
+            <div class="admin-card card mt-3">
+                <div class="card-body p-3">
+                    <p class="fw-bold mb-2" style="font-size:.8rem; color:#888;"><i class="bi bi-info-circle me-1"></i>Ilustrasi struktur hero</p>
+                    <div style="background:linear-gradient(130deg,#7A1020,#C0304A,#D86070);border-radius:10px;padding:16px;color:white;font-size:.72rem;line-height:1.6;">
+                        <div style="background:rgba(255,255,255,.15);border-radius:20px;padding:3px 10px;display:inline-block;margin-bottom:6px;">⭐ Badge</div><br>
+                        <strong><em>Judul 1</em> <span style="color:#FFD700;">Highlight</span><br><em>Judul 2</em></strong>
+                        <p style="margin:6px 0 10px;opacity:.8;font-size:.68rem;">Deskripsi...</p>
+                        <div style="display:flex;gap:6px;">
+                            <span style="background:white;color:#C0304A;padding:4px 10px;border-radius:5px;font-size:.65rem;font-weight:700;">Tombol 1</span>
+                            <span style="border:1px solid white;padding:4px 10px;border-radius:5px;font-size:.65rem;">Tombol 2</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -596,5 +636,20 @@ function makeIconPreview(inputClass, previewIdPrefix) {
 makeIconPreview('stats-icon-input',  'stats-icon-preview-');
 makeIconPreview('kons-icon-input',   'kons-icon-preview-');
 makeIconPreview('unggul-icon-input', 'unggul-icon-preview-');
+
+// Live preview for hero image upload
+document.getElementById('heroGambarInput').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            document.getElementById('heroGambarPreviewImg').src = e.target.result;
+            document.getElementById('heroGambarPreview').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        document.getElementById('heroGambarPreview').style.display = 'none';
+    }
+});
 </script>
 @endsection

@@ -6,7 +6,7 @@
 <style>
 /* ===== HERO ===== */
 .hero-section {
-    background: linear-gradient(135deg, #952035 0%, #C0304A 40%, #A82840 100%);
+    background: linear-gradient(135deg, #5C0E1C 0%, #8B1A2E 25%, #C0304A 60%, #D8506A 80%, #F5C0CB 100%);
     min-height: 90vh;
     display: flex; align-items: center;
     position: relative; overflow: hidden;
@@ -111,7 +111,7 @@
     transition: box-shadow 0.3s, transform 0.3s;
 }
 .lulusan-card:hover { box-shadow: 0 12px 35px rgba(0,0,0,0.1); transform: translateY(-4px); }
-.lulusan-number { width: 40px; height: 40px; background: var(--red-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; flex-shrink: 0; }
+.lulusan-number { width: 40px; height: 40px; background: linear-gradient(135deg, #C0304A, #8B1A2E); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; flex-shrink: 0; }
 .lulusan-card h5 { font-size: 0.95rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; font-family: 'Inter', sans-serif; }
 .lulusan-card p { font-size: 0.83rem; color: var(--gray-text); line-height: 1.7; margin: 0; }
 
@@ -151,7 +151,7 @@
     border-left: 4px solid var(--red-primary);
     padding-left: 20px; margin: 16px 0 24px;
 }
-.sambutan-divider { width: 48px; height: 4px; background: var(--red-primary); border-radius: 2px; flex-shrink: 0; }
+.sambutan-divider { width: 48px; height: 4px; background: linear-gradient(to right, #8B1A2E, #C0304A, #F09AAA); border-radius: 2px; flex-shrink: 0; }
 
 /* ===== BERITA ===== */
 .news-card { border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); height: 100%; }
@@ -172,13 +172,17 @@
 
 /* ===== CTA ===== */
 .cta-section {
-    background: linear-gradient(135deg, var(--red-primary) 0%, var(--red-dark) 100%);
+    background: linear-gradient(135deg, #6D1020 0%, #9B2038 30%, #C0304A 60%, #D8506A 85%, #F5C0CB 100%);
     padding: 80px 0; position: relative; overflow: hidden;
 }
+.cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.07) 100%);
+}
 .cta-section::after {
-    content: ''; position: absolute; right: -100px; top: -100px;
-    width: 400px; height: 400px; border-radius: 50%;
-    background: rgba(255,255,255,0.05);
+    content: ''; position: absolute; right: -80px; top: -80px;
+    width: 380px; height: 380px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 65%);
 }
 </style>
 @endsection

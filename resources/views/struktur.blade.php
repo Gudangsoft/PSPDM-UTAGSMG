@@ -16,7 +16,7 @@
 }
 .sambutan-photo-placeholder {
     width: 280px; height: 320px; border-radius: 20px;
-    background: linear-gradient(135deg, var(--red-primary), var(--red-dark));
+    background: linear-gradient(135deg, #C0304A 0%, #8B1A2E 55%, #5C0E1C 100%);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     color: white; box-shadow: 0 20px 60px rgba(139,0,0,0.2);
@@ -25,7 +25,7 @@
 .sambutan-accent {
     position: absolute; bottom: -16px; right: -16px;
     width: 100px; height: 100px; border-radius: 16px;
-    background: linear-gradient(135deg, var(--red-primary), var(--red-dark));
+    background: linear-gradient(135deg, #C0304A 0%, #8B1A2E 60%, #5C0E1C 100%);
     display: flex; align-items: center; justify-content: center;
     color: white; font-size: 2rem;
     box-shadow: 0 8px 25px rgba(192,48,74,0.35);
@@ -59,7 +59,8 @@
     padding: 28px 24px; text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
     height: 100%;
-    border-top: 4px solid var(--red-primary);
+    border-top: 4px solid transparent;
+    border-image: linear-gradient(to right, #8B1A2E, #C0304A, #F09AAA) 1;
 }
 .pejabat-card:hover { transform: translateY(-6px); box-shadow: 0 16px 45px rgba(0,0,0,0.12); }
 .pejabat-foto {
@@ -71,7 +72,7 @@
 }
 .pejabat-foto-placeholder {
     width: 110px; height: 110px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--red-primary), var(--red-dark));
+    background: linear-gradient(135deg, #C0304A 0%, #8B1A2E 60%, #5C0E1C 100%);
     display: flex; align-items: center; justify-content: center;
     color: white; font-size: 2.2rem; font-weight: 800;
     margin: 0 auto 16px;

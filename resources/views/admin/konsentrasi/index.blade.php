@@ -24,7 +24,6 @@
                         <th style="width:50px;">Urutan</th>
                         <th>Nama Konsentrasi</th>
                         <th style="width:160px;">Nama Inggris</th>
-                        <th style="width:80px;">Ikon</th>
                         <th style="width:90px;">Warna</th>
                         <th style="width:80px;">Tampil</th>
                         <th style="width:100px;">Aksi</th>
@@ -36,14 +35,17 @@
                         <td class="text-center text-muted fw-bold">{{ $k->urutan }}</td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,{{ $k->warna_primer }},{{ $k->warna_sekunder }});display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;flex-shrink:0;">
-                                    <i class="bi {{ $k->ikon }}"></i>
+                                <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,{{ $k->warna_primer }},{{ $k->warna_sekunder }});overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                                    @if($k->gambar)
+                                        <img src="{{ asset('storage/' . $k->gambar) }}" style="width:100%;height:100%;object-fit:cover;">
+                                    @else
+                                        <i class="bi bi-image text-white opacity-50"></i>
+                                    @endif
                                 </div>
                                 <span style="font-weight:600;font-size:.875rem;">{{ $k->nama }}</span>
                             </div>
                         </td>
                         <td class="text-muted" style="font-size:.8rem;">{{ $k->nama_en }}</td>
-                        <td><code style="font-size:.75rem;">{{ $k->ikon }}</code></td>
                         <td>
                             <div class="d-flex gap-1 align-items-center">
                                 <span style="width:18px;height:18px;border-radius:4px;background:{{ $k->warna_primer }};display:inline-block;" title="{{ $k->warna_primer }}"></span>
@@ -75,7 +77,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="text-center text-muted py-4">
+                        <td colspan="6" class="text-center text-muted py-4">
                             Belum ada konsentrasi. <a href="{{ route('admin.konsentrasi.create') }}">Tambah sekarang</a>.
                         </td>
                     </tr>

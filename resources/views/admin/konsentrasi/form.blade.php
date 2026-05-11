@@ -11,7 +11,7 @@
 @endif
 
 <form action="{{ $konsentrasi->exists ? route('admin.konsentrasi.update', $konsentrasi) : route('admin.konsentrasi.store') }}"
-      method="POST">
+      method="POST" enctype="multipart/form-data">
     @csrf
     @if($konsentrasi->exists) @method('PUT') @endif
 
@@ -67,12 +67,30 @@
             <div class="admin-card card mb-4">
                 <div class="card-header"><i class="bi bi-palette me-2"></i>Tampilan & Pengaturan</div>
                 <div class="card-body p-4">
+
+                    {{-- Gambar --}}
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Ikon Bootstrap</label>
-                        <input type="text" name="ikon" class="form-control"
-                               value="{{ old('ikon', $konsentrasi->ikon ?? 'bi-diagram-3') }}"
-                               placeholder="bi-people-fill">
-                        <small class="text-muted">Lihat daftar ikon di <a href="https://icons.getbootstrap.com" target="_blank">icons.getbootstrap.com</a></small>
+                        <label class="form-label fw-semibold">Gambar Konsentrasi</label>
+
+                        {{-- Preview area --}}
+                        <div id="img-preview-wrap" style="width:100%;height:160px;border-radius:12px;overflow:hidden;background:#f0f2f5;display:flex;align-items:center;justify-content:center;margin-bottom:10px;border:2px dashed #ddd;">
+                            @if($konsentrasi->gambar)
+                                <img id="img-preview" src="{{ asset('storage/' . $konsentrasi->gambar) }}"
+                                     style="width:100%;height:100%;object-fit:cover;">
+                            @else
+                                <div id="img-placeholder" style="text-align:center;color:#aaa;">
+                                    <i class="bi bi-image fs-1 d-block mb-1"></i>
+                                    <span style="font-size:.75rem;">Belum ada gambar</span>
+                                </div>
+                                <img id="img-preview" src="" style="width:100%;height:100%;object-fit:cover;display:none;">
+                            @endif
+                        </div>
+
+                        <input type="file" name="gambar" id="gambar-input"
+                               class="form-control @error('gambar') is-invalid @enderror"
+                               accept="image/jpg,image/jpeg,image/png,image/webp">
+                        @error('gambar')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <small class="text-muted">JPG/PNG/WEBP, maks. 2 MB. Direkomendasikan ukuran kotak (1:1).</small>
                     </div>
 
                     <div class="row g-2 mb-3">
@@ -100,10 +118,8 @@
                         </div>
                     </div>
 
-                    {{-- Preview gradient --}}
-                    <div id="gradient-preview" style="height:60px;border-radius:12px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;background:linear-gradient(135deg,{{ $konsentrasi->warna_primer ?? '#C0304A' }},{{ $konsentrasi->warna_sekunder ?? '#8B1A2E' }});">
-                        <i class="bi {{ old('ikon', $konsentrasi->ikon ?? 'bi-diagram-3') }}"></i>
-                    </div>
+                    {{-- Gradient preview strip --}}
+                    <div id="gradient-preview" style="height:12px;border-radius:6px;margin-bottom:16px;background:linear-gradient(135deg,{{ $konsentrasi->warna_primer ?? '#C0304A' }},{{ $konsentrasi->warna_sekunder ?? '#8B1A2E' }});"></div>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Urutan</label>
@@ -134,6 +150,21 @@
 
 @section('scripts')
 <script>
+// Live image preview
+document.getElementById('gambar-input').addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const preview = document.getElementById('img-preview');
+        const placeholder = document.getElementById('img-placeholder');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        if (placeholder) placeholder.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+});
+
 // Sync color picker → text display + update gradient preview
 function syncColor(inputName, textId) {
     const picker = document.querySelector('[name="' + inputName + '"]');
@@ -146,8 +177,8 @@ function syncColor(inputName, textId) {
 function updatePreview() {
     const p  = document.querySelector('[name="warna_primer"]').value;
     const s  = document.querySelector('[name="warna_sekunder"]').value;
-    const el = document.getElementById('gradient-preview');
-    el.style.background = 'linear-gradient(135deg,' + p + ',' + s + ')';
+    document.getElementById('gradient-preview').style.background =
+        'linear-gradient(135deg,' + p + ',' + s + ')';
 }
 syncColor('warna_primer',   'warna_primer_text');
 syncColor('warna_sekunder', 'warna_sekunder_text');

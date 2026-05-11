@@ -9,7 +9,7 @@ class Konsentrasi extends Model
     protected $table = 'konsentrasi';
 
     protected $fillable = [
-        'nama', 'nama_en', 'ikon', 'warna_primer', 'warna_sekunder',
+        'nama', 'nama_en', 'ikon', 'gambar', 'warna_primer', 'warna_sekunder',
         'deskripsi', 'deskripsi_lanjutan', 'topik', 'urutan', 'is_active',
     ];
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Konsentrasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class KonsentrasiController extends Controller
 {
@@ -23,6 +24,11 @@ class KonsentrasiController extends Controller
     {
         $data = $this->validated($request);
         $data['topik'] = $this->parseTopik($request->input('topik_raw', ''));
+
+        if ($request->hasFile('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('konsentrasi', 'public');
+        }
+
         Konsentrasi::create($data);
 
         return redirect()->route('admin.konsentrasi.index')
@@ -38,6 +44,14 @@ class KonsentrasiController extends Controller
     {
         $data = $this->validated($request);
         $data['topik'] = $this->parseTopik($request->input('topik_raw', ''));
+
+        if ($request->hasFile('gambar')) {
+            if ($konsentrasi->gambar) {
+                Storage::disk('public')->delete($konsentrasi->gambar);
+            }
+            $data['gambar'] = $request->file('gambar')->store('konsentrasi', 'public');
+        }
+
         $konsentrasi->update($data);
 
         return redirect()->route('admin.konsentrasi.index')
@@ -46,6 +60,9 @@ class KonsentrasiController extends Controller
 
     public function destroy(Konsentrasi $konsentrasi)
     {
+        if ($konsentrasi->gambar) {
+            Storage::disk('public')->delete($konsentrasi->gambar);
+        }
         $konsentrasi->delete();
         return redirect()->route('admin.konsentrasi.index')
             ->with('success', 'Konsentrasi berhasil dihapus.');
@@ -56,7 +73,7 @@ class KonsentrasiController extends Controller
         $data = $request->validate([
             'nama'               => 'required|string|max:200',
             'nama_en'            => 'nullable|string|max:200',
-            'ikon'               => 'nullable|string|max:60',
+            'gambar'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'warna_primer'       => 'nullable|string|max:20',
             'warna_sekunder'     => 'nullable|string|max:20',
             'deskripsi'          => 'required|string',

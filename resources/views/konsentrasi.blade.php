@@ -27,16 +27,26 @@
         <div class="row g-5 align-items-center mb-5 pb-5 {{ !$loop->last ? 'border-bottom' : '' }}"
              id="konsentrasi-{{ $k->id }}">
 
-            {{-- Icon Card --}}
+            {{-- Image Card --}}
             <div class="col-lg-5 {{ $reverse ? 'order-lg-2' : '' }}" data-aos="{{ $reverse ? 'fade-left' : 'fade-right' }}">
-                <div style="background:linear-gradient(135deg,{{ $k->warna_primer }},{{ $k->warna_sekunder }});border-radius:20px;padding:50px;color:white;text-align:center;position:relative;overflow:hidden;">
-                    <div style="font-size:5rem;margin-bottom:20px;line-height:1;">
-                        <i class="bi {{ $k->ikon }}"></i>
-                    </div>
-                    <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:8px;">{{ $k->nama }}</h3>
-                    @if($k->nama_en)
-                    <p style="opacity:.85;font-size:.875rem;margin:0;">{{ $k->nama_en }}</p>
+                <div style="background:linear-gradient(135deg,{{ $k->warna_primer }},{{ $k->warna_sekunder }});border-radius:20px;overflow:hidden;position:relative;">
+                    @if($k->gambar)
+                        <img src="{{ asset('storage/' . $k->gambar) }}"
+                             alt="{{ $k->nama }}"
+                             style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;">
+                    @else
+                        <div style="padding:50px;color:white;text-align:center;">
+                            <div style="font-size:5rem;margin-bottom:20px;line-height:1;">
+                                <i class="bi {{ $k->ikon ?? 'bi-diagram-3' }}"></i>
+                            </div>
+                        </div>
                     @endif
+                    <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(to top,rgba(0,0,0,.65),transparent);color:white;">
+                        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">{{ $k->nama }}</h3>
+                        @if($k->nama_en)
+                        <p style="opacity:.85;font-size:.78rem;margin:0;">{{ $k->nama_en }}</p>
+                        @endif
+                    </div>
                 </div>
             </div>
 

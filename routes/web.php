@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\HalamanController as AdminHalamanController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PejabatController as AdminPejabatController;
 use App\Http\Controllers\Admin\BerandaController as AdminBerandaController;
+use App\Http\Controllers\Admin\JadwalPmbController;
 
 // Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -58,6 +59,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('pesan', [PesanController::class, 'index'])->name('pesan.index');
     Route::get('pesan/{pesan}', [PesanController::class, 'show'])->name('pesan.show');
     Route::delete('pesan/{pesan}', [PesanController::class, 'destroy'])->name('pesan.destroy');
+    Route::resource('jadwal-pmb', JadwalPmbController::class)->except(['show']);
     Route::get('beranda', [AdminBerandaController::class, 'index'])->name('beranda.index');
     Route::post('beranda', [AdminBerandaController::class, 'update'])->name('beranda.update');
     Route::delete('beranda/hero-gambar', [AdminBerandaController::class, 'destroyHeroGambar'])->name('beranda.destroyHeroGambar');

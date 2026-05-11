@@ -6,6 +6,7 @@ use App\Models\Berita;
 use App\Models\Dosen;
 use App\Models\Galeri;
 use App\Models\Halaman;
+use App\Models\JadwalPmb;
 use App\Models\Pengumuman;
 use App\Models\Pejabat;
 use Illuminate\Http\Request;
@@ -46,13 +47,14 @@ class HomeController extends Controller
         $halamanMap = Halaman::whereIn('slug', [
                 'akademik-kurikulum',
                 'akademik-syarat-pendaftaran',
-                'akademik-jadwal-pmb',
             ])
             ->where('is_published', true)
             ->get()
             ->keyBy('slug');
 
-        return view('akademik', compact('halamanMap'));
+        $jadwals = JadwalPmb::aktif()->get();
+
+        return view('akademik', compact('halamanMap', 'jadwals'));
     }
 
     public function dosen()

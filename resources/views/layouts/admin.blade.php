@@ -140,6 +140,9 @@
         <a href="{{ route('admin.pengumuman.index') }}" class="sidebar-link {{ request()->routeIs('admin.pengumuman.*') ? 'active' : '' }}">
             <i class="bi bi-bell"></i> Pengumuman
         </a>
+        <a href="{{ route('admin.jadwal-pmb.index') }}" class="sidebar-link {{ request()->routeIs('admin.jadwal-pmb.*') ? 'active' : '' }}">
+            <i class="bi bi-calendar-event"></i> Jadwal PMB
+        </a>
         <a href="{{ route('admin.galeri.index') }}" class="sidebar-link {{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}">
             <i class="bi bi-images"></i> Galeri
         </a>

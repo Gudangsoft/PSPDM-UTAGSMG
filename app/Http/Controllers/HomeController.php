@@ -30,7 +30,10 @@ class HomeController extends Controller
 
     public function konsentrasi()
     {
-        return view('konsentrasi');
+        $halaman = Halaman::where('slug', 'konsentrasi')
+            ->where('is_published', true)
+            ->firstOrFail();
+        return view('konsentrasi', compact('halaman'));
     }
 
     public function profilLulusan()

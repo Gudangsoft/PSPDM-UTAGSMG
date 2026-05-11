@@ -11,6 +11,7 @@ use App\Models\Setting;
 use App\Models\MenuItem;
 use Illuminate\Database\Seeder;
 use Database\Seeders\BiayaHalamanSeeder;
+use Database\Seeders\KonsentrasiHalamanSeeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -205,6 +206,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(BiayaHalamanSeeder::class);
+        $this->call(KonsentrasiHalamanSeeder::class);
 
         $this->command->info('✅ Seeding selesai! Login admin: admin@psmpd-untag.ac.id / admin123');
     }

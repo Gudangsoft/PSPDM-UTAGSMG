@@ -43,7 +43,16 @@ class HomeController extends Controller
 
     public function akademik()
     {
-        return view('akademik');
+        $halamanMap = Halaman::whereIn('slug', [
+                'akademik-kurikulum',
+                'akademik-syarat-pendaftaran',
+                'akademik-jadwal-pmb',
+            ])
+            ->where('is_published', true)
+            ->get()
+            ->keyBy('slug');
+
+        return view('akademik', compact('halamanMap'));
     }
 
     public function dosen()

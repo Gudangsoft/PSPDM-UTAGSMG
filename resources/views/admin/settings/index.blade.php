@@ -30,6 +30,13 @@
                             <label class="form-label">Alamat <span class="text-danger">*</span></label>
                             <textarea name="alamat" rows="2" class="form-control" required>{{ $settings['alamat']->value ?? 'Jl. Pawiyatan Luhur IV No.1, Bendan Dhuwur, Semarang 50233' }}</textarea>
                         </div>
+                        <div class="col-12">
+                            <label class="form-label"><i class="bi bi-map me-1 text-danger"></i>Google Maps Embed URL</label>
+                            <textarea name="maps_embed" rows="3" class="form-control" placeholder="https://www.google.com/maps/embed?pb=...">{{ $settings['maps_embed']?->value ?? '' }}</textarea>
+                            <small class="text-muted">
+                                Cara mendapatkan URL: Google Maps → cari lokasi → klik <strong>Bagikan</strong> → tab <strong>Sematkan peta</strong> → salin nilai atribut <code>src="..."</code> dari kode iframe.
+                            </small>
+                        </div>
                         <div class="col-md-6">
                             <label class="form-label">Telepon <span class="text-danger">*</span></label>
                             <input type="text" name="telepon" class="form-control" value="{{ $settings['telepon']->value ?? '(024) 8316405' }}" required>

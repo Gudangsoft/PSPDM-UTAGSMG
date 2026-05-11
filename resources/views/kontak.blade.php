@@ -193,13 +193,16 @@
         </div>
 
         {{-- Google Maps --}}
+        @php $mapsUrl = $site['maps_embed']?->value ?? ''; @endphp
+        @if($mapsUrl)
         <div class="mt-5 rounded-4 overflow-hidden shadow-sm" style="height:350px;">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.0757498698433!2d110.39427931477315!3d-6.983895694983789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708c2a1b5dd6c7%3A0x5f39f4a8c6d5c7b!2sUniversitas%2017%20Agustus%201945%20Semarang!5e0!3m2!1sid!2sid!4v1640000000000!5m2!1sid!2sid"
+            <iframe src="{{ $mapsUrl }}"
                 width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"
-                title="Lokasi UNTAG Semarang">
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Lokasi {{ $site['nama_prodi']?->value ?? 'PSMPD' }} FEB UNTAG Semarang">
             </iframe>
         </div>
+        @endif
     </div>
 </section>
 

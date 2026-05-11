@@ -29,13 +29,14 @@ class SettingController extends Controller
             'favicon'         => 'nullable|image|mimes:png,jpg,jpeg,ico,svg|max:512',
             'cta_label'       => 'nullable|string|max:60',
             'cta_url'         => 'nullable|string|max:500',
+            'maps_embed'      => 'nullable|string|max:2000',
         ]);
 
         $textKeys = [
             'nama_prodi', 'singkatan', 'alamat', 'telepon', 'email',
             'visi', 'misi', 'facebook', 'instagram', 'youtube', 'twitter',
             'whatsapp', 'deskripsi_singkat', 'cta_label', 'cta_url',
-            'info_akreditasi', 'info_durasi', 'info_sks',
+            'info_akreditasi', 'info_durasi', 'info_sks', 'maps_embed',
         ];
 
         Setting::set('cta_aktif', $request->has('cta_aktif') ? '1' : '0');

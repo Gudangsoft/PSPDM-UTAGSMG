@@ -123,6 +123,9 @@
         <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
             <i class="bi bi-speedometer2"></i> Dashboard
         </a>
+        <a href="{{ route('admin.konsentrasi.index') }}" class="sidebar-link {{ request()->routeIs('admin.konsentrasi.*') ? 'active' : '' }}">
+            <i class="bi bi-diagram-3"></i> Konsentrasi Program Studi
+        </a>
         <a href="{{ route('home') }}" target="_blank" class="sidebar-link">
             <i class="bi bi-box-arrow-up-right"></i> Lihat Website
         </a>
@@ -142,9 +145,6 @@
         </a>
         <a href="{{ route('admin.jadwal-pmb.index') }}" class="sidebar-link {{ request()->routeIs('admin.jadwal-pmb.*') ? 'active' : '' }}">
             <i class="bi bi-calendar-event"></i> Jadwal PMB
-        </a>
-        <a href="{{ route('admin.konsentrasi.index') }}" class="sidebar-link {{ request()->routeIs('admin.konsentrasi.*') ? 'active' : '' }}">
-            <i class="bi bi-diagram-3"></i> Konsentrasi
         </a>
         <a href="{{ route('admin.galeri.index') }}" class="sidebar-link {{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}">
             <i class="bi bi-images"></i> Galeri

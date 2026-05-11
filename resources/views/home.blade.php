@@ -7,18 +7,35 @@
 /* ===== HERO ===== */
 .hero-section {
     background:
-        linear-gradient(130deg,
-            transparent 15%,
-            rgba(255,178,200,0.20) 32%,
-            rgba(255,255,255,0.82) 44%,
-            rgba(255,235,242,0.96) 52%,
-            rgba(255,255,255,0.82) 60%,
-            rgba(255,158,183,0.20) 72%,
-            transparent 86%
+        /* Spotlight putih — menyinari area kartu (sisi kanan) */
+        radial-gradient(ellipse 55% 90% at 100% 50%,
+            rgba(255,255,255,0.90) 0%,
+            rgba(255,195,215,0.62) 20%,
+            rgba(225,50,80,0.22) 48%,
+            transparent 68%
         ),
-        radial-gradient(ellipse 65% 65% at 4% 96%, rgba(75,5,15,0.80) 0%, transparent 55%),
-        radial-gradient(ellipse 65% 65% at 96% 96%, rgba(75,5,15,0.80) 0%, transparent 55%),
-        linear-gradient(145deg, #7A1020 0%, #B81E38 28%, #D82E4E 55%, #B81E38 80%, #7A1020 100%);
+        /* Sinar hangat dari sudut kanan atas */
+        radial-gradient(ellipse 50% 50% at 100% 0%,
+            rgba(255,150,170,0.35) 0%,
+            transparent 55%
+        ),
+        /* Bayangan dalam di sudut kiri bawah */
+        radial-gradient(ellipse 50% 60% at 0% 100%,
+            rgba(45,0,8,0.92) 0%,
+            transparent 52%
+        ),
+        /* Bayangan dalam di sudut kanan bawah */
+        radial-gradient(ellipse 50% 60% at 100% 100%,
+            rgba(45,0,8,0.92) 0%,
+            transparent 52%
+        ),
+        /* Pendalaman sisi kiri agar teks terbaca */
+        radial-gradient(ellipse 38% 100% at -2% 50%,
+            rgba(55,0,12,0.75) 0%,
+            transparent 55%
+        ),
+        /* Dasar merah kaya */
+        linear-gradient(148deg, #880F1E 0%, #BC1C32 28%, #D82540 56%, #BC1C32 80%, #880F1E 100%);
     min-height: 90vh;
     display: flex; align-items: center;
     position: relative; overflow: hidden;
@@ -193,18 +210,14 @@
 /* ===== CTA ===== */
 .cta-section {
     background:
-        linear-gradient(130deg,
-            transparent 5%,
-            rgba(255,175,200,0.18) 22%,
-            rgba(255,255,255,0.78) 34%,
-            rgba(255,235,243,0.94) 42%,
-            rgba(255,255,255,0.78) 50%,
-            rgba(255,155,182,0.18) 63%,
-            transparent 78%
+        radial-gradient(ellipse 70% 55% at 50% -15%,
+            rgba(255,160,185,0.48) 0%,
+            rgba(240,60,90,0.18) 40%,
+            transparent 65%
         ),
-        radial-gradient(ellipse 65% 65% at 4% 96%, rgba(75,5,15,0.78) 0%, transparent 55%),
-        radial-gradient(ellipse 65% 65% at 96% 96%, rgba(75,5,15,0.78) 0%, transparent 55%),
-        linear-gradient(145deg, #7A1020 0%, #B81E38 28%, #D82E4E 55%, #B81E38 80%, #7A1020 100%);
+        radial-gradient(ellipse 45% 65% at 0% 100%, rgba(45,0,8,0.90) 0%, transparent 52%),
+        radial-gradient(ellipse 45% 65% at 100% 100%, rgba(45,0,8,0.90) 0%, transparent 52%),
+        linear-gradient(148deg, #880F1E 0%, #BC1C32 28%, #D82540 56%, #BC1C32 80%, #880F1E 100%);
     padding: 80px 0; position: relative; overflow: hidden;
 }
 .cta-section::before { display: none; }

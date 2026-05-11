@@ -77,9 +77,10 @@
         /* ========== HEADER ========== */
         .site-header {
             background:
-                linear-gradient(130deg, transparent 8%, rgba(255,175,195,0.12) 28%, rgba(255,255,255,0.22) 38%, rgba(255,238,244,0.30) 44%, rgba(255,255,255,0.22) 50%, rgba(255,165,188,0.12) 62%, transparent 78%),
-                linear-gradient(120deg, #5C0E1A 0%, #8B1828 30%, #C0304A 60%, #8B1828 85%, #5C0E1A 100%);
-            padding: 12px 0; box-shadow: 0 3px 24px rgba(60,0,15,0.4);
+                radial-gradient(ellipse 50% 200% at 100% 50%, rgba(255,160,180,0.22) 0%, transparent 55%),
+                radial-gradient(ellipse 30% 200% at 0% 50%, rgba(40,0,8,0.55) 0%, transparent 55%),
+                linear-gradient(120deg, #6B0D1A 0%, #9C1828 32%, #C8223E 62%, #9C1828 86%, #6B0D1A 100%);
+            padding: 12px 0; box-shadow: 0 3px 28px rgba(50,0,12,0.45);
         }
         .site-header .logo-text { color: white; text-decoration: none; }
         .site-header .logo-text h4 { font-size: 1.1rem; font-weight: 700; margin: 0; line-height: 1.2; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
@@ -103,19 +104,21 @@
         /* ========== PAGE HERO ========== */
         .page-hero {
             background:
-                linear-gradient(130deg,
-                    transparent 5%,
-                    rgba(255,175,200,0.14) 22%,
-                    rgba(255,255,255,0.42) 34%,
-                    rgba(255,240,246,0.55) 41%,
-                    rgba(255,255,255,0.42) 48%,
-                    rgba(255,158,182,0.14) 62%,
-                    transparent 78%
+                radial-gradient(ellipse 60% 80% at 100% 50%,
+                    rgba(255,255,255,0.55) 0%,
+                    rgba(255,190,210,0.30) 28%,
+                    transparent 58%
                 ),
-                linear-gradient(145deg, #7A1020 0%, #B01E38 30%, #C82E4A 55%, #B01E38 80%, #7A1020 100%);
+                radial-gradient(ellipse 50% 55% at 100% 0%,
+                    rgba(255,140,165,0.30) 0%,
+                    transparent 55%
+                ),
+                radial-gradient(ellipse 40% 70% at 0% 100%, rgba(45,0,8,0.80) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 70% at 100% 100%, rgba(45,0,8,0.80) 0%, transparent 50%),
+                linear-gradient(148deg, #880F1E 0%, #BC1C32 28%, #D82540 56%, #BC1C32 80%, #880F1E 100%);
             padding: 60px 0; color: white; position: relative; overflow: hidden;
         }
-        .page-hero h1 { text-shadow: 0 2px 16px rgba(60,0,12,0.65), 0 4px 32px rgba(60,0,12,0.3); }
+        .page-hero h1 { text-shadow: 0 2px 16px rgba(50,0,10,0.60), 0 4px 28px rgba(50,0,10,0.28); }
         .page-hero::before { display: none; }
         .page-hero::after { display: none; }
         .page-hero h1 { font-size: 2rem; font-weight: 700; margin: 0; }

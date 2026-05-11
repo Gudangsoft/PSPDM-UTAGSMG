@@ -37,10 +37,10 @@
 
         <div class="tab-content" id="akademikTabContent">
             <div class="tab-pane fade show active" id="kurikulum">
-                {!! $halamanMap['akademik-kurikulum']->konten ?? '' !!}
+                {!! $halamanMap['akademik-kurikulum']?->konten ?? '' !!}
             </div>
             <div class="tab-pane fade" id="syarat">
-                {!! $halamanMap['akademik-syarat-pendaftaran']->konten ?? '' !!}
+                {!! $halamanMap['akademik-syarat-pendaftaran']?->konten ?? '' !!}
             </div>
             <div class="tab-pane fade" id="jadwal">
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden">

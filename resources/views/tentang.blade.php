@@ -20,6 +20,14 @@
             <div class="col-lg-6" data-aos="fade-right">
                 <span class="badge" style="background:var(--red-primary); color:white; padding:6px 14px; border-radius:20px; font-size:0.8rem; margin-bottom:16px; display:inline-block;">Program Doktor</span>
                 <h2 style="font-size:1.8rem; font-weight:700; color:var(--dark); margin-bottom:16px;">Program Studi Manajemen Program Doktor FEB UNTAG Semarang</h2>
+                @php $tentangGambar = $site['tentang_gambar']?->value ?? null; @endphp
+                @if($tentangGambar)
+                <div class="rounded-4 overflow-hidden shadow-sm mb-4" style="width:100%;">
+                    <img src="{{ asset('storage/' . $tentangGambar) }}"
+                         alt="Tentang Program"
+                         style="width:100%;height:auto;display:block;">
+                </div>
+                @endif
                 <p class="text-muted" style="line-height:1.8;">Program Studi Manajemen Program Doktor (PSMPD) Fakultas Ekonomi dan Bisnis Universitas 17 Agustus 1945 Semarang hadir sebagai pusat unggulan riset dan pengembangan teori manajemen berbasis nilai-nilai Pancasila.</p>
                 <p class="text-muted" style="line-height:1.8;">Program ini berorientasi pada transformasi strategis organisasi dan kelembagaan, untuk melahirkan pemikiran manajemen Indonesia yang orisinal, inovatif, dan berdaya saing global.</p>
                 <div class="row g-3 mt-2">
@@ -44,15 +52,6 @@
                 </div>
             </div>
             <div class="col-lg-6" data-aos="fade-left">
-                @php $tentangGambar = $site['tentang_gambar']?->value ?? null; @endphp
-                @if($tentangGambar)
-                <div class="rounded-4 overflow-hidden shadow-sm mb-4" style="aspect-ratio:16/9;">
-                    <img src="{{ asset('storage/' . $tentangGambar) }}"
-                         alt="Tentang Program"
-                         style="width:100%;height:100%;object-fit:cover;display:block;">
-                </div>
-                @endif
-
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                     <div style="background:linear-gradient(135deg,var(--red-primary),var(--red-dark)); padding:30px; color:white;">
                         <h5 class="mb-0" style="font-family:'Inter',sans-serif; font-weight:700;"><i class="bi bi-eye me-2"></i>Visi Program Studi</h5>

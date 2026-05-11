@@ -34,7 +34,8 @@
                             <label class="form-label"><i class="bi bi-map me-1 text-danger"></i>Google Maps Embed URL</label>
                             <textarea name="maps_embed" rows="3" class="form-control" placeholder="https://www.google.com/maps/embed?pb=...">{{ $settings['maps_embed']?->value ?? '' }}</textarea>
                             <small class="text-muted">
-                                Cara mendapatkan URL: Google Maps → cari lokasi → klik <strong>Bagikan</strong> → tab <strong>Sematkan peta</strong> → salin nilai atribut <code>src="..."</code> dari kode iframe.
+                                Boleh tempel <strong>URL saja</strong> <em>atau</em> <strong>kode iframe lengkap</strong> dari Google Maps — sistem akan mengekstrak URL-nya secara otomatis.<br>
+                                Cara: Google Maps → cari lokasi → klik <strong>Bagikan</strong> → tab <strong>Sematkan peta</strong> → salin seluruh kode atau hanya nilai <code>src="..."</code>.
                             </small>
                         </div>
                         <div class="col-md-6">

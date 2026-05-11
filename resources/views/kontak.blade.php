@@ -193,7 +193,16 @@
         </div>
 
         {{-- Google Maps --}}
-        @php $mapsUrl = $site['maps_embed']?->value ?? ''; @endphp
+        @php
+            $mapsRaw = $site['maps_embed']?->value ?? '';
+            // Support both: full <iframe ...> HTML or bare URL
+            if ($mapsRaw && str_contains($mapsRaw, '<iframe')) {
+                preg_match('/src=["\']([^"\']+)["\']/', $mapsRaw, $_m);
+                $mapsUrl = $_m[1] ?? '';
+            } else {
+                $mapsUrl = $mapsRaw;
+            }
+        @endphp
         @if($mapsUrl)
         <div class="mt-5 rounded-4 overflow-hidden shadow-sm" style="height:350px;">
             <iframe src="{{ $mapsUrl }}"

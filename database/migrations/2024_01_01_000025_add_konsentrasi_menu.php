@@ -7,27 +7,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        $exists = DB::table('menu_items')
+        // Remove any existing konsentrasi menu item (old position under Akademik)
+        DB::table('menu_items')
             ->where('nilai', 'konsentrasi')
             ->where('tipe', 'route')
-            ->exists();
+            ->delete();
 
-        if ($exists) {
-            return;
-        }
-
-        $akademik = DB::table('menu_items')
-            ->where('label', 'Akademik')
-            ->whereNull('parent_id')
-            ->first();
-
-        if (! $akademik) {
-            return;
-        }
-
-        // Shift existing Akademik children down to make room at urutan=1
+        // Shift top-level items with urutan >= 4 to make room
         DB::table('menu_items')
-            ->where('parent_id', $akademik->id)
+            ->whereNull('parent_id')
+            ->where('urutan', '>=', 4)
             ->increment('urutan');
 
         DB::table('menu_items')->insert([
@@ -35,8 +24,8 @@ return new class extends Migration
             'tipe'       => 'route',
             'nilai'      => 'konsentrasi',
             'icon'       => 'bi-diagram-3',
-            'parent_id'  => $akademik->id,
-            'urutan'     => 1,
+            'parent_id'  => null,
+            'urutan'     => 4,
             'target'     => '_self',
             'is_active'  => true,
             'created_at' => now(),
@@ -50,5 +39,10 @@ return new class extends Migration
             ->where('nilai', 'konsentrasi')
             ->where('tipe', 'route')
             ->delete();
+
+        DB::table('menu_items')
+            ->whereNull('parent_id')
+            ->where('urutan', '>', 4)
+            ->decrement('urutan');
     }
 };

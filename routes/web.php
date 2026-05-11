@@ -29,6 +29,7 @@ Route::get('/akademik', [HomeController::class, 'akademik'])->name('akademik');
 Route::get('/dosen', [HomeController::class, 'dosen'])->name('dosen');
 Route::get('/penelitian', [HomeController::class, 'penelitian'])->name('penelitian');
 Route::get('/struktur', [HomeController::class, 'struktur'])->name('struktur');
+Route::get('/biaya-pendidikan', [HomeController::class, 'biaya'])->name('biaya');
 
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 Route::get('/berita/{slug}', [BeritaController::class, 'show'])->name('berita.show');

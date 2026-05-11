@@ -58,4 +58,9 @@ class HomeController extends Controller
         $pejabat = Pejabat::aktif()->get();
         return view('struktur', compact('pejabat'));
     }
+
+    public function biaya()
+    {
+        return view('biaya');
+    }
 }

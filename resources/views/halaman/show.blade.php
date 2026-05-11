@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $halaman->judul . ' - ' . ($site['singkatan']->value ?? 'PSMPD'))
+@section('title', $halaman->judul . ' - ' . ($site['singkatan']?->value ?? 'PSMPD'))
 
 @section('content')
 

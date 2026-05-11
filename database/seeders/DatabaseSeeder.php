@@ -10,6 +10,7 @@ use App\Models\Pejabat;
 use App\Models\Setting;
 use App\Models\MenuItem;
 use Illuminate\Database\Seeder;
+use Database\Seeders\BiayaHalamanSeeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -202,6 +203,8 @@ class DatabaseSeeder extends Seeder
             MenuItem::create(['label'=>'Galeri','tipe'=>'route','nilai'=>'galeri','urutan'=>6,'is_active'=>true]);
             MenuItem::create(['label'=>'Kontak','tipe'=>'route','nilai'=>'kontak','urutan'=>7,'is_active'=>true]);
         }
+
+        $this->call(BiayaHalamanSeeder::class);
 
         $this->command->info('✅ Seeding selesai! Login admin: admin@psmpd-untag.ac.id / admin123');
     }

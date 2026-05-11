@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\Dosen;
 use App\Models\Galeri;
+use App\Models\Halaman;
 use App\Models\Pengumuman;
 use App\Models\Pejabat;
 use Illuminate\Http\Request;
@@ -61,6 +62,9 @@ class HomeController extends Controller
 
     public function biaya()
     {
-        return view('biaya');
+        $halaman = Halaman::where('slug', 'biaya-pendidikan')
+            ->where('is_published', true)
+            ->firstOrFail();
+        return view('biaya', compact('halaman'));
     }
 }

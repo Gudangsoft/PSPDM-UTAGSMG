@@ -16,7 +16,7 @@
 
 <section class="py-5">
     <div class="container-xl">
-        <div class="row g-5 align-items-center">
+        <div class="row g-5 align-items-start">
             <div class="col-lg-6" data-aos="fade-right">
                 @php $tentangGambar = $site['tentang_gambar']?->value ?? null; @endphp
                 @if($tentangGambar)

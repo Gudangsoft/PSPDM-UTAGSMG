@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Struktur Organisasi - ' . ($site['singkatan']->value ?? 'PSMPD'))
+@section('title', 'Struktur Organisasi - ' . ($site['singkatan']?->value ?? 'PSMPD'))
 
 @section('styles')
 <style>
@@ -95,6 +95,15 @@
 }
 .pejabat-kontak a:hover { text-decoration: underline; }
 
+@media (max-width: 575.98px) {
+    .pejabat-card { padding: 18px 12px; }
+    .pejabat-foto { width: 80px; height: 80px; }
+    .pejabat-foto-placeholder { width: 80px; height: 80px; font-size: 1.6rem; }
+    .pejabat-nama { font-size: 0.85rem; }
+    .pejabat-jabatan { font-size: 0.68rem; padding: 3px 8px; }
+    .pejabat-nidn, .pejabat-keterangan, .pejabat-kontak a { font-size: 0.72rem; }
+}
+
 /* ===== KETUA (highlight first card) ===== */
 .pejabat-card.is-ketua {
     border-top-color: var(--gold, #c8a84b);
@@ -127,12 +136,12 @@
 
 {{-- ===== SAMBUTAN KEPALA PRODI ===== --}}
 @php
-    $sambNama    = $site['sambutan_nama']->value    ?? '';
-    $sambJabatan = $site['sambutan_jabatan']->value  ?? 'Ketua Program Studi';
-    $sambFoto    = $site['sambutan_foto']->value     ?? '';
-    $sambIsi     = $site['sambutan_isi']->value      ?? '';
-    $singkatan   = $site['singkatan']->value         ?? 'PSMPD';
-    $namaProdi   = $site['nama_prodi']->value        ?? 'Program Studi Manajemen Program Doktor';
+    $sambNama    = $site['sambutan_nama']?->value    ?? '';
+    $sambJabatan = $site['sambutan_jabatan']?->value  ?? 'Ketua Program Studi';
+    $sambFoto    = $site['sambutan_foto']?->value     ?? '';
+    $sambIsi     = $site['sambutan_isi']?->value      ?? '';
+    $singkatan   = $site['singkatan']?->value         ?? 'PSMPD';
+    $namaProdi   = $site['nama_prodi']?->value        ?? 'Program Studi Manajemen Program Doktor';
 @endphp
 
 @if($sambNama || $sambIsi)
@@ -198,66 +207,34 @@
         </div>
 
         @if($pejabat->count() > 0)
-            {{-- Ketua (urutan pertama) ditampilkan lebih besar --}}
-            @php $ketua = $pejabat->first(); $staf = $pejabat->skip(1); @endphp
-
-            <div class="row justify-content-center mb-4" data-aos="fade-up">
-                <div class="col-lg-3 col-md-5 col-sm-7">
-                    <div class="pejabat-card is-ketua">
-                        @if($ketua->foto)
-                            <img src="{{ asset('storage/'.$ketua->foto) }}" alt="{{ $ketua->nama }}" class="pejabat-foto">
+            <div class="row g-4 justify-content-center">
+                @foreach($pejabat as $i => $p)
+                <div class="col-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ ($i % 3) * 100 }}">
+                    <div class="pejabat-card {{ $i === 0 ? 'is-ketua' : '' }}">
+                        @if($p->foto)
+                            <img src="{{ asset('storage/'.$p->foto) }}" alt="{{ $p->nama }}" class="pejabat-foto">
                         @else
-                            <div class="pejabat-foto-placeholder">{{ strtoupper(substr($ketua->nama, 0, 1)) }}</div>
+                            <div class="pejabat-foto-placeholder">{{ strtoupper(substr($p->nama, 0, 1)) }}</div>
                         @endif
-                        <div class="pejabat-jabatan">{{ $ketua->jabatan }}</div>
-                        <div class="pejabat-nama">{{ $ketua->nama }}</div>
-                        @if($ketua->nidn)
-                            <div class="pejabat-nidn">NIDN: {{ $ketua->nidn }}</div>
+                        <div class="pejabat-jabatan">{{ $p->jabatan }}</div>
+                        <div class="pejabat-nama">{{ $p->nama }}</div>
+                        @if($p->nidn)
+                            <div class="pejabat-nidn">NIDN: {{ $p->nidn }}</div>
                         @endif
-                        @if($ketua->keterangan)
-                            <p class="pejabat-keterangan">{{ $ketua->keterangan }}</p>
+                        @if($p->keterangan)
+                            <p class="pejabat-keterangan">{{ $p->keterangan }}</p>
                         @endif
                         <div class="pejabat-kontak mt-2">
-                            @if($ketua->email)
-                                <a href="mailto:{{ $ketua->email }}">
-                                    <i class="bi bi-envelope"></i> {{ $ketua->email }}
+                            @if($p->email)
+                                <a href="mailto:{{ $p->email }}">
+                                    <i class="bi bi-envelope"></i> {{ $p->email }}
                                 </a>
                             @endif
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-
-            @if($staf->count() > 0)
-                <div class="row g-4 justify-content-center">
-                    @foreach($staf as $i => $p)
-                    <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ ($i % 4) * 80 }}">
-                        <div class="pejabat-card">
-                            @if($p->foto)
-                                <img src="{{ asset('storage/'.$p->foto) }}" alt="{{ $p->nama }}" class="pejabat-foto">
-                            @else
-                                <div class="pejabat-foto-placeholder">{{ strtoupper(substr($p->nama, 0, 1)) }}</div>
-                            @endif
-                            <div class="pejabat-jabatan">{{ $p->jabatan }}</div>
-                            <div class="pejabat-nama">{{ $p->nama }}</div>
-                            @if($p->nidn)
-                                <div class="pejabat-nidn">NIDN: {{ $p->nidn }}</div>
-                            @endif
-                            @if($p->keterangan)
-                                <p class="pejabat-keterangan">{{ $p->keterangan }}</p>
-                            @endif
-                            <div class="pejabat-kontak mt-2">
-                                @if($p->email)
-                                    <a href="mailto:{{ $p->email }}">
-                                        <i class="bi bi-envelope"></i> {{ $p->email }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            @endif
 
         @else
             <div class="text-center py-5 text-muted">

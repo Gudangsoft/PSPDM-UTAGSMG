@@ -65,12 +65,22 @@
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
 
         /* ========== TOP BAR ========== */
-        .top-bar { background: linear-gradient(90deg, #4A0A18 0%, #7B1530 60%, #9B2038 100%); color: rgba(255,255,255,0.88); font-size: 0.8rem; padding: 6px 0; }
-        .top-bar a { color: rgba(255,255,255,0.88); text-decoration: none; }
+        .top-bar {
+            background:
+                linear-gradient(130deg, transparent 8%, rgba(255,255,255,0.09) 32%, rgba(255,240,245,0.16) 43%, rgba(255,255,255,0.09) 54%, transparent 72%),
+                linear-gradient(90deg, #4A0A18 0%, #8B1828 45%, #6D1020 100%);
+            color: rgba(255,255,255,0.9); font-size: 0.8rem; padding: 6px 0;
+        }
+        .top-bar a { color: rgba(255,255,255,0.9); text-decoration: none; }
         .top-bar a:hover { color: #fff; }
 
         /* ========== HEADER ========== */
-        .site-header { background: linear-gradient(120deg, #6D1020 0%, #9B2038 40%, #C0304A 75%, #CC3F58 100%); padding: 12px 0; box-shadow: 0 2px 24px rgba(80,0,20,0.35); }
+        .site-header {
+            background:
+                linear-gradient(130deg, transparent 8%, rgba(255,175,195,0.12) 28%, rgba(255,255,255,0.22) 38%, rgba(255,238,244,0.30) 44%, rgba(255,255,255,0.22) 50%, rgba(255,165,188,0.12) 62%, transparent 78%),
+                linear-gradient(120deg, #5C0E1A 0%, #8B1828 30%, #C0304A 60%, #8B1828 85%, #5C0E1A 100%);
+            padding: 12px 0; box-shadow: 0 3px 24px rgba(60,0,15,0.4);
+        }
         .site-header .logo-text { color: white; text-decoration: none; }
         .site-header .logo-text h4 { font-size: 1.1rem; font-weight: 700; margin: 0; line-height: 1.2; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
         .site-header .logo-text small { font-size: 0.72rem; opacity: 0.85; letter-spacing: 0.3px; }
@@ -91,9 +101,23 @@
         .main-nav .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23C0304A' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
 
         /* ========== PAGE HERO ========== */
-        .page-hero { background: linear-gradient(135deg, #6D1020 0%, #9B2038 30%, #C0304A 60%, #D8506A 85%, #F5C0CB 100%); padding: 60px 0; color: white; position: relative; overflow: hidden; }
-        .page-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.06) 100%); }
-        .page-hero::after { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); pointer-events: none; }
+        .page-hero {
+            background:
+                linear-gradient(130deg,
+                    transparent 5%,
+                    rgba(255,175,200,0.14) 22%,
+                    rgba(255,255,255,0.42) 34%,
+                    rgba(255,240,246,0.55) 41%,
+                    rgba(255,255,255,0.42) 48%,
+                    rgba(255,158,182,0.14) 62%,
+                    transparent 78%
+                ),
+                linear-gradient(145deg, #7A1020 0%, #B01E38 30%, #C82E4A 55%, #B01E38 80%, #7A1020 100%);
+            padding: 60px 0; color: white; position: relative; overflow: hidden;
+        }
+        .page-hero h1 { text-shadow: 0 2px 16px rgba(60,0,12,0.65), 0 4px 32px rgba(60,0,12,0.3); }
+        .page-hero::before { display: none; }
+        .page-hero::after { display: none; }
         .page-hero h1 { font-size: 2rem; font-weight: 700; margin: 0; }
         .page-hero .breadcrumb { margin: 8px 0 0; }
         .page-hero .breadcrumb-item { color: rgba(255,255,255,0.8); font-size: 0.85rem; }
@@ -141,7 +165,12 @@
         .social-links a:hover { background: linear-gradient(135deg, #C0304A, #8B1A2E); transform: translateY(-2px); }
 
         /* ========== TICKER ========== */
-        .ticker-wrap { background: linear-gradient(90deg, #8B1A2E 0%, #C0304A 55%, #D8506A 100%); padding: 8px 0; overflow: hidden; }
+        .ticker-wrap {
+            background:
+                linear-gradient(130deg, transparent 10%, rgba(255,255,255,0.10) 36%, rgba(255,240,245,0.18) 46%, rgba(255,255,255,0.10) 56%, transparent 74%),
+                linear-gradient(90deg, #7B1528 0%, #C02035 45%, #BB1E30 100%);
+            padding: 8px 0; overflow: hidden;
+        }
         .ticker-label { background: rgba(0,0,0,0.22); color: white; padding: 4px 16px; font-weight: 700; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; border-radius: 0 4px 4px 0; }
         .ticker-content { display: flex; align-items: center; overflow: hidden; flex: 1; }
         .ticker-inner { display: flex; gap: 50px; animation: ticker 30s linear infinite; white-space: nowrap; }

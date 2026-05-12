@@ -200,6 +200,28 @@
 </head>
 <body>
 
+{{-- Progress Bar --}}
+<div id="scroll-progress" style="
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:linear-gradient(90deg,#C0304A,#FF6B8A,#C0304A);
+    z-index:9999; transition:width .1s linear;
+    box-shadow:0 0 8px rgba(192,48,74,.6);
+"></div>
+
+{{-- Back to Top --}}
+<button id="back-to-top" title="Kembali ke atas" style="
+    position:fixed; bottom:28px; right:24px; z-index:9998;
+    width:44px; height:44px; border-radius:50%; border:none;
+    background:linear-gradient(135deg,#C0304A,#8B1A2E);
+    color:white; font-size:1.1rem; cursor:pointer;
+    box-shadow:0 4px 16px rgba(192,48,74,.45);
+    opacity:0; transform:translateY(16px);
+    transition:opacity .3s, transform .3s;
+    display:flex; align-items:center; justify-content:center;
+">
+    <i class="bi bi-chevron-up"></i>
+</button>
+
     {{-- ===== TOP BAR (data dari DB) ===== --}}
     <div class="top-bar d-none d-md-block">
         <div class="container-xl">
@@ -422,5 +444,31 @@
     <script>AOS.init({ duration: 700, once: true, offset: 80 });</script>
 
     @yield('scripts')
+    <script>
+    (function () {
+        const bar = document.getElementById('scroll-progress');
+        const btn = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', function () {
+            // Progress bar
+            const scrolled = window.scrollY;
+            const total    = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+
+            // Back to top visibility
+            if (scrolled > 300) {
+                btn.style.opacity   = '1';
+                btn.style.transform = 'translateY(0)';
+            } else {
+                btn.style.opacity   = '0';
+                btn.style.transform = 'translateY(16px)';
+            }
+        }, { passive: true });
+
+        btn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
+    </script>
 </body>
 </html>

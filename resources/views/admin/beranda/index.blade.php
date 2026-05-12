@@ -640,18 +640,18 @@ $g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $defaul
 
 @section('scripts')
 <script>
-// Submit DELETE form via JS — menghindari nested form
-function _submitDelete(url, msg) {
+// Submit POST form via JS — menghindari nested form
+function _submitPost(url, msg) {
     if (!confirm(msg)) return;
     const f = document.createElement('form');
     f.method = 'POST';
     f.action = url;
-    f.innerHTML = '<input name="_token" value="{{ csrf_token() }}"><input name="_method" value="DELETE">';
+    f.innerHTML = '<input name="_token" value="{{ csrf_token() }}">';
     document.body.appendChild(f);
     f.submit();
 }
-function hapusHeroGambar(url) { _submitDelete(url, 'Hapus gambar hero ini?'); }
-function hapusSlider(num, url) { _submitDelete(url, 'Hapus gambar slider ' + num + '?'); }
+function hapusHeroGambar(url) { _submitPost(url, 'Hapus gambar hero ini?'); }
+function hapusSlider(num, url) { _submitPost(url, 'Hapus gambar slider ' + num + '?'); }
 
 // Tab switching
 document.querySelectorAll('#berandaTabs .nav-link').forEach(link => {

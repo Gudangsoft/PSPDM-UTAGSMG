@@ -417,9 +417,6 @@ $sliderImages = array_values(array_filter(array_map(
                     </div>
                     <hr>
                     <div class="hero-accredit d-flex align-items-center gap-3">
-                        <div class="hero-accredit-badge">
-                            <span class="badge-grade">{{ Str::upper(Str::limit($heroAkrNama, 6, '')) }}</span>
-                        </div>
                         <div>
                             <div style="font-weight:700; font-size:0.9rem; color:#333;">{{ $heroAkrNama }}</div>
                             <div style="font-size:0.78rem; color:#888;">{{ $heroAkrBadan }}</div>

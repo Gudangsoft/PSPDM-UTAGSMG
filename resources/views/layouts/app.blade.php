@@ -85,7 +85,7 @@
         .site-header .logo-text { color: white; text-decoration: none; }
         .site-header .logo-text h4 { font-size: 1.1rem; font-weight: 700; margin: 0; line-height: 1.2; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
         .site-header .logo-text small { font-size: 0.72rem; opacity: 0.85; letter-spacing: 0.3px; }
-        .logo-icon { width: 110px; height: 110px; background: transparent; border-radius: 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+        .logo-icon { width: 150px; height: 150px; background: transparent; border-radius: 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
         .logo-icon img { width: 100%; height: 100%; object-fit: contain; padding: 0; }
         .logo-icon .logo-fallback { font-size: 1.2rem; font-weight: 900; color: white; }
 

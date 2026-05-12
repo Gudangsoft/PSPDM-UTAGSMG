@@ -427,9 +427,14 @@ $sliderImages = array_values(array_filter(array_map(
                         </div>
                     </div>
                     <hr>
-                    <div class="d-flex align-items-center gap-3 mt-1">
+                    <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
                         <div style="font-size:0.82rem; color:#555;"><i class="bi bi-calendar3 me-2 text-danger"></i>{{ $heroPmbLabel }}</div>
-                        <a href="{{ $heroPmbUrl }}" class="btn btn-primary btn-sm ms-auto">{{ $heroPmbBtn }}</a>
+                        <div class="d-flex gap-2 ms-auto">
+                            <a href="{{ $heroPmbUrl }}" class="btn btn-outline-danger btn-sm">{{ $heroPmbBtn }}</a>
+                            <a href="{{ route('halaman.show', 'pmb') }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil-square me-1"></i>Daftar Sekarang
+                            </a>
+                        </div>
                     </div>
                     </div>{{-- /hero-card-body --}}
                 </div>

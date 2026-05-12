@@ -380,7 +380,6 @@ $ctaSeksiBtn2U  = $resolveUrl($s('cta_section_btn2_url',''), 'kontak');
                     </div>
                     <hr>
                     <div class="hero-accredit d-flex align-items-center gap-3">
-                        <div class="badge-a">A</div>
                         <div>
                             <div style="font-weight:700; font-size:0.9rem; color:#333;">{{ $heroAkrNama }}</div>
                             <div style="font-size:0.78rem; color:#888;">{{ $heroAkrBadan }}</div>

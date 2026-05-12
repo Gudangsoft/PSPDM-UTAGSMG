@@ -6,36 +6,7 @@
 <style>
 /* ===== HERO ===== */
 .hero-section {
-    background:
-        /* Spotlight putih — menyinari area kartu (sisi kanan) */
-        radial-gradient(ellipse 55% 90% at 100% 50%,
-            rgba(255,255,255,0.90) 0%,
-            rgba(255,195,215,0.62) 20%,
-            rgba(225,50,80,0.22) 48%,
-            transparent 68%
-        ),
-        /* Sinar hangat dari sudut kanan atas */
-        radial-gradient(ellipse 50% 50% at 100% 0%,
-            rgba(255,150,170,0.35) 0%,
-            transparent 55%
-        ),
-        /* Bayangan dalam di sudut kiri bawah */
-        radial-gradient(ellipse 50% 60% at 0% 100%,
-            rgba(45,0,8,0.92) 0%,
-            transparent 52%
-        ),
-        /* Bayangan dalam di sudut kanan bawah */
-        radial-gradient(ellipse 50% 60% at 100% 100%,
-            rgba(45,0,8,0.92) 0%,
-            transparent 52%
-        ),
-        /* Pendalaman sisi kiri agar teks terbaca */
-        radial-gradient(ellipse 38% 100% at -2% 50%,
-            rgba(55,0,12,0.75) 0%,
-            transparent 55%
-        ),
-        /* Dasar merah kaya */
-        linear-gradient(148deg, #880F1E 0%, #BC1C32 28%, #D82540 56%, #BC1C32 80%, #880F1E 100%);
+    background: linear-gradient(148deg, #880F1E 0%, #BC1C32 28%, #D82540 56%, #BC1C32 80%, #880F1E 100%);
     min-height: 90vh;
     display: flex; align-items: center;
     position: relative; overflow: hidden;
@@ -43,9 +14,29 @@
 }
 .hero-section::before {
     content: '';
-    position: absolute; inset: 0;
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
+.hero-slider-bg { position:absolute; inset:0; z-index:0; }
+.hero-slide {
+    position:absolute; inset:0;
+    background-size:cover; background-position:center center;
+    opacity:0; transition:opacity 1.4s ease-in-out;
+}
+.hero-slide.active { opacity:1; }
+.hero-overlay {
+    position:absolute; inset:0; z-index:1;
+    background:
+        radial-gradient(ellipse 55% 90% at 100% 50%, rgba(255,255,255,0.82) 0%, rgba(255,195,215,0.50) 20%, rgba(200,40,65,0.15) 48%, transparent 68%),
+        radial-gradient(ellipse 50% 50% at 100% 0%, rgba(255,150,170,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 60% at 0% 100%, rgba(45,0,8,0.90) 0%, transparent 52%),
+        radial-gradient(ellipse 50% 60% at 100% 100%, rgba(45,0,8,0.90) 0%, transparent 52%),
+        radial-gradient(ellipse 38% 100% at -2% 50%, rgba(55,0,12,0.78) 0%, transparent 55%),
+        rgba(80,5,14,0.42);
+}
+.hero-dots { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); z-index:5; display:flex; gap:8px; }
+.hero-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.4); cursor:pointer; transition:all .3s; border:none; padding:0; }
+.hero-dot.active { background:white; width:24px; border-radius:4px; }
 .hero-section .hero-badge {
     background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
     color: white; padding: 6px 16px; border-radius: 30px;
@@ -343,8 +334,30 @@ $ctaSeksiBtn2U  = $resolveUrl($s('cta_section_btn2_url',''), 'kontak');
 @endphp
 
 {{-- HERO --}}
+@php
+$sliderImages = array_values(array_filter(array_map(
+    fn($i) => $site["hero_slider_$i"]?->value ?? '',
+    range(1, 5)
+)));
+@endphp
 <section class="hero-section">
-    <div class="container-xl position-relative">
+    @if(count($sliderImages) > 0)
+    <div class="hero-slider-bg">
+        @foreach($sliderImages as $idx => $img)
+        <div class="hero-slide {{ $idx === 0 ? 'active' : '' }}"
+             style="background-image:url('{{ asset('storage/'.$img) }}')"></div>
+        @endforeach
+    </div>
+    <div class="hero-overlay"></div>
+    @if(count($sliderImages) > 1)
+    <div class="hero-dots">
+        @foreach($sliderImages as $idx => $img)
+        <button class="hero-dot {{ $idx === 0 ? 'active' : '' }}" data-idx="{{ $idx }}"></button>
+        @endforeach
+    </div>
+    @endif
+    @endif
+    <div class="container-xl position-relative" style="z-index:3;">
         <div class="row align-items-center g-5">
             <div class="col-lg-7" data-aos="fade-right">
                 <span class="hero-badge"><i class="bi bi-star-fill me-1"></i> {{ $heroBadge }}</span>
@@ -639,4 +652,35 @@ $ctaSeksiBtn2U  = $resolveUrl($s('cta_section_btn2_url',''), 'kontak');
     </div>
 </section>
 
+@endsection
+
+@section('scripts')
+<script>
+(function () {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots   = document.querySelectorAll('.hero-dot');
+    if (slides.length < 2) return;
+    let current = 0, timer;
+
+    function goTo(n) {
+        slides[current].classList.remove('active');
+        dots[current]?.classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current]?.classList.add('active');
+    }
+
+    function next() { goTo(current + 1); }
+
+    timer = setInterval(next, 5000);
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            clearInterval(timer);
+            goTo(i);
+            timer = setInterval(next, 5000);
+        });
+    });
+})();
+</script>
 @endsection

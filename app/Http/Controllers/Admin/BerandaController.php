@@ -64,14 +64,30 @@ class BerandaController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
+        $sliderRules = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $sliderRules["hero_slider_$i"] = 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072';
+        }
+
+        $request->validate(array_merge([
             'hero_gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
+        ], $sliderRules), [
+            'hero_slider_1.max' => 'Ukuran gambar slider maksimal 3 MB.',
+            'hero_slider_1.image' => 'File harus berupa gambar.',
         ]);
 
         if ($request->hasFile('hero_gambar')) {
             $old = Setting::get('hero_gambar');
             if ($old) Storage::disk('public')->delete($old);
             Setting::set('hero_gambar', $request->file('hero_gambar')->store('beranda', 'public'));
+        }
+
+        for ($i = 1; $i <= 5; $i++) {
+            if ($request->hasFile("hero_slider_$i")) {
+                $old = Setting::get("hero_slider_$i");
+                if ($old) Storage::disk('public')->delete($old);
+                Setting::set("hero_slider_$i", $request->file("hero_slider_$i")->store('beranda', 'public'));
+            }
         }
 
         foreach ($this->keys as $key) {
@@ -88,5 +104,15 @@ class BerandaController extends Controller
         Setting::set('hero_gambar', '');
 
         return back()->with('success', 'Gambar hero berhasil dihapus.');
+    }
+
+    public function destroySliderGambar(int $num)
+    {
+        if ($num < 1 || $num > 5) abort(404);
+        $old = Setting::get("hero_slider_$num");
+        if ($old) Storage::disk('public')->delete($old);
+        Setting::set("hero_slider_$num", '');
+
+        return back()->with('success', "Gambar slider $num berhasil dihapus.");
     }
 }

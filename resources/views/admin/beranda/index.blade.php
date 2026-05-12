@@ -155,6 +155,38 @@ $g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $defaul
                 </div>
             </div>
 
+            {{-- Slider Background --}}
+            <div class="admin-card card mt-4">
+                <div class="card-header"><i class="bi bi-images me-2"></i>Slider Background Hero</div>
+                <div class="card-body p-4">
+                    <p class="text-muted mb-3" style="font-size:.78rem;"><i class="bi bi-info-circle me-1"></i>Upload hingga 5 gambar. Gambar akan berganti otomatis setiap 5 detik. Kosongkan semua slot untuk kembali ke background merah.</p>
+                    @for($si = 1; $si <= 5; $si++)
+                    @php $sliderVal = $settings["hero_slider_$si"]?->value ?? ''; @endphp
+                    <div class="mb-3 p-3 rounded-3" style="background:#f9f9f9;border:1px solid #eee;">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <span class="fw-bold" style="font-size:.8rem;color:#444;">Gambar {{ $si }}</span>
+                            @if($sliderVal)
+                            <form action="{{ route('admin.beranda.destroySlider', $si) }}" method="POST" class="ms-auto">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-2 py-0 px-2"
+                                        onclick="return confirm('Hapus gambar slider {{ $si }}?')" style="font-size:.72rem;">
+                                    <i class="bi bi-trash me-1"></i>Hapus
+                                </button>
+                            </form>
+                            @endif
+                        </div>
+                        @if($sliderVal)
+                        <img src="{{ asset('storage/'.$sliderVal) }}" class="img-fluid rounded-2 w-100 mb-2"
+                             style="height:80px;object-fit:cover;">
+                        @endif
+                        <input type="file" name="hero_slider_{{ $si }}" class="form-control form-control-sm"
+                               accept="image/jpeg,image/png,image/webp">
+                    </div>
+                    @endfor
+                    <small class="text-muted">JPG/PNG/WEBP · Maks 3 MB per gambar. Rasio 16:9 direkomendasikan.</small>
+                </div>
+            </div>
+
             {{-- Struktur Hero mini --}}
             <div class="admin-card card mt-3">
                 <div class="card-body p-3">

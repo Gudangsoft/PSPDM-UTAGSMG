@@ -85,9 +85,9 @@
         .site-header .logo-text { color: white; text-decoration: none; }
         .site-header .logo-text h4 { font-size: 1.1rem; font-weight: 700; margin: 0; line-height: 1.2; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
         .site-header .logo-text small { font-size: 0.72rem; opacity: 0.85; letter-spacing: 0.3px; }
-        .logo-icon { width: 72px; height: 72px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; color: var(--red-primary); box-shadow: 0 2px 10px rgba(0,0,0,0.2); flex-shrink: 0; overflow: hidden; }
-        .logo-icon img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
-        .logo-icon .logo-fallback { font-size: 1.1rem; font-weight: 900; color: var(--red-primary); }
+        .logo-icon { width: 80px; height: 80px; background: transparent; border-radius: 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+        .logo-icon img { width: 100%; height: 100%; object-fit: contain; padding: 0; }
+        .logo-icon .logo-fallback { font-size: 1.2rem; font-weight: 900; color: white; }
 
         /* ========== NAVBAR ========== */
         .main-nav { background: white; box-shadow: 0 2px 15px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
@@ -159,8 +159,8 @@
         .site-footer ul { list-style: none; padding: 0; }
         .site-footer ul li { padding: 3px 0; }
         .site-footer ul li i { color: var(--red-light); margin-right: 6px; width: 16px; }
-        .footer-logo-wrap { width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; }
-        .footer-logo-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+        .footer-logo-wrap { width: 90px; height: 90px; background: transparent; border-radius: 0; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; overflow: hidden; }
+        .footer-logo-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 0; }
         .footer-logo-fallback { width: 80px; height: 80px; background: linear-gradient(135deg, #C0304A, #8B1A2E); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.3rem; color: white; margin-bottom: 15px; }
         .footer-bottom { background: rgba(0,0,0,0.3); padding: 16px 0; margin-top: 40px; font-size: 0.8rem; color: rgba(255,255,255,0.6); }
         .footer-bottom a { color: rgba(255,255,255,0.7); text-decoration: none; }
@@ -192,7 +192,7 @@
             .page-hero h1 { font-size: 1.5rem; }
         }
         @media (max-width: 576px) {
-            .site-header .logo-icon { width: 56px; height: 56px; font-size: 1rem; }
+            .site-header .logo-icon { width: 60px; height: 60px; }
         }
     </style>
 

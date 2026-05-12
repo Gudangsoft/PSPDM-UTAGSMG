@@ -46,6 +46,10 @@
                             <label class="form-label">Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" class="form-control" value="{{ $settings['email']->value ?? 'psmpd@untag-smg.ac.id' }}" required>
                         </div>
+                        <div class="col-12">
+                            <label class="form-label"><i class="bi bi-globe me-1 text-danger"></i>Website</label>
+                            <input type="text" name="website" class="form-control" value="{{ $settings['website']->value ?? 'https://untag-smg.ac.id' }}" placeholder="https://...">
+                        </div>
                     </div>
                 </div>
             </div>

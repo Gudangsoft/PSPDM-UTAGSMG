@@ -31,10 +31,11 @@ class SettingController extends Controller
             'cta_label'       => 'nullable|string|max:60',
             'cta_url'         => 'nullable|string|max:500',
             'maps_embed'      => 'nullable|string|max:2000',
+            'website'         => 'nullable|url|max:200',
         ]);
 
         $textKeys = [
-            'nama_prodi', 'singkatan', 'alamat', 'telepon', 'email',
+            'nama_prodi', 'singkatan', 'alamat', 'telepon', 'email', 'website',
             'visi', 'misi', 'facebook', 'instagram', 'youtube', 'twitter',
             'whatsapp', 'deskripsi_singkat', 'cta_label', 'cta_url',
             'info_akreditasi', 'info_durasi', 'info_sks', 'maps_embed',

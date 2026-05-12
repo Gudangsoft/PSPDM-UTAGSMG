@@ -12,6 +12,7 @@
     $youtube     = $s('youtube',     '#');
     $twitter     = $s('twitter',     '#');
     $whatsapp    = $s('whatsapp',    '');
+    $website     = $s('website',     'https://untag-smg.ac.id');
     $deskripsi   = $s('deskripsi_singkat', 'Program Studi Manajemen Program Doktor FEB UNTAG Semarang menghasilkan doktor manajemen yang kompeten, berintegritas, dan berdaya saing global berlandaskan nilai-nilai Pancasila.');
     $logoPath    = $s('logo',        '');
     $faviconPath = $s('favicon',     '');
@@ -419,7 +420,9 @@
                         <li><i class="bi bi-geo-alt-fill"></i>{{ $alamat }}</li>
                         <li><i class="bi bi-telephone-fill"></i>{{ $telepon }}</li>
                         <li><i class="bi bi-envelope-fill"></i>{{ $email }}</li>
-                        <li><i class="bi bi-globe"></i><a href="https://untag-smg.ac.id" target="_blank">untag-smg.ac.id</a></li>
+                        @if($website)
+                        <li><i class="bi bi-globe"></i><a href="{{ $website }}" target="_blank">{{ preg_replace('#^https?://#', '', $website) }}</a></li>
+                        @endif
                         @if($whatsapp)
                         <li><i class="bi bi-whatsapp"></i><a href="{{ $whatsappUrl }}" target="_blank">{{ $whatsapp }}</a></li>
                         @endif

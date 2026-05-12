@@ -126,13 +126,10 @@ $g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $defaul
                              class="img-fluid rounded-3 w-100"
                              style="max-height:200px; object-fit:cover; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
                         <div class="mt-2">
-                            <form action="{{ route('admin.beranda.destroyHeroGambar') }}" method="POST" class="d-inline">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-2"
-                                        onclick="return confirm('Hapus gambar hero ini?')">
-                                    <i class="bi bi-trash me-1"></i>Hapus Gambar
-                                </button>
-                            </form>
+                            <button type="button" class="btn btn-sm btn-outline-danger rounded-2"
+                                    onclick="hapusHeroGambar('{{ route('admin.beranda.destroyHeroGambar') }}')">
+                                <i class="bi bi-trash me-1"></i>Hapus Gambar
+                            </button>
                         </div>
                     </div>
                     @endif
@@ -643,9 +640,9 @@ $g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $defaul
 
 @section('scripts')
 <script>
-// Hapus slider image — pakai JS form agar tidak nested dalam form utama
-function hapusSlider(num, url) {
-    if (!confirm('Hapus gambar slider ' + num + '?')) return;
+// Submit DELETE form via JS — menghindari nested form
+function _submitDelete(url, msg) {
+    if (!confirm(msg)) return;
     const f = document.createElement('form');
     f.method = 'POST';
     f.action = url;
@@ -653,6 +650,8 @@ function hapusSlider(num, url) {
     document.body.appendChild(f);
     f.submit();
 }
+function hapusHeroGambar(url) { _submitDelete(url, 'Hapus gambar hero ini?'); }
+function hapusSlider(num, url) { _submitDelete(url, 'Hapus gambar slider ' + num + '?'); }
 
 // Tab switching
 document.querySelectorAll('#berandaTabs .nav-link').forEach(link => {

@@ -41,7 +41,17 @@
     background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
     color: white; padding: 6px 16px; border-radius: 30px;
     font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-    display: inline-block; margin-bottom: 20px;
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;
+}
+.hero-badge-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #4ade80; flex-shrink: 0;
+    box-shadow: 0 0 0 0 rgba(74,222,128,0.6);
+    animation: badge-pulse 2s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(74,222,128,0.6); }
+    60%  { box-shadow: 0 0 0 6px rgba(74,222,128,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
 }
 .hero-section h1 {
     font-size: clamp(1.8rem, 4vw, 3.2rem); font-weight: 700; color: white;
@@ -59,9 +69,14 @@
 .hero-buttons .btn-outline-light { border-width: 2px; }
 
 .hero-card {
-    background: white; border-radius: 16px; padding: 30px;
+    background: white; border-radius: 16px; overflow: hidden;
     box-shadow: 0 20px 60px rgba(0,0,0,0.25);
 }
+.hero-card-strip {
+    height: 5px;
+    background: linear-gradient(90deg, var(--red-dark), var(--red-primary), #e84a6a, var(--red-primary), var(--red-dark));
+}
+.hero-card-body { padding: 30px; }
 .stat-item { text-align: center; padding: 16px; }
 .stat-item .number {
     font-size: 2.4rem; font-weight: 800; color: var(--red-primary);
@@ -70,7 +85,14 @@
 .stat-item .label { font-size: 0.8rem; color: #888; margin-top: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .hero-card hr { border-color: #f0f0f0; margin: 16px 0; }
 .hero-accredit { background: #fff8f8; border-radius: 10px; padding: 14px 18px; }
-.hero-accredit .badge-a { background: var(--red-primary); color: white; font-size: 1.5rem; font-weight: 900; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.hero-accredit-badge {
+    background: var(--red-primary); color: white;
+    font-size: 0.62rem; font-weight: 800; line-height: 1; letter-spacing: 0.5px; text-transform: uppercase; text-align: center;
+    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(192,48,74,0.35);
+}
+.hero-accredit-badge .badge-grade { font-size: 1.15rem; font-weight: 900; line-height: 1.1; }
 
 /* Hero image */
 .hero-img-wrap { border-radius: 20px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.30); margin-bottom: 20px; }
@@ -359,8 +381,8 @@ $sliderImages = array_values(array_filter(array_map(
     @endif
     <div class="container-xl position-relative" style="z-index:3;">
         <div class="row align-items-center g-5">
-            <div class="col-lg-7" data-aos="fade-right">
-                <span class="hero-badge"><i class="bi bi-star-fill me-1"></i> {{ $heroBadge }}</span>
+            <div class="col-lg-6" data-aos="fade-right">
+                <span class="hero-badge"><span class="hero-badge-dot"></span> {{ $heroBadge }}</span>
                 <h1>
                     {{ $heroJudul1 }} <span>{{ $heroJudulHl }}</span><br>
                     {{ $heroJudul2 }}
@@ -375,7 +397,7 @@ $sliderImages = array_values(array_filter(array_map(
                     </a>
                 </div>
             </div>
-            <div class="col-lg-5" data-aos="fade-left" data-aos-delay="150">
+            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
                 @php $heroGambar = $site['hero_gambar']?->value ?? ''; @endphp
                 @if($heroGambar)
                 <div class="hero-img-wrap">
@@ -383,9 +405,11 @@ $sliderImages = array_values(array_filter(array_map(
                 </div>
                 @endif
                 <div class="hero-card">
+                    <div class="hero-card-strip"></div>
+                    <div class="hero-card-body">
                     <div class="row g-0">
                         @foreach($heroStat as $idx => $stat)
-                        <div class="col-4 stat-item {{ $idx === 2 ? 'border-start border-end' : '' }}">
+                        <div class="col-4 stat-item {{ $idx === 1 ? 'border-start border-end' : '' }}">
                             <div class="number">{{ $stat[0] }}</div>
                             <div class="label">{{ $stat[1] }}</div>
                         </div>
@@ -393,13 +417,16 @@ $sliderImages = array_values(array_filter(array_map(
                     </div>
                     <hr>
                     <div class="hero-accredit d-flex align-items-center gap-3">
+                        <div class="hero-accredit-badge">
+                            <span class="badge-grade">{{ Str::upper(Str::limit($heroAkrNama, 6, '')) }}</span>
+                        </div>
                         <div>
                             <div style="font-weight:700; font-size:0.9rem; color:#333;">{{ $heroAkrNama }}</div>
                             <div style="font-size:0.78rem; color:#888;">{{ $heroAkrBadan }}</div>
                         </div>
                         <div class="ms-auto text-end">
-                            <div style="font-weight:700; font-size:0.9rem; color:#333;">{{ $heroSkNomor }}</div>
-                            <div style="font-size:0.78rem; color:#888;">{{ $heroSkValid }}</div>
+                            <div style="font-weight:700; font-size:0.82rem; color:#333;">{{ $heroSkNomor }}</div>
+                            <div style="font-size:0.76rem; color:#888;">{{ $heroSkValid }}</div>
                         </div>
                     </div>
                     <hr>
@@ -407,6 +434,7 @@ $sliderImages = array_values(array_filter(array_map(
                         <div style="font-size:0.82rem; color:#555;"><i class="bi bi-calendar3 me-2 text-danger"></i>{{ $heroPmbLabel }}</div>
                         <a href="{{ $heroPmbUrl }}" class="btn btn-primary btn-sm ms-auto">{{ $heroPmbBtn }}</a>
                     </div>
+                    </div>{{-- /hero-card-body --}}
                 </div>
             </div>
         </div>

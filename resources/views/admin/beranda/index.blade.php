@@ -166,13 +166,11 @@ $g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $defaul
                         <div class="d-flex align-items-center gap-2 mb-2">
                             <span class="fw-bold" style="font-size:.8rem;color:#444;">Gambar {{ $si }}</span>
                             @if($sliderVal)
-                            <form action="{{ route('admin.beranda.destroySlider', $si) }}" method="POST" class="ms-auto">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-2 py-0 px-2"
-                                        onclick="return confirm('Hapus gambar slider {{ $si }}?')" style="font-size:.72rem;">
-                                    <i class="bi bi-trash me-1"></i>Hapus
-                                </button>
-                            </form>
+                            <button type="button" class="btn btn-sm btn-outline-danger rounded-2 py-0 px-2 ms-auto"
+                                    onclick="hapusSlider({{ $si }},'{{ route('admin.beranda.destroySlider', $si) }}')"
+                                    style="font-size:.72rem;">
+                                <i class="bi bi-trash me-1"></i>Hapus
+                            </button>
                             @endif
                         </div>
                         @if($sliderVal)
@@ -645,6 +643,17 @@ $g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $defaul
 
 @section('scripts')
 <script>
+// Hapus slider image — pakai JS form agar tidak nested dalam form utama
+function hapusSlider(num, url) {
+    if (!confirm('Hapus gambar slider ' + num + '?')) return;
+    const f = document.createElement('form');
+    f.method = 'POST';
+    f.action = url;
+    f.innerHTML = '<input name="_token" value="{{ csrf_token() }}"><input name="_method" value="DELETE">';
+    document.body.appendChild(f);
+    f.submit();
+}
+
 // Tab switching
 document.querySelectorAll('#berandaTabs .nav-link').forEach(link => {
     link.addEventListener('click', function(e) {

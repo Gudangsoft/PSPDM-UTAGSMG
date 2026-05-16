@@ -24,6 +24,12 @@ class GaleriController extends Controller
 
     public function store(Request $request)
     {
+        \Log::info('GALERI STORE', [
+            'has_file'  => $request->hasFile('gambar'),
+            'file_size' => $request->hasFile('gambar') ? $request->file('gambar')->getSize() : null,
+            'file_err'  => $request->hasFile('gambar') ? $request->file('gambar')->getError() : null,
+        ]);
+
         $validated = $request->validate([
             'judul'     => 'required|string|max:255',
             'gambar'    => 'required|image|mimes:jpg,jpeg,png,webp',

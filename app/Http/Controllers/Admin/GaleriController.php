@@ -24,14 +24,16 @@ class GaleriController extends Controller
     {
         $validated = $request->validate([
             'judul'     => 'required|string|max:255',
-            'gambar'    => 'required|image|mimes:jpg,jpeg,png,webp|max:3072',
+            'gambar'    => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
             'kategori'  => 'required|string|max:50',
             'deskripsi' => 'nullable|string|max:500',
-            'urutan'    => 'integer|min:0',
-            'is_active' => 'boolean',
+            'urutan'    => 'nullable|integer|min:0',
+            'is_active' => 'nullable|boolean',
         ]);
 
-        $validated['gambar'] = $request->file('gambar')->store('galeri', 'public');
+        $validated['gambar']    = $request->file('gambar')->store('galeri', 'public');
+        $validated['urutan']    = (int) ($validated['urutan'] ?? 0);
+        $validated['is_active'] = $request->boolean('is_active');
 
         Galeri::create($validated);
 
@@ -47,17 +49,20 @@ class GaleriController extends Controller
     {
         $validated = $request->validate([
             'judul'     => 'required|string|max:255',
-            'gambar'    => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
+            'gambar'    => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'kategori'  => 'required|string|max:50',
             'deskripsi' => 'nullable|string|max:500',
-            'urutan'    => 'integer|min:0',
-            'is_active' => 'boolean',
+            'urutan'    => 'nullable|integer|min:0',
+            'is_active' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('gambar')) {
             if ($galeri->gambar) Storage::disk('public')->delete($galeri->gambar);
             $validated['gambar'] = $request->file('gambar')->store('galeri', 'public');
         }
+
+        $validated['urutan']    = (int) ($validated['urutan'] ?? $galeri->urutan);
+        $validated['is_active'] = $request->boolean('is_active');
 
         $galeri->update($validated);
 

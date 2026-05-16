@@ -14,7 +14,7 @@
                         <label class="form-label">Foto <span class="text-danger">*</span></label>
                         <div id="dropzone" class="border-2 border-dashed rounded-3 p-4 text-center mb-2" style="border:2px dashed #ddd; cursor:pointer; transition:border-color .2s;" onclick="document.getElementById('gambar').click()">
                             <img id="preview" src="" alt="" style="max-width:100%; max-height:200px; border-radius:8px; display:none;">
-                            <div id="placeholder"><i class="bi bi-cloud-upload" style="font-size:2.5rem; color:#ddd;"></i><p class="text-muted mt-2 mb-0" style="font-size:.875rem;">Klik atau seret foto ke sini</p><small class="text-muted">JPG/PNG/WebP, maks 3MB</small></div>
+                            <div id="placeholder"><i class="bi bi-cloud-upload" style="font-size:2.5rem; color:#ddd;"></i><p class="text-muted mt-2 mb-0" style="font-size:.875rem;">Klik atau seret foto ke sini</p><small class="text-muted">JPG / PNG / WebP &bull; Otomatis dikompresi</small></div>
                         </div>
                         <input type="file" name="gambar" id="gambar" class="d-none @error('gambar') is-invalid @enderror" accept="image/*" onchange="previewImg(this)" required>
                         @error('gambar')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror

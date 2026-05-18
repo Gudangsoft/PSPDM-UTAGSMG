@@ -121,6 +121,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('download', [AdminDownloadController::class, 'store'])->name('download.store');
     Route::put('download/{download}', [AdminDownloadController::class, 'update'])->name('download.update');
     Route::delete('download/{download}', [AdminDownloadController::class, 'destroy'])->name('download.destroy');
+    // Download Kategori
+    Route::post('download/kategori', [AdminDownloadController::class, 'storeKategori'])->name('download.kategori.store');
+    Route::put('download/kategori/{kategori}', [AdminDownloadController::class, 'updateKategori'])->name('download.kategori.update');
+    Route::delete('download/kategori/{kategori}', [AdminDownloadController::class, 'destroyKategori'])->name('download.kategori.destroy');
 
     // FAQ
     Route::get('faq', [AdminFaqController::class, 'index'])->name('faq.index');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Download;
+use App\Models\DownloadKategori;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,8 +13,47 @@ class DownloadController extends Controller
 {
     public function index()
     {
-        $downloads = Download::orderBy('urutan')->orderBy('judul')->paginate(20);
-        return view('admin.download.index', compact('downloads'));
+        $downloads  = Download::orderBy('urutan')->orderBy('judul')->paginate(20);
+        $kategoris  = DownloadKategori::terurut()->get();
+        return view('admin.download.index', compact('downloads', 'kategoris'));
+    }
+
+    // ── Kategori CRUD ──────────────────────────────────────────
+
+    public function storeKategori(Request $request)
+    {
+        $request->validate(['nama' => 'required|string|max:80|unique:download_kategoris,nama']);
+        DownloadKategori::create([
+            'nama'      => $request->nama,
+            'urutan'    => $request->urutan ?? 0,
+            'is_active' => $request->boolean('is_active', true),
+        ]);
+        return back()->with('success', 'Kategori berhasil ditambahkan.');
+    }
+
+    public function updateKategori(Request $request, DownloadKategori $kategori)
+    {
+        $request->validate(['nama' => 'required|string|max:80|unique:download_kategoris,nama,' . $kategori->id]);
+        $old = $kategori->nama;
+        $kategori->update([
+            'nama'      => $request->nama,
+            'urutan'    => $request->urutan ?? 0,
+            'is_active' => $request->boolean('is_active'),
+        ]);
+        // Sync nama on download rows
+        if ($old !== $request->nama) {
+            Download::where('kategori', $old)->update(['kategori' => $request->nama]);
+        }
+        return back()->with('success', 'Kategori berhasil diperbarui.');
+    }
+
+    public function destroyKategori(DownloadKategori $kategori)
+    {
+        if (Download::where('kategori', $kategori->nama)->exists()) {
+            return back()->withErrors(['kategori' => 'Kategori masih digunakan oleh ' . Download::where('kategori', $kategori->nama)->count() . ' file.']);
+        }
+        $kategori->delete();
+        return back()->with('success', 'Kategori berhasil dihapus.');
     }
 
     public function store(Request $request)

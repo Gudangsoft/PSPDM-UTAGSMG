@@ -213,21 +213,7 @@
     box-shadow:0 0 8px rgba(192,48,74,.6);
 "></div>
 
-{{-- Back to Top --}}
-<button id="back-to-top" title="Kembali ke atas" style="
-    position:fixed; bottom:28px; right:24px; z-index:9990;
-    width:44px; height:44px; border-radius:50%; border:none;
-    background:linear-gradient(135deg,#C0304A,#8B1A2E);
-    color:white; font-size:1.1rem; cursor:pointer;
-    box-shadow:0 4px 16px rgba(192,48,74,.45);
-    opacity:0; transform:translateY(16px);
-    transition:opacity .3s, transform .3s;
-    display:flex; align-items:center; justify-content:center;
-">
-    <i class="bi bi-chevron-up"></i>
-</button>
-
-{{-- ===== PMB FLOATING BUTTONS ===== --}}
+{{-- ===== PMB FLOATING BUTTONS + BACK TO TOP ===== --}}
 @php
     $pmbWaMsg = rawurlencode("Halo Admin PSMPD FEB UNTAG Semarang 🎓\n\nSaya ingin mendapatkan informasi lebih lanjut mengenai *Pendaftaran Program Studi Manajemen Program Doktor (PSMPD) FEB UNTAG Semarang*.\n\nMohon bantuannya. Terima kasih 🙏");
     $pmbWaUrl = $whatsapp ? 'https://wa.me/' . preg_replace('/\D/', '', $whatsapp) . '?text=' . $pmbWaMsg : '#';
@@ -242,31 +228,33 @@
     z-index: 9991;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     gap: 10px;
 }
 .fab-btn {
     position: relative;
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     color: #fff;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
     transition: transform .2s, box-shadow .2s;
     flex-shrink: 0;
 }
 .fab-btn:hover { transform: scale(1.1); color: #fff; }
 .fab-btn .fab-label {
     position: absolute;
-    right: 60px;
+    right: 58px;
     white-space: nowrap;
-    background: rgba(30,30,30,.88);
+    background: rgba(20,20,20,.85);
     color: #fff;
-    font-size: .72rem;
+    font-size: .71rem;
     font-weight: 600;
     padding: 5px 12px;
     border-radius: 20px;
@@ -274,34 +262,39 @@
     opacity: 0;
     transform: translateX(6px);
     transition: opacity .2s, transform .2s;
-    backdrop-filter: blur(4px);
 }
-.fab-btn:hover .fab-label {
-    opacity: 1;
-    transform: translateX(0);
-}
-@media (max-width: 575.98px) {
-    .fab-btn .fab-label { display: none; }
-    .fab-group { bottom: 16px; right: 12px; gap: 8px; }
-    .fab-btn { width: 48px; height: 48px; font-size: 1.2rem; }
-}
+.fab-btn:hover .fab-label { opacity: 1; transform: translateX(0); }
 .fab-daftar {
     background: linear-gradient(135deg, #C0304A, #8B1A2E);
-    box-shadow: 0 4px 18px rgba(192,48,74,.55);
+    box-shadow: 0 4px 16px rgba(192,48,74,.5);
     animation: fabPulseRed 3s infinite;
 }
 .fab-wa {
     background: #25D366;
-    box-shadow: 0 4px 18px rgba(37,211,102,.5);
+    box-shadow: 0 4px 16px rgba(37,211,102,.45);
     animation: fabPulseGreen 2.5s infinite;
 }
+.fab-top {
+    background: linear-gradient(135deg, #374151, #1f2937);
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity .3s, transform .3s, box-shadow .2s;
+}
+.fab-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 @keyframes fabPulseGreen {
-    0%,100% { box-shadow: 0 4px 16px rgba(37,211,102,.5); }
-    50%      { box-shadow: 0 6px 26px rgba(37,211,102,.85); transform: scale(1.06); }
+    0%,100% { box-shadow: 0 4px 14px rgba(37,211,102,.45); }
+    50%      { box-shadow: 0 6px 22px rgba(37,211,102,.8); }
 }
 @keyframes fabPulseRed {
-    0%,100% { box-shadow: 0 4px 16px rgba(192,48,74,.5); }
-    50%      { box-shadow: 0 6px 26px rgba(192,48,74,.88); transform: scale(1.06); }
+    0%,100% { box-shadow: 0 4px 14px rgba(192,48,74,.5); }
+    50%      { box-shadow: 0 6px 22px rgba(192,48,74,.85); }
+}
+@media (max-width: 575.98px) {
+    .fab-btn .fab-label { display: none; }
+    .fab-group { bottom: 14px; right: 12px; gap: 8px; }
+    .fab-btn { width: 46px; height: 46px; font-size: 1.15rem; }
 }
 </style>
 
@@ -314,11 +307,17 @@
 
     {{-- WA Konsultasi --}}
     @if($whatsapp)
-    <a href="{{ $pmbWaUrl }}" target="_blank" rel="noopener" class="fab-btn fab-wa" title="Konsultasi PMB via WhatsApp">
+    <a href="{{ $pmbWaUrl }}" target="_blank" rel="noopener" class="fab-btn fab-wa" title="Konsultasi PMB">
         <i class="bi bi-whatsapp"></i>
         <span class="fab-label">Konsultasi PMB</span>
     </a>
     @endif
+
+    {{-- Back to Top --}}
+    <button id="back-to-top" class="fab-btn fab-top" title="Kembali ke atas">
+        <i class="bi bi-chevron-up"></i>
+        <span class="fab-label">Ke atas</span>
+    </button>
 </div>
 
     {{-- ===== PMB ANNOUNCEMENT BAR ===== --}}
@@ -584,11 +583,9 @@
 
             // Back to top visibility
             if (scrolled > 300) {
-                btn.style.opacity   = '1';
-                btn.style.transform = 'translateY(0)';
+                btn.classList.add('visible');
             } else {
-                btn.style.opacity   = '0';
-                btn.style.transform = 'translateY(16px)';
+                btn.classList.remove('visible');
             }
         }, { passive: true });
 

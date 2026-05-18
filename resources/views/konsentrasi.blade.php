@@ -62,12 +62,13 @@
                 @endif
 
                 @if($k->topik && count($k->topik))
-                <h6 style="font-weight:700;color:var(--dark);margin-top:20px;margin-bottom:12px;">Topik Kajian Utama:</h6>
-                <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                    @foreach($k->topik as $topik)
-                    <span style="background:{{ $k->warna_primer }}18;color:{{ $k->warna_primer }};border:1px solid {{ $k->warna_primer }}44;padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:600;">
+                <h6 style="font-weight:700;color:var(--dark);margin-top:20px;margin-bottom:8px;font-size:.75rem;text-transform:uppercase;letter-spacing:.7px;">Topik Kajian Utama</h6>
+                <div style="border:1px solid #e8e8e8;border-radius:8px;overflow:hidden;">
+                    @foreach($k->topik as $i => $topik)
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px 14px;font-size:.83rem;color:#444;{{ $i % 2 === 0 ? 'background:#fafafa;' : 'background:#fff;' }}{{ !$loop->last ? 'border-bottom:1px solid #f0f0f0;' : '' }}">
+                        <span style="width:6px;height:6px;border-radius:50%;background:{{ $k->warna_primer }};flex-shrink:0;"></span>
                         {{ $topik }}
-                    </span>
+                    </div>
                     @endforeach
                 </div>
                 @endif

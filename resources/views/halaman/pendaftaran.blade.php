@@ -285,6 +285,65 @@
     background: #fee2e2; color: #8B0000;
 }
 .req-accordion .accordion-button:focus { box-shadow: none; }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 767.98px) {
+    .pmb-hero { padding: 40px 0 60px; }
+    .pmb-hero h1 { font-size: 1.75rem; }
+    .pmb-hero p.lead { font-size: .95rem; }
+
+    /* Hero right card: hide on xs, show stacked content differently */
+    .pmb-hero .col-lg-5 { margin-top: 28px; }
+    .pmb-hero .col-lg-5 > div { padding: 20px 16px !important; display: block !important; text-align: center; }
+    .pmb-hero .col-lg-5 .btn-daftar { display: inline-flex !important; margin-top: 16px !important; }
+
+    /* Stat cards: tighter on mobile */
+    .stat-cards { margin-top: -28px; }
+    .stat-card { padding: 16px 12px; border-radius: 10px; }
+    .stat-card .icon { width: 40px; height: 40px; font-size: 1.1rem; margin-bottom: 8px; }
+    .stat-card .value { font-size: 1.1rem; }
+    .stat-card .label { font-size: .72rem; }
+
+    /* Sections: reduce padding */
+    section[style*="padding:80px"] { padding: 50px 0 !important; }
+    section[style*="padding:60px"] { padding: 40px 0 50px !important; }
+    .section-title { font-size: 1.35rem; }
+    .section-subtitle { font-size: .88rem; margin-bottom: 24px; }
+
+    /* Persyaratan: full width on xs */
+    .req-card { padding: 14px 16px; gap: 12px; }
+    .req-num { width: 30px; height: 30px; font-size: .78rem; }
+    .req-body h6 { font-size: .87rem; }
+
+    /* Biaya card */
+    .biaya-card { padding: 28px 20px; border-radius: 16px; }
+    .biaya-card::after { display: none; }
+    .bank-detail { padding: 14px 16px; }
+    .bank-row { flex-wrap: wrap; gap: 6px; }
+    .bank-row .key { min-width: 80px; font-size: .73rem; }
+    .bank-row .val { font-size: .88rem; }
+
+    /* Step list */
+    .step-item { gap: 14px; margin-bottom: 22px; }
+    .step-icon { width: 38px; height: 38px; font-size: .95rem; }
+    .step-item::before { left: 19px; top: 44px; }
+
+    /* Kontak: 2-col on mobile */
+    .kontak-card { padding: 20px 16px; border-radius: 12px; }
+    .kontak-icon { width: 50px; height: 50px; font-size: 1.3rem; margin-bottom: 12px; }
+
+    /* CTA */
+    .cta-section { padding: 36px 20px; border-radius: 16px; }
+    .btn-daftar, .btn-wa { padding: 12px 24px; font-size: .9rem; width: 100%; justify-content: center; }
+    .d-flex.flex-wrap.gap-3 { flex-direction: column; }
+}
+
+@media (max-width: 575.98px) {
+    .pmb-hero { padding: 32px 0 56px; }
+    .pmb-badge { font-size: .7rem; padding: 4px 12px; }
+    .stat-cards { margin-top: -20px; }
+    .stat-card .icon { width: 36px; height: 36px; border-radius: 10px; }
+}
 </style>
 @endsection
 
@@ -298,6 +357,15 @@
                 <div class="pmb-badge"><i class="bi bi-mortarboard-fill me-1"></i> Gelombang I TA 2025/2026</div>
                 <h1>Pendaftaran<br>Mahasiswa Baru</h1>
                 <p class="lead">Program Doktor Manajemen (S3) FEB UNTAG Semarang — dirancang untuk para profesional dan akademisi yang ingin mencapai puncak karier.</p>
+                {{-- CTA mobile: hanya tampil di bawah md --}}
+                <div class="d-flex gap-3 flex-wrap mt-4 d-lg-none">
+                    <a href="https://pspdm.untagsmg.ac.id/halaman/pmb" class="btn-daftar" style="font-size:.88rem;padding:11px 24px;">
+                        <i class="bi bi-send-fill"></i> Daftar Sekarang
+                    </a>
+                    <a href="https://wa.me/6282319475792?text=Halo%20PSMPD%2C%20saya%20ingin%20konsultasi%20pendaftaran%20Program%20Doktor%20Manajemen" target="_blank" class="btn-wa" style="font-size:.88rem;padding:11px 20px;">
+                        <i class="bi bi-whatsapp"></i> Konsultasi
+                    </a>
+                </div>
                 <nav aria-label="breadcrumb" class="breadcrumb-hero mt-3">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
@@ -305,10 +373,11 @@
                     </ol>
                 </nav>
             </div>
-            <div class="col-lg-5 text-center mt-4 mt-lg-0" data-aos="fade-left">
-                <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:28px 24px;display:inline-block;">
+            {{-- Box kanan: hanya tampil di lg ke atas --}}
+            <div class="col-lg-5 text-center mt-4 mt-lg-0 d-none d-lg-flex align-items-center justify-content-center" data-aos="fade-left">
+                <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:32px 28px;display:inline-block;">
                     <div style="color:#fff;font-size:.8rem;opacity:.7;margin-bottom:8px;text-transform:uppercase;letter-spacing:.1em;">Pendaftaran Dibuka</div>
-                    <div style="color:#fff;font-size:2rem;font-weight:900;">S E K A R A N G</div>
+                    <div style="color:#fff;font-size:2.2rem;font-weight:900;letter-spacing:.08em;">SEKARANG</div>
                     <div style="color:rgba(255,255,255,.7);font-size:.85rem;margin-top:6px;">Jangan lewatkan kesempatan ini</div>
                     <a href="https://pspdm.untagsmg.ac.id/halaman/pmb"
                        class="btn-daftar mt-4 d-inline-flex" style="padding:12px 28px;font-size:.9rem;">

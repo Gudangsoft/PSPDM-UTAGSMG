@@ -234,64 +234,92 @@
     $pmbDaftarUrl = route('halaman.show', 'pmb');
 @endphp
 
-{{-- WA Konsultasi PMB --}}
-@if($whatsapp)
-<a href="{{ $pmbWaUrl }}" target="_blank" rel="noopener" id="fab-wa"
-   title="Konsultasi PMB via WhatsApp"
-   style="position:fixed; bottom:82px; right:20px; z-index:9991;
-          width:52px; height:52px; border-radius:50%;
-          background:#25D366; color:white;
-          display:flex; align-items:center; justify-content:center;
-          font-size:1.4rem; text-decoration:none;
-          box-shadow:0 4px 18px rgba(37,211,102,.5);
-          animation:fabPulseGreen 2.5s infinite;">
-    <i class="bi bi-whatsapp"></i>
-</a>
-@endif
-
-{{-- Daftar Sekarang FAB --}}
-<a href="{{ $pmbDaftarUrl }}" id="fab-daftar"
-   title="Daftar Program Doktor"
-   style="position:fixed; bottom:146px; right:20px; z-index:9991;
-          display:flex; align-items:center; gap:8px;
-          background:linear-gradient(135deg,#C0304A,#8B1A2E); color:white;
-          padding:10px 16px 10px 12px; border-radius:30px; text-decoration:none;
-          font-size:.82rem; font-weight:700;
-          box-shadow:0 4px 18px rgba(192,48,74,.55);
-          white-space:nowrap;
-          animation:fabPulseRed 3s infinite;">
-    <i class="bi bi-pencil-square" style="font-size:1rem;"></i>
-    <span>Daftar Sekarang</span>
-</a>
-
-{{-- Label tooltip WA --}}
-<div style="position:fixed; bottom:91px; right:80px; z-index:9990;
-            background:#222; color:white; font-size:.72rem; padding:4px 10px;
-            border-radius:20px; pointer-events:none; white-space:nowrap;
-            opacity:0; transition:opacity .2s;" id="fab-wa-label">
-    Konsultasi PMB
-</div>
-
 <style>
+.fab-group {
+    position: fixed;
+    bottom: 20px;
+    right: 16px;
+    z-index: 9991;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+.fab-btn {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: #fff;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    flex-shrink: 0;
+}
+.fab-btn:hover { transform: scale(1.1); color: #fff; }
+.fab-btn .fab-label {
+    position: absolute;
+    right: 60px;
+    white-space: nowrap;
+    background: rgba(30,30,30,.88);
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(6px);
+    transition: opacity .2s, transform .2s;
+    backdrop-filter: blur(4px);
+}
+.fab-btn:hover .fab-label {
+    opacity: 1;
+    transform: translateX(0);
+}
+@media (max-width: 575.98px) {
+    .fab-btn .fab-label { display: none; }
+    .fab-group { bottom: 16px; right: 12px; gap: 8px; }
+    .fab-btn { width: 48px; height: 48px; font-size: 1.2rem; }
+}
+.fab-daftar {
+    background: linear-gradient(135deg, #C0304A, #8B1A2E);
+    box-shadow: 0 4px 18px rgba(192,48,74,.55);
+    animation: fabPulseRed 3s infinite;
+}
+.fab-wa {
+    background: #25D366;
+    box-shadow: 0 4px 18px rgba(37,211,102,.5);
+    animation: fabPulseGreen 2.5s infinite;
+}
 @keyframes fabPulseGreen {
-    0%,100% { box-shadow: 0 4px 18px rgba(37,211,102,.5); }
-    50%      { box-shadow: 0 4px 28px rgba(37,211,102,.85); transform: scale(1.06); }
+    0%,100% { box-shadow: 0 4px 16px rgba(37,211,102,.5); }
+    50%      { box-shadow: 0 6px 26px rgba(37,211,102,.85); transform: scale(1.06); }
 }
 @keyframes fabPulseRed {
-    0%,100% { box-shadow: 0 4px 18px rgba(192,48,74,.55); }
-    50%      { box-shadow: 0 4px 28px rgba(192,48,74,.9); }
+    0%,100% { box-shadow: 0 4px 16px rgba(192,48,74,.5); }
+    50%      { box-shadow: 0 6px 26px rgba(192,48,74,.88); transform: scale(1.06); }
 }
 </style>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var wa    = document.getElementById('fab-wa');
-    var label = document.getElementById('fab-wa-label');
-    if (wa && label) {
-        wa.addEventListener('mouseenter', function () { label.style.opacity = '1'; });
-        wa.addEventListener('mouseleave', function () { label.style.opacity = '0'; });
-    }
-});
-</script>
+
+<div class="fab-group">
+    {{-- Daftar Sekarang --}}
+    <a href="{{ $pmbDaftarUrl }}" class="fab-btn fab-daftar" title="Daftar Program Doktor">
+        <i class="bi bi-pencil-square"></i>
+        <span class="fab-label">Daftar Sekarang</span>
+    </a>
+
+    {{-- WA Konsultasi --}}
+    @if($whatsapp)
+    <a href="{{ $pmbWaUrl }}" target="_blank" rel="noopener" class="fab-btn fab-wa" title="Konsultasi PMB via WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+        <span class="fab-label">Konsultasi PMB</span>
+    </a>
+    @endif
+</div>
 
     {{-- ===== PMB ANNOUNCEMENT BAR ===== --}}
     @php $adaPmb = \App\Models\JadwalPmb::where('is_active', true)->exists(); @endphp

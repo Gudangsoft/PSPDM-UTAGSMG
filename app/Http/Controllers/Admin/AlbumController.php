@@ -108,6 +108,41 @@ class AlbumController extends Controller
             ->with('success', "{$uploaded} foto berhasil diupload ke album.");
     }
 
+    // AJAX: upload satu foto per request
+    public function uploadOne(Request $request, Album $album)
+    {
+        $request->validate([
+            'foto'     => 'required|image|mimes:jpg,jpeg,png,webp',
+            'judul'    => 'nullable|string|max:255',
+            'kategori' => 'nullable|string|max:50',
+        ]);
+
+        try {
+            $path = $this->compressAndStore($request->file('foto'));
+
+            $galeri = Galeri::create([
+                'album_id'  => $album->id,
+                'judul'     => $request->input('judul', $album->nama),
+                'gambar'    => $path,
+                'kategori'  => $request->input('kategori', 'Kegiatan'),
+                'urutan'    => 0,
+                'is_active' => true,
+            ]);
+
+            if (!$album->cover_foto) {
+                $album->update(['cover_foto' => $path]);
+            }
+
+            return response()->json([
+                'ok'  => true,
+                'url' => asset('storage/' . $path),
+                'id'  => $galeri->id,
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json(['ok' => false, 'error' => $e->getMessage()], 500);
+        }
+    }
+
     public function destroyFoto(Album $album, Galeri $galeri)
     {
         if ($galeri->gambar) Storage::disk('public')->delete($galeri->gambar);

@@ -50,53 +50,58 @@
             </div>
         </div>
 
-        {{-- Bulk Upload --}}
+        {{-- Bulk Upload AJAX --}}
         <div class="admin-card card">
             <div class="card-header fw-bold">
                 <i class="bi bi-cloud-upload me-2"></i>Upload Foto Massal
             </div>
             <div class="card-body p-4">
-                <form action="{{ route('admin.album.bulk-upload', $album) }}" method="POST"
-                      enctype="multipart/form-data" id="bulkForm">
-                    @csrf
-                    <div class="mb-3">
-                        <label class="form-label">Prefix Judul Foto</label>
-                        <input type="text" name="judul_prefix" class="form-control"
-                               value="{{ $album->nama }}" placeholder="cth: Wisuda 2025">
-                        <small class="text-muted">Judul foto akan diberi nomor otomatis</small>
+                <div class="mb-3">
+                    <label class="form-label">Prefix Judul Foto</label>
+                    <input type="text" id="judulPrefix" class="form-control"
+                           value="{{ $album->nama }}" placeholder="cth: Wisuda 2025">
+                    <small class="text-muted">Judul foto akan diberi nomor otomatis</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Kategori</label>
+                    <select id="kategoriSelect" class="form-select">
+                        @foreach(['Kegiatan','Wisuda','Seminar','Penelitian','Kampus','Umum'] as $k)
+                        <option value="{{ $k }}">{{ $k }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Pilih Foto <span class="text-danger">*</span></label>
+                    <div id="dropzone-bulk"
+                         style="border:2px dashed #ddd; border-radius:12px; padding:24px; text-align:center; cursor:pointer; transition:border-color .2s;"
+                         onclick="document.getElementById('fotos').click()"
+                         ondragover="event.preventDefault(); this.style.borderColor='#C0304A';"
+                         ondragleave="this.style.borderColor='#ddd';"
+                         ondrop="handleDrop(event)">
+                        <i class="bi bi-images" style="font-size:2.5rem; color:#ddd;"></i>
+                        <p class="text-muted mt-2 mb-0" style="font-size:.875rem;">Klik atau seret foto ke sini</p>
+                        <small class="text-muted">Bisa pilih banyak foto sekaligus &bull; JPG/PNG/WebP</small>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Kategori</label>
-                        <select name="kategori" class="form-select">
-                            @foreach(['Kegiatan','Wisuda','Seminar','Penelitian','Kampus','Umum'] as $k)
-                            <option value="{{ $k }}">{{ $k }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Pilih Foto <span class="text-danger">*</span></label>
-                        <div id="dropzone-bulk"
-                             style="border:2px dashed #ddd; border-radius:12px; padding:24px; text-align:center; cursor:pointer; transition:border-color .2s;"
-                             onclick="document.getElementById('fotos').click()"
-                             ondragover="event.preventDefault(); this.style.borderColor='#C0304A';"
-                             ondragleave="this.style.borderColor='#ddd';"
-                             ondrop="handleDrop(event)">
-                            <i class="bi bi-images" style="font-size:2.5rem; color:#ddd;"></i>
-                            <p class="text-muted mt-2 mb-0" style="font-size:.875rem;">Klik atau seret foto ke sini</p>
-                            <small class="text-muted">Bisa pilih banyak foto sekaligus &bull; JPG/PNG/WebP</small>
-                        </div>
-                        <input type="file" name="fotos[]" id="fotos" class="d-none"
-                               accept="image/*" multiple onchange="showPreviews(this.files)">
-                    </div>
+                    <input type="file" id="fotos" class="d-none" accept="image/*" multiple onchange="prepareFiles(this.files)">
+                </div>
 
-                    {{-- Preview grid --}}
-                    <div id="preview-grid" class="row g-2 mb-3" style="display:none!important;"></div>
-                    <div id="file-count" class="text-muted mb-3" style="font-size:.85rem; display:none;"></div>
+                {{-- File list --}}
+                <div id="file-list" class="mb-3" style="display:none; max-height:220px; overflow-y:auto; border:1px solid #eee; border-radius:8px; padding:8px;"></div>
 
-                    <button type="submit" class="btn btn-admin-primary w-100" id="btnUpload" disabled>
-                        <i class="bi bi-upload me-2"></i>Upload Foto
-                    </button>
-                </form>
+                {{-- Progress --}}
+                <div id="progress-wrap" class="mb-3" style="display:none;">
+                    <div class="d-flex justify-content-between mb-1" style="font-size:.82rem;">
+                        <span id="progress-label">Mengupload...</span>
+                        <span id="progress-count"></span>
+                    </div>
+                    <div class="progress" style="height:8px;">
+                        <div id="progress-bar" class="progress-bar bg-danger" style="width:0%; transition:width .3s;"></div>
+                    </div>
+                </div>
+
+                <button id="btnUpload" class="btn btn-admin-primary w-100" disabled onclick="startUpload()">
+                    <i class="bi bi-upload me-2"></i>Upload Foto
+                </button>
             </div>
         </div>
     </div>
@@ -170,50 +175,89 @@
 </style>
 
 <script>
-function showPreviews(files) {
-    const grid = document.getElementById('preview-grid');
-    const count = document.getElementById('file-count');
-    const btn   = document.getElementById('btnUpload');
-    grid.innerHTML = '';
-    if (!files.length) { grid.style.display = 'none'; count.style.display = 'none'; btn.disabled = true; return; }
-    grid.style.display = '';
-    count.style.display = '';
-    count.textContent = files.length + ' foto dipilih';
+const UPLOAD_URL = '{{ route('admin.album.upload-one', $album) }}';
+const CSRF       = '{{ csrf_token() }}';
+let selectedFiles = [];
+
+function prepareFiles(files) {
+    selectedFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+    const list = document.getElementById('file-list');
+    const btn  = document.getElementById('btnUpload');
+    if (!selectedFiles.length) { list.style.display = 'none'; btn.disabled = true; return; }
+    list.style.display = '';
+    list.innerHTML = selectedFiles.map((f, i) =>
+        `<div id="fi-${i}" class="d-flex align-items-center gap-2 py-1 px-2" style="font-size:.82rem; border-bottom:1px solid #f0f0f0;">
+            <i class="bi bi-image text-muted"></i>
+            <span class="flex-fill text-truncate">${f.name}</span>
+            <span class="text-muted">${(f.size/1024/1024).toFixed(1)} MB</span>
+            <span id="st-${i}" class="badge bg-secondary" style="min-width:60px;">Antri</span>
+        </div>`
+    ).join('');
     btn.disabled = false;
-    Array.from(files).slice(0, 12).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = e => {
-            const col = document.createElement('div');
-            col.className = 'col-4 col-md-3';
-            col.innerHTML = `<img src="${e.target.result}" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;">`;
-            grid.appendChild(col);
-        };
-        reader.readAsDataURL(file);
-    });
-    if (files.length > 12) {
-        const col = document.createElement('div');
-        col.className = 'col-4 col-md-3 d-flex align-items-center justify-content-center';
-        col.innerHTML = `<span class="text-muted" style="font-size:.8rem;">+${files.length - 12} lagi</span>`;
-        grid.appendChild(col);
-    }
+    btn.innerHTML = `<i class="bi bi-upload me-2"></i>Upload ${selectedFiles.length} Foto`;
 }
 
 function handleDrop(e) {
     e.preventDefault();
     document.getElementById('dropzone-bulk').style.borderColor = '#ddd';
-    const input = document.getElementById('fotos');
-    const dt = new DataTransfer();
+    const dt    = new DataTransfer();
     Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')).forEach(f => dt.items.add(f));
-    input.files = dt.files;
-    showPreviews(input.files);
+    document.getElementById('fotos').files = dt.files;
+    prepareFiles(dt.files);
 }
 
-// Show progress on submit
-document.getElementById('bulkForm').addEventListener('submit', function() {
-    const btn = document.getElementById('btnUpload');
+async function startUpload() {
+    if (!selectedFiles.length) return;
+    const btn      = document.getElementById('btnUpload');
+    const wrap     = document.getElementById('progress-wrap');
+    const bar      = document.getElementById('progress-bar');
+    const label    = document.getElementById('progress-label');
+    const counter  = document.getElementById('progress-count');
+    const judul    = document.getElementById('judulPrefix').value || '{{ $album->nama }}';
+    const kategori = document.getElementById('kategoriSelect').value;
+
     btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Mengupload...';
-});
+    wrap.style.display = '';
+    let done = 0, failed = 0;
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+        document.getElementById(`st-${i}`).className = 'badge bg-warning text-dark';
+        document.getElementById(`st-${i}`).textContent = 'Upload...';
+
+        const fd = new FormData();
+        fd.append('_token', CSRF);
+        fd.append('foto', selectedFiles[i]);
+        fd.append('judul', judul + ' ' + (i + 1));
+        fd.append('kategori', kategori);
+
+        try {
+            const res  = await fetch(UPLOAD_URL, { method: 'POST', body: fd });
+            const json = await res.json();
+            if (json.ok) {
+                done++;
+                document.getElementById(`st-${i}`).className = 'badge bg-success';
+                document.getElementById(`st-${i}`).textContent = 'OK';
+            } else {
+                throw new Error(json.error || 'Gagal');
+            }
+        } catch (err) {
+            failed++;
+            document.getElementById(`st-${i}`).className = 'badge bg-danger';
+            document.getElementById(`st-${i}`).textContent = 'Gagal';
+        }
+
+        const pct = Math.round(((i + 1) / selectedFiles.length) * 100);
+        bar.style.width = pct + '%';
+        counter.textContent = `${i + 1} / ${selectedFiles.length}`;
+        label.textContent = `Mengupload foto ${i + 1}...`;
+    }
+
+    label.textContent = `Selesai: ${done} berhasil, ${failed} gagal.`;
+    bar.style.width = '100%';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-arrow-clockwise me-2"></i>Refresh Halaman';
+    btn.onclick = () => location.reload();
+}
 </script>
 
 @endsection

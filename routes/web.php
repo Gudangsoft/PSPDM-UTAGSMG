@@ -54,6 +54,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('galeri', AdminGaleriController::class);
     Route::resource('album', AdminAlbumController::class)->except(['show']);
     Route::post('album/{album}/bulk-upload', [AdminAlbumController::class, 'bulkUpload'])->name('album.bulk-upload');
+    Route::post('album/{album}/upload-one', [AdminAlbumController::class, 'uploadOne'])->name('album.upload-one');
     Route::delete('album/{album}/foto/{galeri}', [AdminAlbumController::class, 'destroyFoto'])->name('album.destroy-foto');
     Route::post('album/{album}/cover/{galeri}', [AdminAlbumController::class, 'setCover'])->name('album.set-cover');
     Route::resource('dosen', AdminDosenController::class);

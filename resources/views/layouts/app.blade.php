@@ -215,7 +215,7 @@
 
 {{-- Back to Top --}}
 <button id="back-to-top" title="Kembali ke atas" style="
-    position:fixed; bottom:28px; right:24px; z-index:9998;
+    position:fixed; bottom:28px; right:24px; z-index:9990;
     width:44px; height:44px; border-radius:50%; border:none;
     background:linear-gradient(135deg,#C0304A,#8B1A2E);
     color:white; font-size:1.1rem; cursor:pointer;
@@ -226,6 +226,98 @@
 ">
     <i class="bi bi-chevron-up"></i>
 </button>
+
+{{-- ===== PMB FLOATING BUTTONS ===== --}}
+@php
+    $pmbWaMsg = rawurlencode("Halo Admin PSMPD FEB UNTAG Semarang 🎓\n\nSaya ingin mendapatkan informasi lebih lanjut mengenai *Pendaftaran Program Studi Manajemen Program Doktor (PSMPD) FEB UNTAG Semarang*.\n\nMohon bantuannya. Terima kasih 🙏");
+    $pmbWaUrl = $whatsapp ? 'https://wa.me/' . preg_replace('/\D/', '', $whatsapp) . '?text=' . $pmbWaMsg : '#';
+    $pmbDaftarUrl = route('halaman.show', 'pmb');
+@endphp
+
+{{-- WA Konsultasi PMB --}}
+@if($whatsapp)
+<a href="{{ $pmbWaUrl }}" target="_blank" rel="noopener" id="fab-wa"
+   title="Konsultasi PMB via WhatsApp"
+   style="position:fixed; bottom:82px; right:20px; z-index:9991;
+          width:52px; height:52px; border-radius:50%;
+          background:#25D366; color:white;
+          display:flex; align-items:center; justify-content:center;
+          font-size:1.4rem; text-decoration:none;
+          box-shadow:0 4px 18px rgba(37,211,102,.5);
+          animation:fabPulseGreen 2.5s infinite;">
+    <i class="bi bi-whatsapp"></i>
+</a>
+@endif
+
+{{-- Daftar Sekarang FAB --}}
+<a href="{{ $pmbDaftarUrl }}" id="fab-daftar"
+   title="Daftar Program Doktor"
+   style="position:fixed; bottom:146px; right:20px; z-index:9991;
+          display:flex; align-items:center; gap:8px;
+          background:linear-gradient(135deg,#C0304A,#8B1A2E); color:white;
+          padding:10px 16px 10px 12px; border-radius:30px; text-decoration:none;
+          font-size:.82rem; font-weight:700;
+          box-shadow:0 4px 18px rgba(192,48,74,.55);
+          white-space:nowrap;
+          animation:fabPulseRed 3s infinite;">
+    <i class="bi bi-pencil-square" style="font-size:1rem;"></i>
+    <span>Daftar Sekarang</span>
+</a>
+
+{{-- Label tooltip WA --}}
+<div style="position:fixed; bottom:91px; right:80px; z-index:9990;
+            background:#222; color:white; font-size:.72rem; padding:4px 10px;
+            border-radius:20px; pointer-events:none; white-space:nowrap;
+            opacity:0; transition:opacity .2s;" id="fab-wa-label">
+    Konsultasi PMB
+</div>
+
+<style>
+@keyframes fabPulseGreen {
+    0%,100% { box-shadow: 0 4px 18px rgba(37,211,102,.5); }
+    50%      { box-shadow: 0 4px 28px rgba(37,211,102,.85); transform: scale(1.06); }
+}
+@keyframes fabPulseRed {
+    0%,100% { box-shadow: 0 4px 18px rgba(192,48,74,.55); }
+    50%      { box-shadow: 0 4px 28px rgba(192,48,74,.9); }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var wa    = document.getElementById('fab-wa');
+    var label = document.getElementById('fab-wa-label');
+    if (wa && label) {
+        wa.addEventListener('mouseenter', function () { label.style.opacity = '1'; });
+        wa.addEventListener('mouseleave', function () { label.style.opacity = '0'; });
+    }
+});
+</script>
+
+    {{-- ===== PMB ANNOUNCEMENT BAR ===== --}}
+    @php $adaPmb = \App\Models\JadwalPmb::where('is_active', true)->exists(); @endphp
+    @if($adaPmb)
+    <div id="pmb-bar" style="background:linear-gradient(90deg,#8B1A2E,#C0304A,#8B1A2E);
+         background-size:200% 100%; animation:barSlide 4s linear infinite;
+         color:white; text-align:center; padding:8px 16px; font-size:.82rem; font-weight:600;
+         position:relative; z-index:1050;">
+        <span style="margin-right:12px;">
+            🎓 Pendaftaran Program Doktor Manajemen FEB UNTAG Semarang sedang <strong>TERBUKA!</strong>
+        </span>
+        <a href="{{ route('halaman.show', 'pmb') }}"
+           style="background:white; color:#C0304A; padding:3px 14px; border-radius:20px;
+                  font-weight:700; text-decoration:none; font-size:.78rem; margin-right:8px;">
+            Daftar Sekarang &rarr;
+        </a>
+        <button onclick="document.getElementById('pmb-bar').style.display='none'"
+                style="position:absolute; right:12px; top:50%; transform:translateY(-50%);
+                       background:none; border:none; color:rgba(255,255,255,.7);
+                       cursor:pointer; font-size:1rem; line-height:1;"
+                title="Tutup">&times;</button>
+    </div>
+    <style>
+    @keyframes barSlide { 0%{background-position:0 0} 100%{background-position:200% 0} }
+    </style>
+    @endif
 
     {{-- ===== TOP BAR (data dari DB) ===== --}}
     <div class="top-bar d-none d-md-block">

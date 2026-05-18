@@ -666,6 +666,68 @@ $sliderImages = array_values(array_filter(array_map(
 </section>
 @endif
 
+{{-- ===== BROSUR & DOKUMEN PMB ===== --}}
+<section class="section-pad" style="background:linear-gradient(135deg,#fff5f7,#fff);">
+    <div class="container-xl">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="section-title text-start mb-0 pb-0">
+                    <h2 style="text-align:left!important;">Unduh Brosur & Informasi PMB</h2>
+                    <p style="max-width:100%; text-align:left!important;">Dapatkan informasi lengkap tentang program, kurikulum, dan persyaratan pendaftaran dalam format dokumen yang bisa disimpan dan dibagikan.</p>
+                </div>
+                <div class="d-flex gap-3 flex-wrap mt-4">
+                    @if($whatsapp ?? false)
+                    <a href="{{ $whatsappUrl }}" target="_blank" class="btn btn-success rounded-pill px-4">
+                        <i class="bi bi-whatsapp me-2"></i>Tanya via WhatsApp
+                    </a>
+                    @endif
+                    <a href="{{ route('faq.index') }}" class="btn btn-outline-danger rounded-pill px-4">
+                        <i class="bi bi-question-circle me-2"></i>FAQ Pendaftaran
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-7" data-aos="fade-left">
+                @if($brosur->count() > 0)
+                <div class="row g-3">
+                    @foreach($brosur as $dok)
+                    <div class="col-sm-6">
+                        <div class="card border-0 shadow-sm rounded-4 h-100" style="transition:transform .2s;" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform=''">
+                            <div class="card-body d-flex align-items-center gap-3 p-3">
+                                <div style="width:48px;height:48px;border-radius:12px;background:#fff0f3;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                    <i class="bi bi-file-earmark-pdf" style="font-size:1.5rem;color:#C0304A;"></i>
+                                </div>
+                                <div class="flex-fill" style="min-width:0;">
+                                    <div class="fw-bold" style="font-size:.88rem;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $dok->judul }}</div>
+                                    @if($dok->ukuran)<small class="text-muted">{{ $dok->ukuran }}</small>@endif
+                                </div>
+                                <a href="{{ route('download.unduh', $dok->id) }}" class="btn btn-sm rounded-3 flex-shrink-0"
+                                   style="background:#fff0f3;color:#C0304A;border:1.5px solid #f5b8c4;font-weight:600;">
+                                    <i class="bi bi-download"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @else
+                <div class="card border-0 rounded-4 p-4 text-center" style="border:2px dashed #f5b8c4!important;background:#fff5f7;">
+                    <i class="bi bi-file-earmark-arrow-down" style="font-size:3rem;color:#f5b8c4;"></i>
+                    <p class="text-muted mt-3 mb-3 small">Brosur dan dokumen PMB segera tersedia.<br>Hubungi sekretariat untuk mendapatkan salinan.</p>
+                    <a href="{{ route('kontak') }}" class="btn btn-outline-danger rounded-pill btn-sm">
+                        <i class="bi bi-envelope me-2"></i>Hubungi Kami
+                    </a>
+                </div>
+                @endif
+                <div class="text-center mt-3">
+                    <a href="{{ route('download.index') }}" class="text-muted" style="font-size:.82rem;">
+                        <i class="bi bi-folder2-open me-1"></i>Lihat semua dokumen &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {{-- CTA --}}
 <section class="cta-section">
     <div class="container-xl position-relative">

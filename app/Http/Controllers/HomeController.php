@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Download;
 use App\Models\Dosen;
 use App\Models\Galeri;
 use App\Models\Halaman;
@@ -17,11 +18,12 @@ class HomeController extends Controller
     public function index()
     {
         $berita_terbaru = Berita::published()->latest('published_at')->take(3)->get();
-        $pengumuman = Pengumuman::aktif()->latest()->take(5)->get();
-        $galeri = Galeri::aktif()->take(8)->get();
-        $dosen = Dosen::aktif()->take(6)->get();
+        $pengumuman     = Pengumuman::aktif()->latest()->take(5)->get();
+        $galeri         = Galeri::aktif()->take(8)->get();
+        $dosen          = Dosen::aktif()->take(6)->get();
+        $brosur         = Download::aktif()->where('kategori', 'Brosur')->terurut()->get();
 
-        return view('home', compact('berita_terbaru', 'pengumuman', 'galeri', 'dosen'));
+        return view('home', compact('berita_terbaru', 'pengumuman', 'galeri', 'dosen', 'brosur'));
     }
 
     public function tentang()

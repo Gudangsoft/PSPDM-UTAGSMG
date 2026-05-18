@@ -127,7 +127,10 @@
             <i class="bi bi-box-arrow-up-right"></i> Lihat Website
         </a>
 
-        @php $authUser = auth()->user(); @endphp
+        @php
+            $authUser   = auth()->user();
+            $pesanBaru  = \App\Models\PesanKontak::where('is_read', false)->count();
+        @endphp
 
         @if($authUser->hasPermission('sdm'))
         <div class="sidebar-section">SDM & Akademik</div>
@@ -185,7 +188,6 @@
         <div class="sidebar-section">Komunikasi</div>
         <a href="{{ route('admin.pesan.index') }}" class="sidebar-link {{ request()->routeIs('admin.pesan.*') ? 'active' : '' }}">
             <i class="bi bi-envelope"></i> Pesan Masuk
-            @php $pesanBaru = \App\Models\PesanKontak::where('is_read', false)->count(); @endphp
             @if($pesanBaru > 0)
             <span class="sidebar-badge">{{ $pesanBaru }}</span>
             @endif

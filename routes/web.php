@@ -81,14 +81,23 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
 // Auth Routes
 Route::get('/login', function () {
-    return view('auth.login');
+    $a = rand(1, 9); $b = rand(1, 9);
+    session(['captcha_answer' => $a + $b]);
+    return view('auth.login', compact('a', 'b'));
 })->name('login')->middleware('guest');
 
 Route::post('/login', function (\Illuminate\Http\Request $request) {
-    $credentials = $request->validate([
+    $request->validate([
         'email'    => 'required|email',
         'password' => 'required',
+        'captcha'  => 'required|integer',
     ]);
+
+    if ((int) $request->captcha !== (int) session('captcha_answer')) {
+        return back()->withErrors(['captcha' => 'Jawaban verifikasi salah.'])->onlyInput('email');
+    }
+
+    $credentials = $request->only('email', 'password');
     if (\Illuminate\Support\Facades\Auth::attempt($credentials, $request->boolean('remember'))) {
         $request->session()->regenerate();
         return redirect()->intended(route('admin.dashboard'));

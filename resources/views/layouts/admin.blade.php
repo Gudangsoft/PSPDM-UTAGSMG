@@ -149,6 +149,12 @@
         <a href="{{ route('admin.sambutan.index') }}" class="sidebar-link {{ request()->routeIs('admin.sambutan.*') ? 'active' : '' }}">
             <i class="bi bi-chat-quote"></i> Sambutan Ketua
         </a>
+        <a href="{{ route('admin.publikasi.index') }}" class="sidebar-link {{ request()->routeIs('admin.publikasi.*') ? 'active' : '' }}">
+            <i class="bi bi-journal-bookmark"></i> Publikasi & Riset
+        </a>
+        <a href="{{ route('admin.testimonial.index') }}" class="sidebar-link {{ request()->routeIs('admin.testimonial.*') ? 'active' : '' }}">
+            <i class="bi bi-chat-left-quote"></i> Testimoni Alumni
+        </a>
         @endif
 
         @if($authUser->hasPermission('konten'))
@@ -161,6 +167,15 @@
         </a>
         <a href="{{ route('admin.pengumuman.index') }}" class="sidebar-link {{ request()->routeIs('admin.pengumuman.*') ? 'active' : '' }}">
             <i class="bi bi-bell"></i> Pengumuman
+        </a>
+        <a href="{{ route('admin.agenda.index') }}" class="sidebar-link {{ request()->routeIs('admin.agenda.*') ? 'active' : '' }}">
+            <i class="bi bi-calendar-event"></i> Agenda & Kegiatan
+        </a>
+        <a href="{{ route('admin.faq.index') }}" class="sidebar-link {{ request()->routeIs('admin.faq.*') ? 'active' : '' }}">
+            <i class="bi bi-question-circle"></i> FAQ
+        </a>
+        <a href="{{ route('admin.download.index') }}" class="sidebar-link {{ request()->routeIs('admin.download.*') ? 'active' : '' }}">
+            <i class="bi bi-download"></i> Download Center
         </a>
         <a href="{{ route('admin.halaman.index') }}" class="sidebar-link {{ request()->routeIs('admin.halaman.*') ? 'active' : '' }}">
             <i class="bi bi-file-earmark-richtext"></i> Halaman Dinamis
@@ -180,7 +195,7 @@
         @if($authUser->hasPermission('pmb'))
         <div class="sidebar-section">PMB</div>
         <a href="{{ route('admin.jadwal-pmb.index') }}" class="sidebar-link {{ request()->routeIs('admin.jadwal-pmb.*') ? 'active' : '' }}">
-            <i class="bi bi-calendar-event"></i> Jadwal PMB
+            <i class="bi bi-calendar-check"></i> Jadwal PMB
         </a>
         @endif
 
@@ -207,6 +222,15 @@
         </a>
         <a href="{{ route('admin.settings.index') }}" class="sidebar-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
             <i class="bi bi-gear"></i> Pengaturan
+        </a>
+        <a href="{{ route('admin.activity-log.index') }}" class="sidebar-link {{ request()->routeIs('admin.activity-log.*') ? 'active' : '' }}">
+            <i class="bi bi-clock-history"></i> Log Aktivitas
+        </a>
+        <a href="{{ route('admin.export.pesan') }}" class="sidebar-link" title="Export CSV">
+            <i class="bi bi-file-earmark-spreadsheet"></i> Export Pesan CSV
+        </a>
+        <a href="{{ route('admin.export.dosen') }}" class="sidebar-link" title="Export CSV">
+            <i class="bi bi-file-earmark-spreadsheet"></i> Export Dosen CSV
         </a>
         @endif
 

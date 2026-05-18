@@ -27,6 +27,15 @@ use App\Http\Controllers\Admin\HakAksesController as AdminHakAksesController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\WaBlasterController as AdminWaController;
 use App\Http\Controllers\Admin\MailBlasterController as AdminMailController;
+use App\Http\Controllers\Admin\DownloadController as AdminDownloadController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
+use App\Http\Controllers\Admin\AgendaController as AdminAgendaController;
+use App\Http\Controllers\Admin\PublikasiController as AdminPublikasiController;
+use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\FaqController;
 
 // Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -46,6 +55,11 @@ Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumu
 Route::get('/pengumuman/{pengumuman}', [PengumumanController::class, 'show'])->name('pengumuman.show');
 
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
+
+Route::get('/download', [DownloadController::class, 'index'])->name('download.index');
+Route::get('/download/{download}/unduh', [DownloadController::class, 'unduh'])->name('download.unduh');
+Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda.index');
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
 Route::post('/kontak', [KontakController::class, 'store'])->name('kontak.store')->middleware('throttle:5,1');
@@ -102,6 +116,60 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('profile/foto', [AdminProfileController::class, 'updateFoto'])->name('profile.foto');
     Route::delete('profile/foto', [AdminProfileController::class, 'destroyFoto'])->name('profile.foto.destroy');
 
+    // Download Center
+    Route::get('download', [AdminDownloadController::class, 'index'])->name('download.index');
+    Route::post('download', [AdminDownloadController::class, 'store'])->name('download.store');
+    Route::put('download/{download}', [AdminDownloadController::class, 'update'])->name('download.update');
+    Route::delete('download/{download}', [AdminDownloadController::class, 'destroy'])->name('download.destroy');
+
+    // FAQ
+    Route::get('faq', [AdminFaqController::class, 'index'])->name('faq.index');
+    Route::post('faq', [AdminFaqController::class, 'store'])->name('faq.store');
+    Route::put('faq/{faq}', [AdminFaqController::class, 'update'])->name('faq.update');
+    Route::delete('faq/{faq}', [AdminFaqController::class, 'destroy'])->name('faq.destroy');
+
+    // Testimoni
+    Route::get('testimonial', [AdminTestimonialController::class, 'index'])->name('testimonial.index');
+    Route::post('testimonial', [AdminTestimonialController::class, 'store'])->name('testimonial.store');
+    Route::put('testimonial/{testimonial}', [AdminTestimonialController::class, 'update'])->name('testimonial.update');
+    Route::delete('testimonial/{testimonial}', [AdminTestimonialController::class, 'destroy'])->name('testimonial.destroy');
+
+    // Agenda
+    Route::get('agenda', [AdminAgendaController::class, 'index'])->name('agenda.index');
+    Route::post('agenda', [AdminAgendaController::class, 'store'])->name('agenda.store');
+    Route::put('agenda/{agenda}', [AdminAgendaController::class, 'update'])->name('agenda.update');
+    Route::delete('agenda/{agenda}', [AdminAgendaController::class, 'destroy'])->name('agenda.destroy');
+
+    // Publikasi
+    Route::get('publikasi', [AdminPublikasiController::class, 'index'])->name('publikasi.index');
+    Route::post('publikasi', [AdminPublikasiController::class, 'store'])->name('publikasi.store');
+    Route::put('publikasi/{publikasi}', [AdminPublikasiController::class, 'update'])->name('publikasi.update');
+    Route::delete('publikasi/{publikasi}', [AdminPublikasiController::class, 'destroy'])->name('publikasi.destroy');
+
+    // Activity Log
+    Route::get('activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
+
+    // Export CSV
+    Route::get('export/pesan', function () {
+        $rows = \App\Models\PesanKontak::orderByDesc('created_at')->get();
+        $csv  = "Nama,Email,Telepon,Subjek,Pesan,Tanggal\n";
+        foreach ($rows as $r) {
+            $csv .= implode(',', array_map(fn($v) => '"' . str_replace('"', '""', $v) . '"',
+                [$r->nama, $r->email, $r->telepon ?? '', $r->subjek ?? '', $r->pesan, $r->created_at->format('Y-m-d H:i')])) . "\n";
+        }
+        return response($csv, 200, ['Content-Type' => 'text/csv', 'Content-Disposition' => 'attachment; filename="pesan-masuk.csv"']);
+    })->name('export.pesan');
+
+    Route::get('export/dosen', function () {
+        $rows = \App\Models\Dosen::orderBy('urutan')->get();
+        $csv  = "Nama,NIDN,Jabatan,Konsentrasi,Email\n";
+        foreach ($rows as $r) {
+            $csv .= implode(',', array_map(fn($v) => '"' . str_replace('"', '""', $v ?? '') . '"',
+                [$r->nama, $r->nidn ?? '', $r->jabatan ?? '', $r->konsentrasi ?? '', $r->email ?? ''])) . "\n";
+        }
+        return response($csv, 200, ['Content-Type' => 'text/csv', 'Content-Disposition' => 'attachment; filename="dosen.csv"']);
+    })->name('export.dosen');
+
     // WA Blaster
     Route::get('wa-blaster', [AdminWaController::class, 'index'])->name('wa.index');
     Route::post('wa-blaster/send', [AdminWaController::class, 'send'])->name('wa.send');
@@ -113,6 +181,37 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('sambutan', [SambutanController::class, 'update'])->name('sambutan.update');
     Route::delete('sambutan/foto', [SambutanController::class, 'destroyFoto'])->name('sambutan.destroyFoto');
 });
+
+// Sitemap
+Route::get('/sitemap.xml', function () {
+    $urls = collect([
+        ['loc' => url('/'),                   'priority' => '1.0',  'freq' => 'weekly'],
+        ['loc' => url('/berita'),             'priority' => '0.9',  'freq' => 'daily'],
+        ['loc' => url('/pengumuman'),         'priority' => '0.8',  'freq' => 'weekly'],
+        ['loc' => url('/galeri'),             'priority' => '0.7',  'freq' => 'monthly'],
+        ['loc' => url('/dosen'),              'priority' => '0.7',  'freq' => 'monthly'],
+        ['loc' => url('/download'),           'priority' => '0.6',  'freq' => 'weekly'],
+        ['loc' => url('/agenda'),             'priority' => '0.7',  'freq' => 'weekly'],
+        ['loc' => url('/faq'),                'priority' => '0.5',  'freq' => 'monthly'],
+        ['loc' => url('/penelitian'),         'priority' => '0.6',  'freq' => 'monthly'],
+        ['loc' => url('/kontak'),             'priority' => '0.5',  'freq' => 'yearly'],
+    ]);
+
+    $berita = \App\Models\Berita::where('is_published', true)->orderByDesc('published_at')->limit(200)->get();
+    foreach ($berita as $b) {
+        $urls->push(['loc' => route('berita.show', $b->slug), 'priority' => '0.8', 'freq' => 'monthly', 'lastmod' => $b->updated_at->toDateString()]);
+    }
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    foreach ($urls as $u) {
+        $xml .= "  <url>\n    <loc>{$u['loc']}</loc>\n";
+        if (!empty($u['lastmod'])) $xml .= "    <lastmod>{$u['lastmod']}</lastmod>\n";
+        $xml .= "    <changefreq>{$u['freq']}</changefreq>\n    <priority>{$u['priority']}</priority>\n  </url>\n";
+    }
+    $xml .= '</urlset>';
+    return response($xml, 200, ['Content-Type' => 'application/xml']);
+})->name('sitemap');
 
 // Auth Routes
 Route::get('/login', function () {

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('title', $pengumuman->judul . ' - PSMPD-FEB UNTAG')
+@section('og_title', $pengumuman->judul)
+@section('og_description', Str::limit(strip_tags($pengumuman->konten), 160))
 @section('content')
 
 <div class="page-hero">
@@ -37,10 +39,14 @@
                         @endif
                     </div>
                 </div>
-                <div class="mt-3">
+                <div class="mt-3 d-flex gap-2 align-items-center flex-wrap">
                     <a href="{{ route('pengumuman.index') }}" class="btn btn-outline-secondary rounded-pill">
-                        <i class="bi bi-arrow-left me-2"></i>Kembali ke Daftar Pengumuman
+                        <i class="bi bi-arrow-left me-2"></i>Kembali
                     </a>
+                    <span class="text-muted" style="font-size:.85rem;">Bagikan:</span>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill"><i class="bi bi-facebook me-1"></i>Facebook</a>
+                    <a href="https://wa.me/?text={{ urlencode($pengumuman->judul.' '.url()->current()) }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill"><i class="bi bi-whatsapp me-1"></i>WhatsApp</a>
+                    <button onclick="navigator.clipboard.writeText('{{ url()->current() }}');this.innerHTML='<i class=\'bi bi-check\' ></i> Disalin!'" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="bi bi-link me-1"></i>Salin Link</button>
                 </div>
             </div>
         </div>

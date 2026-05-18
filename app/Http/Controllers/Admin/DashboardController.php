@@ -3,28 +3,48 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
+use App\Models\Agenda;
 use App\Models\Berita;
 use App\Models\Dosen;
+use App\Models\Download;
+use App\Models\Faq;
 use App\Models\Galeri;
 use App\Models\Pengumuman;
 use App\Models\PesanKontak;
+use App\Models\Publikasi;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $stats = [
-            'berita'     => Berita::count(),
-            'pengumuman' => Pengumuman::count(),
-            'dosen'      => Dosen::count(),
-            'galeri'     => Galeri::count(),
-            'pesan'      => PesanKontak::count(),
-            'pesan_baru' => PesanKontak::where('is_read', false)->count(),
-        ];
+        $totalBerita      = Berita::where('is_published', true)->count();
+        $totalPengumuman  = Pengumuman::where('is_active', true)->count();
+        $totalDosen       = Dosen::count();
+        $totalGaleri      = Galeri::count();
+        $totalDownload    = Download::count();
+        $totalFaq         = Faq::count();
+        $totalAgenda      = Agenda::aktif()->mendatang()->count();
+        $totalPublikasi   = Publikasi::count();
+        $pesanBelumDibaca = PesanKontak::where('is_read', false)->count();
 
-        $berita_terbaru = Berita::latest()->take(5)->get();
-        $pesan_terbaru  = PesanKontak::latest()->take(5)->get();
+        $beritaTerbaru  = Berita::orderByDesc('created_at')->limit(5)->get();
+        $agendaMendatang = Agenda::aktif()->mendatang()->terurut()->limit(5)->get();
+        $logTerbaru     = ActivityLog::with('user')->orderByDesc('created_at')->limit(8)->get();
 
-        return view('admin.dashboard', compact('stats', 'berita_terbaru', 'pesan_terbaru'));
+        return view('admin.dashboard', compact(
+            'totalBerita',
+            'totalPengumuman',
+            'totalDosen',
+            'totalGaleri',
+            'totalDownload',
+            'totalFaq',
+            'totalAgenda',
+            'totalPublikasi',
+            'pesanBelumDibaca',
+            'beritaTerbaru',
+            'agendaMendatang',
+            'logTerbaru',
+        ));
     }
 }

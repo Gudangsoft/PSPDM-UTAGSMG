@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title', $berita->judul . ' - PSMPD-FEB UNTAG')
+@section('og_title', $berita->judul)
+@section('og_description', Str::limit(strip_tags($berita->ringkasan ?? $berita->konten), 160))
+@if($berita->gambar)@section('og_image', $berita->gambar_url)@endif
 @section('content')
 
 <div class="page-hero">

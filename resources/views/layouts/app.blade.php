@@ -27,11 +27,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ $namaProdi }} - Fakultas Ekonomi dan Bisnis Universitas 17 Agustus 1945 Semarang">
     <meta name="keywords" content="doktor manajemen, PSMPD, UNTAG Semarang, program doktor, FEB UNTAG">
-    <meta property="og:title" content="@yield('title', $singkatan . ' - FEB UNTAG Semarang')">
-    <meta property="og:description" content="{{ $namaProdi }}">
-    @if($logoUrl)
-    <meta property="og:image" content="{{ $logoUrl }}">
-    @endif
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('og_title', $singkatan . ' - FEB UNTAG Semarang')">
+    <meta property="og:description" content="@yield('og_description', $deskripsi)">
+    <meta property="og:image" content="@yield('og_image', $logoUrl ?? '')">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('og_title', $singkatan . ' - FEB UNTAG Semarang')">
+    <meta name="twitter:description" content="@yield('og_description', $deskripsi)">
+    <meta name="twitter:image" content="@yield('og_image', $logoUrl ?? '')">
     <title>@yield('title', $singkatan . ' - FEB UNTAG Semarang')</title>
 
     {{-- Favicon: dari database, fallback ke default --}}

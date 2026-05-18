@@ -286,6 +286,73 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── Password: eye toggle + strength bar ──────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('input[type="password"]').forEach(function (input) {
+        // Wrap in relative container
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'position:relative;';
+        input.parentNode.insertBefore(wrapper, input);
+        wrapper.appendChild(input);
+
+        // Eye button
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.innerHTML = '<i class="bi bi-eye"></i>';
+        btn.title = 'Tampilkan password';
+        btn.style.cssText = 'position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#aaa;cursor:pointer;padding:2px 4px;font-size:1rem;line-height:1;z-index:5;';
+        btn.addEventListener('click', function () {
+            var show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            btn.innerHTML = show ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+            btn.title = show ? 'Sembunyikan password' : 'Tampilkan password';
+            btn.style.color = show ? '#C0304A' : '#aaa';
+        });
+        input.style.paddingRight = '40px';
+        wrapper.appendChild(btn);
+
+        // Strength bar — only for new-password fields (name="password")
+        if (input.name === 'password') {
+            var meter = document.createElement('div');
+            meter.style.cssText = 'margin-top:5px;';
+            meter.innerHTML =
+                '<div style="height:5px;border-radius:3px;background:#eee;overflow:hidden;">' +
+                    '<div class="pw-bar" style="height:100%;width:0;border-radius:3px;transition:width .3s,background .3s;"></div>' +
+                '</div>' +
+                '<div class="pw-label" style="font-size:.72rem;margin-top:3px;font-weight:600;"></div>';
+            wrapper.parentNode.insertBefore(meter, wrapper.nextSibling);
+
+            input.addEventListener('input', function () {
+                var val = input.value;
+                var bar   = meter.querySelector('.pw-bar');
+                var label = meter.querySelector('.pw-label');
+                if (!val) { bar.style.width = '0'; label.textContent = ''; return; }
+
+                var score = 0;
+                if (val.length >= 8)  score++;
+                if (val.length >= 12) score++;
+                if (/[A-Z]/.test(val)) score++;
+                if (/[0-9]/.test(val)) score++;
+                if (/[^A-Za-z0-9]/.test(val)) score++;
+
+                var levels = [
+                    { pct: '20%', color: '#ef4444', text: 'Sangat Lemah' },
+                    { pct: '40%', color: '#f97316', text: 'Lemah' },
+                    { pct: '60%', color: '#eab308', text: 'Sedang' },
+                    { pct: '80%', color: '#22c55e', text: 'Kuat' },
+                    { pct: '100%', color: '#16a34a', text: 'Sangat Kuat' },
+                ];
+                var lvl = levels[Math.min(score - 1, 4)];
+                bar.style.width       = lvl.pct;
+                bar.style.background  = lvl.color;
+                label.textContent     = lvl.text;
+                label.style.color     = lvl.color;
+            });
+        }
+    });
+});
+</script>
 @yield('scripts')
 </body>
 </html>

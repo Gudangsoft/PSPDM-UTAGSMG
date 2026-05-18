@@ -132,8 +132,12 @@
                     <label class="form-label">Password</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-lock" style="font-size:.85rem;"></i></span>
-                        <input type="password" name="password" class="form-control border-start-0"
+                        <input type="password" name="password" id="loginPassword" class="form-control border-start-0 border-end-0"
                                placeholder="••••••••" required>
+                        <button type="button" class="input-group-text bg-white border-start-0" id="loginEyeBtn"
+                                onclick="toggleLoginPw()" title="Tampilkan password" style="cursor:pointer;color:#aaa;">
+                            <i class="bi bi-eye" id="loginEyeIcon" style="font-size:.85rem;"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -173,5 +177,16 @@
             </div>
         </div>
     </div>
+<script>
+function toggleLoginPw() {
+    var inp  = document.getElementById('loginPassword');
+    var icon = document.getElementById('loginEyeIcon');
+    var btn  = document.getElementById('loginEyeBtn');
+    var show = inp.type === 'password';
+    inp.type = show ? 'text' : 'password';
+    icon.className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
+    btn.style.color = show ? '#C0304A' : '#aaa';
+}
+</script>
 </body>
 </html>

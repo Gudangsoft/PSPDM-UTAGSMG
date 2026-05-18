@@ -89,9 +89,21 @@
                 linear-gradient(120deg, #6B0D1A 0%, #9C1828 32%, #C8223E 62%, #9C1828 86%, #6B0D1A 100%);
             padding: 12px 0; box-shadow: 0 3px 28px rgba(50,0,12,0.45);
         }
-        .site-header .logo-text { color: white; text-decoration: none; }
-        .site-header .logo-text h4 { font-size: 1.1rem; font-weight: 700; margin: 0; line-height: 1.2; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; }
-        .site-header .logo-text small { font-size: 0.72rem; opacity: 0.85; letter-spacing: 0.3px; }
+        .site-header .logo-text { color: white; text-decoration: none; line-height: 1; }
+        .logo-line1 {
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+            opacity: 0.82; font-family: 'Inter', sans-serif;
+            text-transform: uppercase; margin-bottom: 2px;
+        }
+        .logo-line2 {
+            font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em;
+            font-family: 'Inter', sans-serif; text-transform: uppercase;
+            line-height: 1.1; margin-bottom: 4px;
+        }
+        .logo-sub {
+            font-size: 0.68rem; opacity: 0.78; letter-spacing: 0.2px;
+            font-family: 'Inter', sans-serif;
+        }
         .logo-icon { width: 150px; height: 150px; background: transparent; border-radius: 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
         .logo-icon img { width: 100%; height: 100%; object-fit: contain; padding: 0; }
         .logo-icon .logo-fallback { font-size: 1.2rem; font-weight: 900; color: white; }
@@ -236,8 +248,9 @@
             /* Header compact */
             .site-header { padding: 8px 0; }
             .logo-icon { width: 52px !important; height: 52px !important; }
-            .site-header .logo-text h4 { font-size: 0.85rem; line-height: 1.25; }
-            .site-header .logo-text small { display: none; }
+            .logo-line1 { font-size: 0.62rem; }
+            .logo-line2 { font-size: 0.92rem; }
+            .logo-sub { display: none; }
 
             /* Navbar toggler alignment */
             .main-nav .container-xl { padding-left: 12px; padding-right: 12px; }
@@ -256,7 +269,8 @@
         @media (max-width: 575px) {
             .site-header { padding: 6px 0; }
             .logo-icon { width: 44px !important; height: 44px !important; }
-            .site-header .logo-text h4 { font-size: 0.78rem; }
+            .logo-line1 { font-size: 0.58rem; letter-spacing: 0.06em; }
+            .logo-line2 { font-size: 0.82rem; }
             .page-hero h1 { font-size: 1.25rem; }
             .page-hero { padding: 28px 0 24px; }
             .ticker-label { font-size: 0.72rem; padding: 4px 10px; }
@@ -452,8 +466,20 @@
                     @endif
                 </div>
                 <a href="{{ route('home') }}" class="logo-text">
-                    <h4>{{ strtoupper($namaProdi) }}</h4>
-                    <small>Fakultas Ekonomi dan Bisnis &bull; Universitas 17 Agustus 1945 Semarang</small>
+                    @php
+                        $upper = strtoupper($namaProdi);
+                        // Pisah "PROGRAM STUDI MANAJEMEN PROGRAM DOKTOR" jadi 2 baris
+                        if (preg_match('/^(.*?)\s+(PROGRAM\s+DOKTOR\b.*)$/i', $upper, $m)) {
+                            $line1 = trim($m[1]);
+                            $line2 = trim($m[2]);
+                        } else {
+                            $line1 = $upper;
+                            $line2 = '';
+                        }
+                    @endphp
+                    <div class="logo-line1">{{ $line1 }}</div>
+                    @if($line2)<div class="logo-line2">{{ $line2 }}</div>@endif
+                    <div class="logo-sub">Fakultas Ekonomi dan Bisnis &bull; Universitas 17 Agustus 1945 Semarang</div>
                 </a>
             </div>
         </div>

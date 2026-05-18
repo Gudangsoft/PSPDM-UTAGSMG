@@ -310,8 +310,7 @@
                     <div style="color:#fff;font-size:.8rem;opacity:.7;margin-bottom:8px;text-transform:uppercase;letter-spacing:.1em;">Pendaftaran Dibuka</div>
                     <div style="color:#fff;font-size:2rem;font-weight:900;">S E K A R A N G</div>
                     <div style="color:rgba(255,255,255,.7);font-size:.85rem;margin-top:6px;">Jangan lewatkan kesempatan ini</div>
-                    <a href="https://wa.me/6282319475792?text=Halo%20PSMPD%2C%20saya%20ingin%20mendaftar%20Program%20Doktor%20Manajemen.%20Boleh%20minta%20informasi%20pendaftarannya%3F"
-                       target="_blank"
+                    <a href="https://pspdm.untagsmg.ac.id/halaman/pmb"
                        class="btn-daftar mt-4 d-inline-flex" style="padding:12px 28px;font-size:.9rem;">
                         <i class="bi bi-send-fill"></i> Daftar Sekarang
                     </a>
@@ -577,8 +576,7 @@
                     Bergabunglah dengan komunitas akademisi dan profesional terbaik di Program Doktor Manajemen FEB UNTAG Semarang.
                 </p>
                 <div class="d-flex flex-wrap gap-3 justify-content-center">
-                    <a href="https://wa.me/6282319475792?text=Halo%20PSMPD%2C%20saya%20ingin%20mendaftar%20Program%20Doktor%20Manajemen%20FEB%20UNTAG%20Semarang.%20Mohon%20informasi%20selengkapnya."
-                       target="_blank" class="btn-daftar">
+                    <a href="https://pspdm.untagsmg.ac.id/halaman/pmb" class="btn-daftar">
                         <i class="bi bi-send-fill"></i> Daftar Sekarang
                     </a>
                     <a href="https://wa.me/6282319475792?text=Halo%20PSMPD%2C%20saya%20ingin%20konsultasi%20tentang%20Program%20Doktor%20Manajemen%20FEB%20UNTAG%20Semarang"

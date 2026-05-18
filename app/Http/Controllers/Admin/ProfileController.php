@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
@@ -29,6 +30,29 @@ class ProfileController extends Controller
         $user->save();
 
         return back()->with('success', 'Profil berhasil diperbarui.');
+    }
+
+    public function updateFoto(Request $request)
+    {
+        $request->validate(['foto' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048']);
+
+        $user = Auth::user();
+        if ($user->foto) Storage::disk('public')->delete($user->foto);
+
+        $path = $request->file('foto')->store('profile', 'public');
+        $user->update(['foto' => $path]);
+
+        return back()->with('success', 'Foto profil berhasil diperbarui.');
+    }
+
+    public function destroyFoto()
+    {
+        $user = Auth::user();
+        if ($user->foto) {
+            Storage::disk('public')->delete($user->foto);
+            $user->update(['foto' => null]);
+        }
+        return back()->with('success', 'Foto profil berhasil dihapus.');
     }
 
     public function updatePassword(Request $request)

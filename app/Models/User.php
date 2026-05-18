@@ -10,7 +10,13 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'role_id'];
+    protected $fillable = ['name', 'email', 'foto', 'password', 'role_id'];
+
+    public function getFotoUrlAttribute(): string
+    {
+        if ($this->foto) return asset('storage/' . $this->foto);
+        return '';
+    }
     protected $hidden   = ['password', 'remember_token'];
 
     protected function casts(): array

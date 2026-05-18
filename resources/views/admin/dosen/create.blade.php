@@ -24,8 +24,8 @@
                             <label class="form-label">Jabatan Akademik <span class="text-danger">*</span></label>
                             <select name="jabatan" class="form-select @error('jabatan') is-invalid @enderror">
                                 <option value="">-- Pilih Jabatan --</option>
-                                @foreach(['Guru Besar / Professor', 'Lektor Kepala', 'Lektor', 'Asisten Ahli', 'Dosen Tetap', 'Dosen Tidak Tetap'] as $j)
-                                <option value="{{ $j }}" {{ old('jabatan') == $j ? 'selected' : '' }}>{{ $j }}</option>
+                                @foreach($jabatans as $j)
+                                <option value="{{ $j->nama }}" {{ old('jabatan') == $j->nama ? 'selected' : '' }}>{{ $j->nama }}</option>
                                 @endforeach
                             </select>
                             @error('jabatan')<div class="invalid-feedback">{{ $message }}</div>@enderror

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dosen;
+use App\Models\JabatanAkademik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +18,8 @@ class DosenController extends Controller
 
     public function create()
     {
-        return view('admin.dosen.create');
+        $jabatans = JabatanAkademik::aktif()->get();
+        return view('admin.dosen.create', compact('jabatans'));
     }
 
     public function store(Request $request)
@@ -47,7 +49,8 @@ class DosenController extends Controller
 
     public function edit(Dosen $dosen)
     {
-        return view('admin.dosen.edit', compact('dosen'));
+        $jabatans = JabatanAkademik::aktif()->get();
+        return view('admin.dosen.edit', compact('dosen', 'jabatans'));
     }
 
     public function update(Request $request, Dosen $dosen)

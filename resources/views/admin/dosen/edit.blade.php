@@ -20,10 +20,11 @@
                             <input type="text" name="nidn" class="form-control" value="{{ old('nidn', $dosen->nidn) }}">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Jabatan <span class="text-danger">*</span></label>
+                            <label class="form-label">Jabatan Akademik <span class="text-danger">*</span></label>
                             <select name="jabatan" class="form-select">
-                                @foreach(['Guru Besar / Professor', 'Lektor Kepala', 'Lektor', 'Asisten Ahli', 'Dosen Tetap', 'Dosen Tidak Tetap'] as $j)
-                                <option value="{{ $j }}" {{ old('jabatan', $dosen->jabatan) == $j ? 'selected' : '' }}>{{ $j }}</option>
+                                <option value="">-- Pilih Jabatan --</option>
+                                @foreach($jabatans as $j)
+                                <option value="{{ $j->nama }}" {{ old('jabatan', $dosen->jabatan) == $j->nama ? 'selected' : '' }}>{{ $j->nama }}</option>
                                 @endforeach
                             </select>
                         </div>

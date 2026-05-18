@@ -127,9 +127,12 @@
             <i class="bi bi-box-arrow-up-right"></i> Lihat Website
         </a>
 
-        <div class="sidebar-section">Program Studi</div>
+        <div class="sidebar-section">SDM & Akademik</div>
         <a href="{{ route('admin.konsentrasi.index') }}" class="sidebar-link {{ request()->routeIs('admin.konsentrasi.*') ? 'active' : '' }}">
             <i class="bi bi-diagram-3"></i> Konsentrasi
+        </a>
+        <a href="{{ route('admin.jabatan.index') }}" class="sidebar-link {{ request()->routeIs('admin.jabatan.*') ? 'active' : '' }}">
+            <i class="bi bi-award"></i> Jabatan Akademik
         </a>
         <a href="{{ route('admin.dosen.index') }}" class="sidebar-link {{ request()->routeIs('admin.dosen.*') ? 'active' : '' }}">
             <i class="bi bi-people"></i> Dosen & Staf
@@ -152,10 +155,13 @@
             <i class="bi bi-bell"></i> Pengumuman
         </a>
         <a href="{{ route('admin.galeri.index') }}" class="sidebar-link {{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}">
-            <i class="bi bi-images"></i> Galeri
+            <i class="bi bi-images"></i> Galeri Foto
         </a>
         <a href="{{ route('admin.album.index') }}" class="sidebar-link {{ request()->routeIs('admin.album.*') ? 'active' : '' }}">
             <i class="bi bi-folder2-open"></i> Album
+        </a>
+        <a href="{{ route('admin.halaman.index') }}" class="sidebar-link {{ request()->routeIs('admin.halaman.*') ? 'active' : '' }}">
+            <i class="bi bi-file-earmark-richtext"></i> Halaman Dinamis
         </a>
 
         <div class="sidebar-section">PMB</div>
@@ -175,9 +181,6 @@
         <div class="sidebar-section">Sistem</div>
         <a href="{{ route('admin.menu.index') }}" class="sidebar-link {{ request()->routeIs('admin.menu.*') ? 'active' : '' }}">
             <i class="bi bi-menu-button-wide"></i> Menu Navigasi
-        </a>
-        <a href="{{ route('admin.halaman.index') }}" class="sidebar-link {{ request()->routeIs('admin.halaman.*') ? 'active' : '' }}">
-            <i class="bi bi-file-earmark-richtext"></i> Halaman Dinamis
         </a>
         <a href="{{ route('admin.settings.index') }}" class="sidebar-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
             <i class="bi bi-gear"></i> Pengaturan

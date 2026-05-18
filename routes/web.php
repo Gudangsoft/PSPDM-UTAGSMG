@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\BerandaController as AdminBerandaController;
 use App\Http\Controllers\Admin\JadwalPmbController;
 use App\Http\Controllers\Admin\KonsentrasiController as AdminKonsentrasiController;
 use App\Http\Controllers\Admin\AlbumController as AdminAlbumController;
+use App\Http\Controllers\Admin\JabatanAkademikController as AdminJabatanController;
 
 // Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -58,6 +59,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::delete('album/{album}/foto/{galeri}', [AdminAlbumController::class, 'destroyFoto'])->name('album.destroy-foto');
     Route::post('album/{album}/cover/{galeri}', [AdminAlbumController::class, 'setCover'])->name('album.set-cover');
     Route::resource('dosen', AdminDosenController::class);
+    Route::resource('jabatan', AdminJabatanController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('pejabat', AdminPejabatController::class);
     Route::resource('halaman', AdminHalamanController::class);
     Route::resource('menu', MenuController::class)->except(['show']);

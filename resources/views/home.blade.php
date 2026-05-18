@@ -648,10 +648,12 @@ $sliderImages = array_values(array_filter(array_map(
         <div class="row g-3">
             @foreach($galeri->take(8) as $foto)
             <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 60 }}">
-                <div class="galeri-item">
-                    <img src="{{ $foto->gambar_url }}" alt="{{ $foto->judul }}" onerror="this.src='https://via.placeholder.com/300x180/CC0000/ffffff?text=Galeri'">
-                    <div class="galeri-overlay"><i class="bi bi-zoom-in"></i></div>
-                </div>
+                <a href="{{ $foto->gambar_url }}" class="glightbox-home" data-gallery="home-galeri" data-description="{{ $foto->judul }}" style="display:block; text-decoration:none;">
+                    <div class="galeri-item">
+                        <img src="{{ $foto->gambar_url }}" alt="{{ $foto->judul }}" onerror="this.src='https://via.placeholder.com/300x180/CC0000/ffffff?text=Galeri'">
+                        <div class="galeri-overlay"><i class="bi bi-zoom-in"></i></div>
+                    </div>
+                </a>
             </div>
             @endforeach
         </div>
@@ -715,4 +717,7 @@ $sliderImages = array_values(array_filter(array_map(
     });
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+<script>GLightbox({ selector: '.glightbox-home' });</script>
 @endsection

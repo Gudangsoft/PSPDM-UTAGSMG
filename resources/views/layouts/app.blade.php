@@ -192,12 +192,73 @@
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 991px) {
-            .main-nav .navbar-nav .nav-link { padding: 10px 16px !important; }
+            /* Navbar desktop underline indicator off */
             .main-nav .navbar-nav .nav-link:after { display: none; }
-            .page-hero h1 { font-size: 1.5rem; }
+            .page-hero h1 { font-size: 1.6rem; }
+            .page-hero { padding: 44px 0; }
+
+            /* ── Mobile navbar menu ── */
+            .main-nav .navbar-collapse {
+                background: #fff;
+                border-top: 3px solid var(--red-primary);
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+                padding: 8px 0 16px;
+                margin-top: 8px;
+            }
+            .main-nav .navbar-nav .nav-link {
+                padding: 12px 20px !important;
+                font-size: 0.9rem;
+                border-bottom: 1px solid #f5f5f5;
+            }
+            .main-nav .navbar-nav .nav-item:last-child .nav-link { border-bottom: none; }
+            .main-nav .navbar-nav .nav-link.active {
+                background: #fff5f5;
+                color: var(--red-primary) !important;
+                border-left: 3px solid var(--red-primary);
+            }
+            .main-nav .dropdown-menu {
+                box-shadow: none;
+                border-top: 1px solid #f5f5f5;
+                border-radius: 0;
+                padding: 4px 0 4px 16px;
+                margin: 0;
+            }
+            .main-nav .dropdown-item {
+                padding: 10px 20px;
+                border-bottom: 1px solid #f9f9f9;
+            }
         }
-        @media (max-width: 576px) {
-            .site-header .logo-icon { width: 60px; height: 60px; }
+
+        @media (max-width: 767px) {
+            /* Header compact */
+            .site-header { padding: 8px 0; }
+            .logo-icon { width: 52px !important; height: 52px !important; }
+            .site-header .logo-text h4 { font-size: 0.85rem; line-height: 1.25; }
+            .site-header .logo-text small { display: none; }
+
+            /* Navbar toggler alignment */
+            .main-nav .container-xl { padding-left: 12px; padding-right: 12px; }
+            .main-nav .navbar-toggler { margin-left: auto; }
+
+            /* Page hero */
+            .page-hero { padding: 36px 0 32px; }
+            .page-hero h1 { font-size: 1.4rem; }
+
+            /* Footer */
+            .site-footer { padding-top: 40px; }
+            .footer-bottom { text-align: center; }
+            .footer-bottom .d-flex { flex-direction: column; gap: 6px !important; }
+        }
+
+        @media (max-width: 575px) {
+            .site-header { padding: 6px 0; }
+            .logo-icon { width: 44px !important; height: 44px !important; }
+            .site-header .logo-text h4 { font-size: 0.78rem; }
+            .page-hero h1 { font-size: 1.25rem; }
+            .page-hero { padding: 28px 0 24px; }
+            .ticker-label { font-size: 0.72rem; padding: 4px 10px; }
+            .ticker-inner a { font-size: 0.76rem; }
         }
     </style>
 
@@ -420,8 +481,15 @@
 
     {{-- ===== MAIN NAVIGATION ===== --}}
     <nav class="main-nav navbar navbar-expand-lg">
-        <div class="container-xl">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <div class="container-xl d-flex align-items-center">
+            {{-- Brand di navbar khusus mobile --}}
+            <a href="{{ route('home') }}" class="d-lg-none me-auto text-decoration-none"
+               style="font-size:.75rem;font-weight:700;color:var(--red-primary);letter-spacing:.5px;line-height:1.2;max-width:180px;">
+                {{ $singkatan }}<br>
+                <span style="font-weight:400;color:#666;font-size:.68rem;">FEB UNTAG Semarang</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    style="padding:6px 10px;">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
@@ -467,6 +535,16 @@
                 <a href="{{ $ctaUrl }}" class="btn btn-primary btn-sm ms-2 d-none d-lg-inline-flex align-items-center gap-1">
                     <i class="bi bi-pencil-square"></i> {{ $ctaLabel }}
                 </a>
+                @endif
+                {{-- Mobile-only CTA inside menu --}}
+                @if($ctaAktif)
+                <div class="d-lg-none px-3 pt-2 pb-1">
+                    <a href="{{ $ctaUrl }}"
+                       class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2"
+                       style="border-radius:8px;font-weight:700;">
+                        <i class="bi bi-pencil-square"></i> {{ $ctaLabel }}
+                    </a>
+                </div>
                 @endif
             </div>
         </div>

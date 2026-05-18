@@ -238,6 +238,98 @@
 .cta-section h2, .cta-section p, .cta-section h3 {
     text-shadow: 0 2px 18px rgba(60,0,12,0.65), 0 4px 35px rgba(60,0,12,0.35);
 }
+
+/* ===== MOBILE ===== */
+@media (max-width: 991px) {
+    /* Hero */
+    .hero-section { min-height: 70vh; padding: 60px 0 80px; }
+    .hero-card { margin-top: 28px; }
+    .hero-img-wrap { margin-bottom: 16px; }
+    .hero-img { height: 180px; }
+
+    /* Stats bar */
+    .stat-bar-item { padding: 20px 16px; }
+    .stat-bar-item .value { font-size: 1.5rem; }
+    .stat-bar-item .icon { font-size: 1.6rem; }
+
+    /* Sections */
+    .section-pad { padding: 56px 0; }
+    .sambutan-home { padding: 56px 0; }
+    .cta-section { padding: 56px 0; }
+}
+
+@media (max-width: 767px) {
+    /* Hero */
+    .hero-section { min-height: auto; padding: 48px 0 60px; }
+    .hero-section h1 { font-size: clamp(1.5rem, 5vw, 2.2rem); }
+    .hero-section p { font-size: 0.9rem; }
+    .hero-buttons .btn { padding: 11px 20px; font-size: 0.88rem; width: 100%; justify-content: center; display: flex; }
+    .hero-buttons { flex-direction: column; gap: 10px !important; }
+    .hero-badge { font-size: 0.75rem; margin-bottom: 14px; }
+
+    /* Hero card */
+    .hero-card-body { padding: 18px 16px; }
+    .stat-item { padding: 12px 8px; }
+    .stat-item .number { font-size: 1.8rem; }
+    .stat-item .label { font-size: 0.7rem; }
+
+    /* Stats bar: 2×2 grid */
+    .stats-bar .row > div { flex: 0 0 50%; max-width: 50%; border-bottom: 1px solid #f0f0f0; }
+    .stats-bar .row > div:nth-child(odd) { border-right: 1px solid #f0f0f0; }
+    .stats-bar .row > div:nth-child(even) { border-right: none !important; }
+    .stat-bar-item { padding: 20px 14px; }
+    .stat-bar-item .value { font-size: 1.4rem; }
+    .stat-bar-item .icon { font-size: 1.5rem; margin-bottom: 6px; }
+
+    /* Sections */
+    .section-pad { padding: 44px 0; }
+    .sambutan-home { padding: 44px 0; }
+    .cta-section { padding: 44px 0; }
+
+    /* Konsentrasi cards */
+    .konsentrasi-card .card-body { padding: 22px 18px; }
+    .konsentrasi-icon-wrap { width: 56px; height: 56px; font-size: 1.4rem; margin-bottom: 14px; }
+
+    /* Keunggulan */
+    .keunggulan-item { padding: 20px 14px; }
+    .keunggulan-icon { width: 58px; height: 58px; font-size: 1.3rem; margin-bottom: 12px; }
+
+    /* Lulusan */
+    .lulusan-card { padding: 20px 18px; }
+
+    /* Sambutan */
+    .sambutan-img-wrap { text-align: center; }
+    .sambutan-img-wrap img,
+    .sambutan-img-placeholder { width: 200px; height: 240px; margin: 0 auto; }
+    .sambutan-img-deco { width: 60px; height: 60px; font-size: 1.4rem; bottom: -10px; right: -8px; }
+
+    /* Berita */
+    .news-card img { height: 160px; }
+
+    /* Galeri */
+    .galeri-item img { height: 140px; }
+
+    /* CTA buttons */
+    .cta-section .d-flex.gap-3 { flex-direction: column; align-items: center; }
+    .cta-section .btn { width: 100%; max-width: 320px; }
+}
+
+@media (max-width: 575px) {
+    .hero-section { padding: 36px 0 52px; }
+    .hero-section h1 { font-size: 1.45rem; }
+    .hero-section .hero-badge { font-size: 0.7rem; }
+    .hero-card-body { padding: 14px 12px; }
+    .stat-item .number { font-size: 1.5rem; }
+
+    /* Stats bar: stack all full-width */
+    .stats-bar .row > div { flex: 0 0 50%; border-right: none; }
+    .stat-bar-item { padding: 16px 12px; }
+    .stat-bar-item .value { font-size: 1.25rem; }
+
+    /* Section title */
+    .section-title h2 { font-size: 1.5rem; }
+    .section-title p { font-size: 0.85rem; }
+}
 </style>
 @endsection
 

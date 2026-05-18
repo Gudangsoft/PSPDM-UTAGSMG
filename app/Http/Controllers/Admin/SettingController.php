@@ -32,10 +32,13 @@ class SettingController extends Controller
             'cta_url'         => 'nullable|string|max:500',
             'maps_embed'      => 'nullable|string|max:2000',
             'website'         => 'nullable|url|max:200',
+            'wa_api_key'      => 'nullable|string|max:200',
+            'wa_sender'       => 'nullable|string|max:20',
         ]);
 
         $textKeys = [
             'nama_prodi', 'singkatan', 'alamat', 'telepon', 'email', 'website',
+            'wa_api_key', 'wa_sender',
             'visi', 'misi', 'facebook', 'instagram', 'youtube', 'twitter',
             'whatsapp', 'deskripsi_singkat', 'cta_label', 'cta_url',
             'info_akreditasi', 'info_durasi', 'info_sks', 'maps_embed',

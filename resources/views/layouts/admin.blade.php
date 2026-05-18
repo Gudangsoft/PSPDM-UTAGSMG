@@ -177,6 +177,12 @@
             <span class="sidebar-badge">{{ $pesanBaru }}</span>
             @endif
         </a>
+        <a href="{{ route('admin.wa.index') }}" class="sidebar-link {{ request()->routeIs('admin.wa.*') ? 'active' : '' }}">
+            <i class="bi bi-whatsapp"></i> WA Blaster
+        </a>
+        <a href="{{ route('admin.mail.index') }}" class="sidebar-link {{ request()->routeIs('admin.mail.*') ? 'active' : '' }}">
+            <i class="bi bi-envelope-paper"></i> Kirim Email
+        </a>
 
         <div class="sidebar-section">Sistem</div>
         <a href="{{ route('admin.menu.index') }}" class="sidebar-link {{ request()->routeIs('admin.menu.*') ? 'active' : '' }}">
@@ -214,9 +220,15 @@
                 <div class="topbar-avatar">{{ substr(auth()->user()->name ?? 'A', 0, 1) }}</div>
                 <span class="d-none d-md-block" style="font-size:.875rem; font-weight:600; color:#333;">{{ auth()->user()->name ?? 'Admin' }}</span>
             </div>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3">
-                <li><h6 class="dropdown-header">{{ auth()->user()->email ?? '' }}</h6></li>
-                <li><hr class="dropdown-divider"></li>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3" style="min-width:200px;">
+                <li><h6 class="dropdown-header" style="font-size:.78rem;">{{ auth()->user()->email ?? '' }}</h6></li>
+                <li><hr class="dropdown-divider my-1"></li>
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
+                        <i class="bi bi-person-gear me-2 text-muted"></i>Edit Profil
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider my-1"></li>
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf

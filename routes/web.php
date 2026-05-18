@@ -23,6 +23,9 @@ use App\Http\Controllers\Admin\JadwalPmbController;
 use App\Http\Controllers\Admin\KonsentrasiController as AdminKonsentrasiController;
 use App\Http\Controllers\Admin\AlbumController as AdminAlbumController;
 use App\Http\Controllers\Admin\JabatanAkademikController as AdminJabatanController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\WaBlasterController as AdminWaController;
+use App\Http\Controllers\Admin\MailBlasterController as AdminMailController;
 
 // Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -76,6 +79,19 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('beranda/slider/{num}/hapus', [AdminBerandaController::class, 'destroySliderGambar'])->name('beranda.destroySlider');
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+
+    // Profile
+    Route::get('profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [AdminProfileController::class, 'update'])->name('profile.update');
+    Route::put('profile/password', [AdminProfileController::class, 'updatePassword'])->name('profile.password');
+
+    // WA Blaster
+    Route::get('wa-blaster', [AdminWaController::class, 'index'])->name('wa.index');
+    Route::post('wa-blaster/send', [AdminWaController::class, 'send'])->name('wa.send');
+
+    // Mail Blaster
+    Route::get('mail-blaster', [AdminMailController::class, 'index'])->name('mail.index');
+    Route::post('mail-blaster/send', [AdminMailController::class, 'send'])->name('mail.send');
     Route::get('sambutan', [SambutanController::class, 'index'])->name('sambutan.index');
     Route::post('sambutan', [SambutanController::class, 'update'])->name('sambutan.update');
     Route::delete('sambutan/foto', [SambutanController::class, 'destroyFoto'])->name('sambutan.destroyFoto');

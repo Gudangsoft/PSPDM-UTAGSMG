@@ -50,6 +50,15 @@
                             <label class="form-label"><i class="bi bi-globe me-1 text-danger"></i>Website</label>
                             <input type="text" name="website" class="form-control" value="{{ $settings['website']->value ?? 'https://untag-smg.ac.id' }}" placeholder="https://...">
                         </div>
+                        <div class="col-12"><hr class="my-1"></div>
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="bi bi-whatsapp me-1 text-success"></i>WA API Key (Fonnte)</label>
+                            <input type="text" name="wa_api_key" class="form-control" value="{{ $settings['wa_api_key']->value ?? '' }}" placeholder="Token dari fonnte.com">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="bi bi-phone me-1 text-success"></i>WA Nomor Pengirim</label>
+                            <input type="text" name="wa_sender" class="form-control" value="{{ $settings['wa_sender']->value ?? '' }}" placeholder="628xxxxxxxxxx">
+                        </div>
                     </div>
                 </div>
             </div>

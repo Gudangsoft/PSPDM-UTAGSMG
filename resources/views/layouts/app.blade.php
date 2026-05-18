@@ -65,8 +65,10 @@
             --gold: #c8a84b;
         }
         * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; color: #333; overflow-x: hidden; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; color: #333; overflow-x: hidden; position: relative; }
+        img, video, iframe, embed, object { max-width: 100%; }
+        section, header, footer, nav { overflow-x: clip; }
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
 
         /* ========== TOP BAR ========== */
@@ -645,7 +647,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ duration: 700, once: true, offset: 80 });</script>
+    <script>AOS.init({ duration: 700, once: true, offset: 80, disable: window.innerWidth < 768 ? true : false });</script>
 
     @yield('scripts')
     <script>

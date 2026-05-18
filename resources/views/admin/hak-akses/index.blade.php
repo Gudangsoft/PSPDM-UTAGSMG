@@ -18,9 +18,14 @@
 
 @php
 $modules = \App\Models\Role::$modules;
-$moduleColors = [
-    'sdm' => '#4f46e5', 'konten' => '#0891b2', 'galeri' => '#7c3aed',
-    'pmb' => '#d97706', 'komunikasi' => '#16a34a', 'sistem' => '#dc2626', 'hak_akses' => '#9d174d',
+$moduleMeta = [
+    'sdm'        => ['icon' => 'bi-people-fill',      'color' => '#4f46e5', 'desc' => 'Dosen, Jabatan, Pejabat, Konsentrasi'],
+    'konten'     => ['icon' => 'bi-file-earmark-text','color' => '#0891b2', 'desc' => 'Berita, Pengumuman, Halaman, Menu'],
+    'galeri'     => ['icon' => 'bi-images',            'color' => '#7c3aed', 'desc' => 'Galeri foto & Album'],
+    'pmb'        => ['icon' => 'bi-calendar-event',   'color' => '#d97706', 'desc' => 'Jadwal Penerimaan Mahasiswa Baru'],
+    'komunikasi' => ['icon' => 'bi-chat-dots-fill',   'color' => '#16a34a', 'desc' => 'Pesan Masuk, WA Blaster, Email'],
+    'sistem'     => ['icon' => 'bi-gear-fill',         'color' => '#dc2626', 'desc' => 'Pengaturan website & Beranda'],
+    'hak_akses'  => ['icon' => 'bi-shield-lock-fill', 'color' => '#9d174d', 'desc' => 'Kelola Role & Pengguna admin'],
 ];
 @endphp
 
@@ -31,7 +36,7 @@ $moduleColors = [
         <div class="admin-card card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span class="fw-bold"><i class="bi bi-shield-lock me-2"></i>Manajemen Role</span>
-                <button class="btn btn-sm btn-admin-primary" onclick="document.getElementById('addRolePanel').classList.toggle('d-none')">
+                <button class="btn btn-sm btn-admin-primary" onclick="toggleAddRole()">
                     <i class="bi bi-plus-lg me-1"></i>Tambah Role
                 </button>
             </div>
@@ -40,25 +45,32 @@ $moduleColors = [
             <div id="addRolePanel" class="d-none border-top p-4" style="background:#fafafa;">
                 <form action="{{ route('admin.hak-akses.store-role') }}" method="POST">
                     @csrf
-                    <div class="row g-3 align-items-end">
-                        <div class="col-md-4">
-                            <label class="form-label">Nama Role <span class="text-danger">*</span></label>
-                            <input type="text" name="nama" class="form-control" placeholder="cth: Editor Berita">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Hak Akses Modul</label>
-                            <div class="d-flex flex-wrap gap-2">
-                                @foreach($modules as $key => $label)
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $key }}" id="np_{{ $key }}">
-                                    <label class="form-check-label" for="np_{{ $key }}" style="font-size:.82rem;">{{ $label }}</label>
-                                </div>
-                                @endforeach
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Nama Role <span class="text-danger">*</span></label>
+                        <input type="text" name="nama" class="form-control" placeholder="cth: Editor Berita" style="max-width:320px;" required>
+                    </div>
+                    <label class="form-label fw-semibold mb-2">Pilih Hak Akses Modul</label>
+                    <div class="perm-grid mb-3" id="addPermGrid">
+                        @foreach($modules as $key => $label)
+                        @php $m = $moduleMeta[$key] ?? ['icon'=>'bi-circle','color'=>'#666','desc'=>'']; @endphp
+                        <label class="perm-card" for="np_{{ $key }}">
+                            <input type="checkbox" name="permissions[]" value="{{ $key }}" id="np_{{ $key }}" class="perm-cb">
+                            <div class="perm-icon" style="background:{{ $m['color'] }}18;color:{{ $m['color'] }};">
+                                <i class="bi {{ $m['icon'] }}"></i>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-admin-primary w-100">Simpan</button>
-                        </div>
+                            <div class="perm-info">
+                                <div class="perm-name">{{ $label }}</div>
+                                <div class="perm-desc">{{ $m['desc'] }}</div>
+                            </div>
+                            <div class="perm-check"><i class="bi bi-check2"></i></div>
+                        </label>
+                        @endforeach
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-admin-primary btn-sm px-4">
+                            <i class="bi bi-save me-1"></i>Simpan Role
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleAddRole()">Batal</button>
                     </div>
                 </form>
             </div>
@@ -68,7 +80,7 @@ $moduleColors = [
                     <table class="table admin-table mb-0">
                         <thead>
                             <tr>
-                                <th>Role</th>
+                                <th style="width:220px;">Role</th>
                                 <th>Hak Akses Modul</th>
                                 <th class="text-center" style="width:80px;">Pengguna</th>
                                 <th class="text-center" style="width:100px;">Aksi</th>
@@ -79,24 +91,26 @@ $moduleColors = [
                             <tr>
                                 <td>
                                     <span class="fw-bold">{{ $role->nama }}</span>
-                                    <br><small class="text-muted font-monospace">{{ $role->slug }}</small>
+                                    <br><small class="text-muted font-monospace" style="font-size:.72rem;">{{ $role->slug }}</small>
                                 </td>
                                 <td>
                                     @if(in_array('all', $role->permissions ?? []))
-                                    <span class="badge" style="background:linear-gradient(135deg,#C0304A,#8B1A2E);color:white;">Akses Penuh</span>
-                                    @else
-                                    @foreach($role->permissions ?? [] as $perm)
-                                    <span class="badge me-1" style="background:{{ $moduleColors[$perm] ?? '#666' }}22;color:{{ $moduleColors[$perm] ?? '#666' }};border:1px solid {{ $moduleColors[$perm] ?? '#666' }}44;font-size:.72rem;">
-                                        {{ $modules[$perm] ?? $perm }}
+                                    <span class="badge" style="background:linear-gradient(135deg,#C0304A,#8B1A2E);color:white;font-size:.75rem;">
+                                        <i class="bi bi-infinity me-1"></i>Akses Penuh
                                     </span>
-                                    @endforeach
-                                    @if(empty($role->permissions))
-                                    <span class="text-muted" style="font-size:.82rem;">Tidak ada akses</span>
-                                    @endif
+                                    @else
+                                        @forelse($role->permissions ?? [] as $perm)
+                                        @php $m = $moduleMeta[$perm] ?? ['icon'=>'bi-circle','color'=>'#666']; @endphp
+                                        <span class="badge me-1 mb-1" style="background:{{ $m['color'] }}18;color:{{ $m['color'] }};border:1px solid {{ $m['color'] }}33;font-size:.72rem;">
+                                            <i class="bi {{ $m['icon'] }} me-1"></i>{{ $modules[$perm] ?? $perm }}
+                                        </span>
+                                        @empty
+                                        <span class="text-muted" style="font-size:.82rem;">Tidak ada akses</span>
+                                        @endforelse
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge bg-light text-dark">{{ $role->users_count }}</span>
+                                    <span class="badge bg-light text-dark border">{{ $role->users_count }}</span>
                                 </td>
                                 <td class="text-center">
                                     @if($role->slug !== 'super-admin')
@@ -147,19 +161,26 @@ $moduleColors = [
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
+                                    @if($u->foto)
+                                    <img src="{{ $u->foto_url }}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+                                    @else
                                     <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#C0304A,#8B1A2E);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:white;flex-shrink:0;">
                                         {{ strtoupper(substr($u->name, 0, 1)) }}
                                     </div>
+                                    @endif
                                     <span class="fw-semibold">{{ $u->name }}</span>
                                     @if($u->id === auth()->id())
-                                    <span class="badge bg-light text-muted" style="font-size:.68rem;">Anda</span>
+                                    <span class="badge bg-light text-muted border" style="font-size:.68rem;">Anda</span>
                                     @endif
                                 </div>
                             </td>
                             <td style="font-size:.85rem; color:#555;">{{ $u->email }}</td>
                             <td>
                                 @if($u->role)
-                                <span class="badge rounded-pill" style="background:#f0f4ff;color:#333;font-size:.78rem;">{{ $u->role->nama }}</span>
+                                @php $firstPerm = $u->role->permissions[0] ?? null; $m2 = $firstPerm ? ($moduleMeta[$firstPerm] ?? null) : null; @endphp
+                                <span class="badge rounded-pill" style="background:{{ in_array('all',$u->role->permissions??[]) ? '#fff0f3' : ($m2 ? $m2['color'].'18' : '#f0f4ff') }};color:{{ in_array('all',$u->role->permissions??[]) ? '#C0304A' : ($m2 ? $m2['color'] : '#333') }};border:1px solid {{ in_array('all',$u->role->permissions??[]) ? '#f5c0cc' : ($m2 ? $m2['color'].'33' : '#dde') }};font-size:.78rem;">
+                                    {{ $u->role->nama }}
+                                </span>
                                 @else
                                 <span class="text-muted" style="font-size:.82rem;">—</span>
                                 @endif
@@ -173,7 +194,7 @@ $moduleColors = [
                                     </button>
                                     @if($u->id !== auth()->id())
                                     <form action="{{ route('admin.hak-akses.destroy-user', $u) }}" method="POST"
-                                          onsubmit="return confirm('Hapus pengguna {{ $u->name }}?')">
+                                          onsubmit="return confirm('Hapus pengguna {{ addslashes($u->name) }}?')">
                                         @csrf @method('DELETE')
                                         <button class="btn btn-sm btn-outline-danger rounded-2"><i class="bi bi-trash"></i></button>
                                     </form>
@@ -193,31 +214,43 @@ $moduleColors = [
 
 {{-- Modal Edit Role --}}
 <div class="modal fade" id="editRoleModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content rounded-4">
-            <div class="modal-header border-0"><h6 class="modal-title fw-bold">Edit Role</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-header border-0 pb-0">
+                <h6 class="modal-title fw-bold"><i class="bi bi-shield-lock me-2"></i>Edit Role</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
             <form id="editRoleForm" method="POST">
                 @csrf @method('PUT')
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Nama Role</label>
+                        <label class="form-label fw-semibold">Nama Role <span class="text-danger">*</span></label>
                         <input type="text" name="nama" id="er_nama" class="form-control" required>
                     </div>
-                    <label class="form-label">Hak Akses Modul</label>
-                    <div class="d-flex flex-column gap-2">
+                    <label class="form-label fw-semibold mb-2">Pilih Hak Akses Modul</label>
+                    <p class="text-muted mb-3" style="font-size:.82rem;">Centang modul yang boleh diakses oleh role ini.</p>
+                    <div class="perm-grid" id="editPermGrid">
                         @foreach($modules as $key => $label)
-                        <div class="form-check">
-                            <input class="form-check-input er-perm" type="checkbox" name="permissions[]" value="{{ $key }}" id="er_{{ $key }}">
-                            <label class="form-check-label" for="er_{{ $key }}">
-                                <span class="fw-semibold">{{ $label }}</span>
-                            </label>
-                        </div>
+                        @php $m = $moduleMeta[$key] ?? ['icon'=>'bi-circle','color'=>'#666','desc'=>'']; @endphp
+                        <label class="perm-card" for="er_{{ $key }}">
+                            <input type="checkbox" name="permissions[]" value="{{ $key }}" id="er_{{ $key }}" class="perm-cb er-perm">
+                            <div class="perm-icon" style="background:{{ $m['color'] }}18;color:{{ $m['color'] }};">
+                                <i class="bi {{ $m['icon'] }}"></i>
+                            </div>
+                            <div class="perm-info">
+                                <div class="perm-name">{{ $label }}</div>
+                                <div class="perm-desc">{{ $m['desc'] }}</div>
+                            </div>
+                            <div class="perm-check"><i class="bi bi-check2"></i></div>
+                        </label>
                         @endforeach
                     </div>
                 </div>
-                <div class="modal-footer border-0">
+                <div class="modal-footer border-0 pt-0">
                     <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-sm btn-admin-primary">Simpan</button>
+                    <button type="submit" class="btn btn-sm btn-admin-primary px-4">
+                        <i class="bi bi-save me-1"></i>Simpan
+                    </button>
                 </div>
             </form>
         </div>
@@ -309,13 +342,77 @@ $moduleColors = [
     </div>
 </div>
 
+<style>
+/* Permission card grid */
+.perm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+}
+.perm-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .15s;
+    background: #fff;
+    position: relative;
+    user-select: none;
+}
+.perm-card:hover { border-color: #C0304A44; background: #fff5f7; }
+.perm-cb { position: absolute; opacity: 0; width: 0; height: 0; }
+.perm-cb:checked ~ .perm-icon { opacity: 1; }
+.perm-cb:checked + .perm-icon { opacity: 1; }
+.perm-card:has(.perm-cb:checked) {
+    border-color: #C0304A;
+    background: #fff5f7;
+}
+.perm-card:has(.perm-cb:checked) .perm-check {
+    opacity: 1;
+    background: #C0304A;
+    color: white;
+}
+.perm-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+.perm-info { flex: 1; min-width: 0; }
+.perm-name { font-size: .82rem; font-weight: 600; color: #222; }
+.perm-desc { font-size: .72rem; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.perm-check {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .7rem;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: all .15s;
+}
+.perm-card:has(.perm-cb:checked) .perm-check { opacity: 1; border-color: #C0304A; }
+</style>
+
 <script>
+function toggleAddRole() {
+    const panel = document.getElementById('addRolePanel');
+    panel.classList.toggle('d-none');
+}
+
 function openEditRole(id, nama, perms) {
     document.getElementById('editRoleForm').action = '/admin/hak-akses/role/' + id;
     document.getElementById('er_nama').value = nama;
-    document.querySelectorAll('.er-perm').forEach(cb => cb.checked = perms.includes(cb.value));
+    document.querySelectorAll('.er-perm').forEach(cb => {
+        cb.checked = perms.includes(cb.value);
+    });
     new bootstrap.Modal(document.getElementById('editRoleModal')).show();
 }
+
 function openEditUser(id, name, email, roleId) {
     document.getElementById('editUserForm').action = '/admin/hak-akses/user/' + id;
     document.getElementById('eu_name').value  = name;

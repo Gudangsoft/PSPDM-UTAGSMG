@@ -240,7 +240,11 @@
         </a>
         <div class="dropdown">
             <div class="topbar-user dropdown-toggle" data-bs-toggle="dropdown">
-                <div class="topbar-avatar">{{ substr(auth()->user()->name ?? 'A', 0, 1) }}</div>
+                @if($authUser->foto)
+                <img src="{{ $authUser->foto_url }}" class="topbar-avatar" style="object-fit:cover;border:2px solid #f5c0cc;">
+                @else
+                <div class="topbar-avatar">{{ strtoupper(substr($authUser->name ?? 'A', 0, 1)) }}</div>
+                @endif
                 <span class="d-none d-md-block" style="font-size:.875rem; font-weight:600; color:#333;">{{ auth()->user()->name ?? 'Admin' }}</span>
             </div>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3" style="min-width:200px;">

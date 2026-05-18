@@ -247,9 +247,9 @@
         @media (max-width: 767px) {
             /* Header compact */
             .site-header { padding: 8px 0; }
-            .logo-icon { width: 52px !important; height: 52px !important; }
-            .logo-line1 { font-size: 0.62rem; }
-            .logo-line2 { font-size: 0.92rem; }
+            .logo-icon { width: 72px !important; height: 72px !important; }
+            .logo-line1 { font-size: 0.65rem; }
+            .logo-line2 { font-size: 1rem; }
             .logo-sub { display: none; }
 
             /* Navbar toggler alignment */
@@ -268,9 +268,9 @@
 
         @media (max-width: 575px) {
             .site-header { padding: 6px 0; }
-            .logo-icon { width: 44px !important; height: 44px !important; }
-            .logo-line1 { font-size: 0.58rem; letter-spacing: 0.06em; }
-            .logo-line2 { font-size: 0.82rem; }
+            .logo-icon { width: 60px !important; height: 60px !important; }
+            .logo-line1 { font-size: 0.6rem; letter-spacing: 0.06em; }
+            .logo-line2 { font-size: 0.88rem; }
             .page-hero h1 { font-size: 1.25rem; }
             .page-hero { padding: 28px 0 24px; }
             .ticker-label { font-size: 0.72rem; padding: 4px 10px; }

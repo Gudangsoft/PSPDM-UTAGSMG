@@ -11,7 +11,12 @@ class Galeri extends Model
 
     protected $table = 'galeri';
 
-    protected $fillable = ['judul', 'gambar', 'kategori', 'deskripsi', 'urutan', 'is_active'];
+    protected $fillable = ['album_id', 'judul', 'gambar', 'kategori', 'deskripsi', 'urutan', 'is_active'];
+
+    public function album()
+    {
+        return $this->belongsTo(Album::class);
+    }
 
     protected $casts = [
         'is_active' => 'boolean',

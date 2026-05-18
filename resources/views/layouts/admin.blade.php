@@ -154,6 +154,9 @@
         <a href="{{ route('admin.galeri.index') }}" class="sidebar-link {{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}">
             <i class="bi bi-images"></i> Galeri
         </a>
+        <a href="{{ route('admin.album.index') }}" class="sidebar-link {{ request()->routeIs('admin.album.*') ? 'active' : '' }}">
+            <i class="bi bi-folder2-open"></i> Album
+        </a>
 
         <div class="sidebar-section">PMB</div>
         <a href="{{ route('admin.jadwal-pmb.index') }}" class="sidebar-link {{ request()->routeIs('admin.jadwal-pmb.*') ? 'active' : '' }}">

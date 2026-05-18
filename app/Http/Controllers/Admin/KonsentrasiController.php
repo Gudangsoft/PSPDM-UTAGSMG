@@ -23,7 +23,6 @@ class KonsentrasiController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request);
-        $data['topik'] = $this->parseTopik($request->input('topik_raw', ''));
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('konsentrasi', 'public');
@@ -43,7 +42,6 @@ class KonsentrasiController extends Controller
     public function update(Request $request, Konsentrasi $konsentrasi)
     {
         $data = $this->validated($request);
-        $data['topik'] = $this->parseTopik($request->input('topik_raw', ''));
 
         if ($request->hasFile('gambar')) {
             if ($konsentrasi->gambar) {
@@ -89,10 +87,4 @@ class KonsentrasiController extends Controller
         return $data;
     }
 
-    private function parseTopik(string $raw): array
-    {
-        return array_values(array_filter(
-            array_map('trim', explode("\n", str_replace("\r", '', $raw)))
-        ));
-    }
 }

@@ -52,12 +52,6 @@
                                   placeholder="Paragraf kedua (opsional)...">{{ old('deskripsi_lanjutan', $konsentrasi->deskripsi_lanjutan) }}</textarea>
                     </div>
 
-                    <div>
-                        <label class="form-label fw-semibold">Topik Kajian Utama</label>
-                        <textarea name="topik_raw" rows="7" class="form-control"
-                                  placeholder="Satu topik per baris, contoh:&#10;Manajemen SDM Strategis&#10;Pengembangan Organisasi&#10;Kepemimpinan Transformasional">{{ old('topik_raw', $konsentrasi->exists ? implode("\n", $konsentrasi->topik ?? []) : '') }}</textarea>
-                        <small class="text-muted">Tulis satu topik per baris. Akan ditampilkan sebagai badge di halaman konsentrasi.</small>
-                    </div>
                 </div>
             </div>
         </div>

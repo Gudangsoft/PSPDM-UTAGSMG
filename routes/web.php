@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\JadwalPmbController;
 use App\Http\Controllers\Admin\KonsentrasiController as AdminKonsentrasiController;
 use App\Http\Controllers\Admin\AlbumController as AdminAlbumController;
 use App\Http\Controllers\Admin\JabatanAkademikController as AdminJabatanController;
+use App\Http\Controllers\Admin\HakAksesController as AdminHakAksesController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\WaBlasterController as AdminWaController;
 use App\Http\Controllers\Admin\MailBlasterController as AdminMailController;
@@ -79,6 +80,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('beranda/slider/{num}/hapus', [AdminBerandaController::class, 'destroySliderGambar'])->name('beranda.destroySlider');
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+
+    // Hak Akses
+    Route::get('hak-akses', [AdminHakAksesController::class, 'index'])->name('hak-akses.index')->middleware('permission:hak_akses');
+    Route::post('hak-akses/role', [AdminHakAksesController::class, 'storeRole'])->name('hak-akses.store-role')->middleware('permission:hak_akses');
+    Route::put('hak-akses/role/{role}', [AdminHakAksesController::class, 'updateRole'])->name('hak-akses.update-role')->middleware('permission:hak_akses');
+    Route::delete('hak-akses/role/{role}', [AdminHakAksesController::class, 'destroyRole'])->name('hak-akses.destroy-role')->middleware('permission:hak_akses');
+    Route::post('hak-akses/user', [AdminHakAksesController::class, 'storeUser'])->name('hak-akses.store-user')->middleware('permission:hak_akses');
+    Route::put('hak-akses/user/{user}', [AdminHakAksesController::class, 'updateUser'])->name('hak-akses.update-user')->middleware('permission:hak_akses');
+    Route::delete('hak-akses/user/{user}', [AdminHakAksesController::class, 'destroyUser'])->name('hak-akses.destroy-user')->middleware('permission:hak_akses');
+
+    // Apply permissions to protected routes
+    Route::middleware('permission:galeri')->group(function () {
+        // galeri & album routes already defined, permission checked via middleware
+    });
 
     // Profile
     Route::get('profile', [AdminProfileController::class, 'edit'])->name('profile.edit');

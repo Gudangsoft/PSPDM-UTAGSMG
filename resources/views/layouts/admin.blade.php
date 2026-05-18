@@ -127,6 +127,9 @@
             <i class="bi bi-box-arrow-up-right"></i> Lihat Website
         </a>
 
+        @php $authUser = auth()->user(); @endphp
+
+        @if($authUser->hasPermission('sdm'))
         <div class="sidebar-section">SDM & Akademik</div>
         <a href="{{ route('admin.konsentrasi.index') }}" class="sidebar-link {{ request()->routeIs('admin.konsentrasi.*') ? 'active' : '' }}">
             <i class="bi bi-diagram-3"></i> Konsentrasi
@@ -143,7 +146,9 @@
         <a href="{{ route('admin.sambutan.index') }}" class="sidebar-link {{ request()->routeIs('admin.sambutan.*') ? 'active' : '' }}">
             <i class="bi bi-chat-quote"></i> Sambutan Ketua
         </a>
+        @endif
 
+        @if($authUser->hasPermission('konten'))
         <div class="sidebar-section">Konten</div>
         <a href="{{ route('admin.beranda.index') }}" class="sidebar-link {{ request()->routeIs('admin.beranda.*') ? 'active' : '' }}">
             <i class="bi bi-house-heart"></i> Konten Beranda
@@ -154,21 +159,29 @@
         <a href="{{ route('admin.pengumuman.index') }}" class="sidebar-link {{ request()->routeIs('admin.pengumuman.*') ? 'active' : '' }}">
             <i class="bi bi-bell"></i> Pengumuman
         </a>
+        <a href="{{ route('admin.halaman.index') }}" class="sidebar-link {{ request()->routeIs('admin.halaman.*') ? 'active' : '' }}">
+            <i class="bi bi-file-earmark-richtext"></i> Halaman Dinamis
+        </a>
+        @endif
+
+        @if($authUser->hasPermission('galeri'))
+        @if(!$authUser->hasPermission('konten'))<div class="sidebar-section">Konten</div>@endif
         <a href="{{ route('admin.galeri.index') }}" class="sidebar-link {{ request()->routeIs('admin.galeri.*') ? 'active' : '' }}">
             <i class="bi bi-images"></i> Galeri Foto
         </a>
         <a href="{{ route('admin.album.index') }}" class="sidebar-link {{ request()->routeIs('admin.album.*') ? 'active' : '' }}">
             <i class="bi bi-folder2-open"></i> Album
         </a>
-        <a href="{{ route('admin.halaman.index') }}" class="sidebar-link {{ request()->routeIs('admin.halaman.*') ? 'active' : '' }}">
-            <i class="bi bi-file-earmark-richtext"></i> Halaman Dinamis
-        </a>
+        @endif
 
+        @if($authUser->hasPermission('pmb'))
         <div class="sidebar-section">PMB</div>
         <a href="{{ route('admin.jadwal-pmb.index') }}" class="sidebar-link {{ request()->routeIs('admin.jadwal-pmb.*') ? 'active' : '' }}">
             <i class="bi bi-calendar-event"></i> Jadwal PMB
         </a>
+        @endif
 
+        @if($authUser->hasPermission('komunikasi'))
         <div class="sidebar-section">Komunikasi</div>
         <a href="{{ route('admin.pesan.index') }}" class="sidebar-link {{ request()->routeIs('admin.pesan.*') ? 'active' : '' }}">
             <i class="bi bi-envelope"></i> Pesan Masuk
@@ -183,7 +196,9 @@
         <a href="{{ route('admin.mail.index') }}" class="sidebar-link {{ request()->routeIs('admin.mail.*') ? 'active' : '' }}">
             <i class="bi bi-envelope-paper"></i> Kirim Email
         </a>
+        @endif
 
+        @if($authUser->hasPermission('sistem'))
         <div class="sidebar-section">Sistem</div>
         <a href="{{ route('admin.menu.index') }}" class="sidebar-link {{ request()->routeIs('admin.menu.*') ? 'active' : '' }}">
             <i class="bi bi-menu-button-wide"></i> Menu Navigasi
@@ -191,6 +206,14 @@
         <a href="{{ route('admin.settings.index') }}" class="sidebar-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
             <i class="bi bi-gear"></i> Pengaturan
         </a>
+        @endif
+
+        @if($authUser->hasPermission('hak_akses'))
+        <div class="sidebar-section">Hak Akses</div>
+        <a href="{{ route('admin.hak-akses.index') }}" class="sidebar-link {{ request()->routeIs('admin.hak-akses.*') ? 'active' : '' }}">
+            <i class="bi bi-shield-lock"></i> Role & Pengguna
+        </a>
+        @endif
 
         <div class="sidebar-section">Akun</div>
         <form action="{{ route('logout') }}" method="POST">

@@ -458,13 +458,13 @@
     <header class="site-header">
         <div class="container-xl">
             <div class="d-flex align-items-center gap-3">
-                <div class="logo-icon">
+                <a href="{{ route('home') }}" class="logo-icon" style="text-decoration:none;">
                     @if($logoUrl)
                         <img src="{{ $logoUrl }}" alt="{{ $singkatan }} Logo">
                     @else
                         <span class="logo-fallback">{{ $singkatan }}</span>
                     @endif
-                </div>
+                </a>
                 <a href="{{ route('home') }}" class="logo-text">
                     @php
                         $upper = strtoupper($namaProdi);

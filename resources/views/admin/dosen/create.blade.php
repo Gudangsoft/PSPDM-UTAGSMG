@@ -34,8 +34,8 @@
                             <label class="form-label">Konsentrasi</label>
                             <select name="konsentrasi" class="form-select">
                                 <option value="">-- Pilih Konsentrasi --</option>
-                                @foreach(['Manajemen Modal Manusia Strategis', 'Manajemen Ekosistem Pasar Inovatif', 'Manajemen Keuangan Etis & Pengembangan Berkelanjutan'] as $k)
-                                <option value="{{ $k }}" {{ old('konsentrasi') == $k ? 'selected' : '' }}>{{ $k }}</option>
+                                @foreach($konsentrasis as $k)
+                                <option value="{{ $k->nama }}" {{ old('konsentrasi') == $k->nama ? 'selected' : '' }}>{{ $k->nama }}</option>
                                 @endforeach
                             </select>
                         </div>

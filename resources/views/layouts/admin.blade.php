@@ -149,6 +149,9 @@
         <a href="{{ route('admin.sambutan.index') }}" class="sidebar-link {{ request()->routeIs('admin.sambutan.*') ? 'active' : '' }}">
             <i class="bi bi-chat-quote"></i> Sambutan Ketua
         </a>
+        <a href="{{ route('admin.riset-unggulan.index') }}" class="sidebar-link {{ request()->routeIs('admin.riset-unggulan.*') ? 'active' : '' }}">
+            <i class="bi bi-lightbulb"></i> Unggulan Riset
+        </a>
         <a href="{{ route('admin.publikasi.index') }}" class="sidebar-link {{ request()->routeIs('admin.publikasi.*') ? 'active' : '' }}">
             <i class="bi bi-journal-bookmark"></i> Publikasi & Riset
         </a>

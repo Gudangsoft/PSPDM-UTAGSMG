@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\Admin\AgendaController as AdminAgendaController;
 use App\Http\Controllers\Admin\PublikasiController as AdminPublikasiController;
+use App\Http\Controllers\Admin\RisetUnggulanController as AdminRisetController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\AgendaController;
@@ -144,6 +145,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('agenda', [AdminAgendaController::class, 'store'])->name('agenda.store');
     Route::put('agenda/{agenda}', [AdminAgendaController::class, 'update'])->name('agenda.update');
     Route::delete('agenda/{agenda}', [AdminAgendaController::class, 'destroy'])->name('agenda.destroy');
+
+    // Unggulan Riset
+    Route::resource('riset-unggulan', AdminRisetController::class)->except(['show']);
 
     // Publikasi
     Route::get('publikasi', [AdminPublikasiController::class, 'index'])->name('publikasi.index');

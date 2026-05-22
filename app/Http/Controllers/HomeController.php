@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\RisetUnggulan;
 use App\Models\Download;
 use App\Models\Dosen;
 use App\Models\Galeri;
@@ -72,7 +73,8 @@ class HomeController extends Controller
 
     public function penelitian()
     {
-        return view('penelitian');
+        $riset = RisetUnggulan::aktif()->get();
+        return view('penelitian', compact('riset'));
     }
 
     public function struktur()

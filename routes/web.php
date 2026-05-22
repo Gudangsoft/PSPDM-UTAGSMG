@@ -44,6 +44,7 @@ Route::get('/konsentrasi', [HomeController::class, 'konsentrasi'])->name('konsen
 Route::get('/profil-lulusan', [HomeController::class, 'profilLulusan'])->name('profil-lulusan');
 Route::get('/akademik', [HomeController::class, 'akademik'])->name('akademik');
 Route::get('/dosen', [HomeController::class, 'dosen'])->name('dosen');
+Route::get('/dosen/{dosen}', [HomeController::class, 'dosenShow'])->name('dosen.show');
 Route::get('/penelitian', [HomeController::class, 'penelitian'])->name('penelitian');
 Route::get('/struktur', [HomeController::class, 'struktur'])->name('struktur');
 Route::get('/biaya-pendidikan', [HomeController::class, 'biaya'])->name('biaya');

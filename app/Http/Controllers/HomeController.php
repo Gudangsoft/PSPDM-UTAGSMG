@@ -64,6 +64,12 @@ class HomeController extends Controller
         return view('dosen', compact('dosen'));
     }
 
+    public function dosenShow(Dosen $dosen)
+    {
+        abort_unless($dosen->is_active, 404);
+        return view('dosen-show', compact('dosen'));
+    }
+
     public function penelitian()
     {
         return view('penelitian');

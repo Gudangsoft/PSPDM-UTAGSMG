@@ -42,16 +42,28 @@
                             <input type="email" name="email" class="form-control" value="{{ old('email', $dosen->email) }}">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Google Scholar</label>
-                            <input type="url" name="google_scholar" class="form-control" value="{{ old('google_scholar', $dosen->google_scholar) }}">
+                            <label class="form-label">Google Scholar URL</label>
+                            <input type="url" name="google_scholar" class="form-control" value="{{ old('google_scholar', $dosen->google_scholar) }}" placeholder="https://scholar.google.com/...">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">SINTA URL</label>
+                            <input type="url" name="sinta_url" class="form-control" value="{{ old('sinta_url', $dosen->sinta_url ?? '') }}" placeholder="https://sinta.kemdikbud.go.id/...">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Scopus URL</label>
+                            <input type="url" name="scopus_url" class="form-control" value="{{ old('scopus_url', $dosen->scopus_url ?? '') }}" placeholder="https://www.scopus.com/...">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">ResearchGate URL</label>
+                            <input type="url" name="researchgate_url" class="form-control" value="{{ old('researchgate_url', $dosen->researchgate_url ?? '') }}" placeholder="https://www.researchgate.net/...">
                         </div>
                         <div class="col-12">
-                            <label class="form-label">Keahlian</label>
-                            <input type="text" name="keahlian" class="form-control" value="{{ old('keahlian', $dosen->keahlian) }}">
+                            <label class="form-label">Keahlian <small class="text-muted">(pisah dengan koma)</small></label>
+                            <input type="text" name="keahlian" class="form-control" value="{{ old('keahlian', $dosen->keahlian) }}" placeholder="Mis: Manajemen SDM, Kepemimpinan Strategis">
                         </div>
                         <div class="col-12">
                             <label class="form-label">Biografi</label>
-                            <textarea name="bio" rows="4" class="form-control">{{ old('bio', $dosen->bio) }}</textarea>
+                            <textarea name="bio" rows="6" class="form-control" placeholder="Deskripsi lengkap tentang dosen...">{{ old('bio', $dosen->bio) }}</textarea>
                         </div>
                     </div>
                 </div>

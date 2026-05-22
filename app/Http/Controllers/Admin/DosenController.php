@@ -33,9 +33,12 @@ class DosenController extends Controller
             'foto'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'email'         => 'nullable|email|max:100',
             'bio'           => 'nullable|string',
-            'google_scholar'=> 'nullable|url|max:255',
-            'urutan'        => 'integer|min:0',
-            'is_active'     => 'boolean',
+            'google_scholar'    => 'nullable|url|max:255',
+            'sinta_url'         => 'nullable|url|max:255',
+            'scopus_url'        => 'nullable|url|max:255',
+            'researchgate_url'  => 'nullable|url|max:255',
+            'urutan'            => 'integer|min:0',
+            'is_active'         => 'boolean',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -64,9 +67,12 @@ class DosenController extends Controller
             'foto'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'email'         => 'nullable|email|max:100',
             'bio'           => 'nullable|string',
-            'google_scholar'=> 'nullable|url|max:255',
-            'urutan'        => 'integer|min:0',
-            'is_active'     => 'boolean',
+            'google_scholar'    => 'nullable|url|max:255',
+            'sinta_url'         => 'nullable|url|max:255',
+            'scopus_url'        => 'nullable|url|max:255',
+            'researchgate_url'  => 'nullable|url|max:255',
+            'urutan'            => 'integer|min:0',
+            'is_active'         => 'boolean',
         ]);
 
         if ($request->hasFile('foto')) {

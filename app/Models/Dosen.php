@@ -13,7 +13,9 @@ class Dosen extends Model
 
     protected $fillable = [
         'nama', 'nidn', 'jabatan', 'konsentrasi', 'keahlian',
-        'foto', 'email', 'bio', 'google_scholar', 'urutan', 'is_active',
+        'foto', 'email', 'bio', 'google_scholar',
+        'sinta_url', 'scopus_url', 'researchgate_url',
+        'urutan', 'is_active',
     ];
 
     protected $casts = [

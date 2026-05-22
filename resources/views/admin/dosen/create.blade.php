@@ -47,13 +47,25 @@
                             <label class="form-label">Google Scholar URL</label>
                             <input type="url" name="google_scholar" class="form-control" value="{{ old('google_scholar') }}" placeholder="https://scholar.google.com/...">
                         </div>
-                        <div class="col-12">
-                            <label class="form-label">Bidang Keahlian</label>
-                            <input type="text" name="keahlian" class="form-control" value="{{ old('keahlian') }}" placeholder="Mis: Manajemen SDM, Kepemimpinan Strategis">
+                        <div class="col-md-4">
+                            <label class="form-label">SINTA URL</label>
+                            <input type="url" name="sinta_url" class="form-control" value="{{ old('sinta_url') }}" placeholder="https://sinta.kemdikbud.go.id/...">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Scopus URL</label>
+                            <input type="url" name="scopus_url" class="form-control" value="{{ old('scopus_url') }}" placeholder="https://www.scopus.com/...">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">ResearchGate URL</label>
+                            <input type="url" name="researchgate_url" class="form-control" value="{{ old('researchgate_url') }}" placeholder="https://www.researchgate.net/...">
                         </div>
                         <div class="col-12">
-                            <label class="form-label">Biografi Singkat</label>
-                            <textarea name="bio" rows="4" class="form-control" placeholder="Deskripsi singkat tentang dosen...">{{ old('bio') }}</textarea>
+                            <label class="form-label">Bidang Keahlian <small class="text-muted">(pisah dengan koma)</small></label>
+                            <input type="text" name="keahlian" class="form-control" value="{{ old('keahlian') }}" placeholder="Mis: Manajemen SDM, Kepemimpinan Strategis, Organizational Behavior">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Biografi</label>
+                            <textarea name="bio" rows="6" class="form-control" placeholder="Deskripsi lengkap tentang dosen: latar belakang pendidikan, pengalaman mengajar, minat riset, pencapaian akademik...">{{ old('bio') }}</textarea>
                         </div>
                     </div>
                 </div>

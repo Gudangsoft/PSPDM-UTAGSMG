@@ -7,6 +7,7 @@ use App\Models\Dosen;
 use App\Models\JabatanAkademik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DosenController extends Controller
 {
@@ -60,6 +61,7 @@ class DosenController extends Controller
     {
         $validated = $request->validate([
             'nama'          => 'required|string|max:100',
+            'slug'          => 'nullable|string|max:120|unique:dosen,slug,' . $dosen->id,
             'nidn'          => 'nullable|string|max:20',
             'jabatan'       => 'required|string|max:100',
             'konsentrasi'   => 'nullable|string|max:100',
@@ -74,6 +76,13 @@ class DosenController extends Controller
             'urutan'            => 'integer|min:0',
             'is_active'         => 'boolean',
         ]);
+
+        // Normalize slug: kebab-case, or keep existing if left blank
+        if (!empty($validated['slug'])) {
+            $validated['slug'] = Str::slug($validated['slug']);
+        } else {
+            unset($validated['slug']);
+        }
 
         if ($request->hasFile('foto')) {
             if ($dosen->foto) {

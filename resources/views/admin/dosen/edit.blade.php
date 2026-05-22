@@ -58,6 +58,14 @@
                             <input type="url" name="researchgate_url" class="form-control" value="{{ old('researchgate_url', $dosen->researchgate_url ?? '') }}" placeholder="https://www.researchgate.net/...">
                         </div>
                         <div class="col-12">
+                            <label class="form-label">URL Slug <small class="text-muted">(bagian URL: /dosen/<strong>slug</strong>)</small></label>
+                            <div class="input-group">
+                                <span class="input-group-text text-muted" style="font-size:.8rem;">/dosen/</span>
+                                <input type="text" name="slug" class="form-control" value="{{ old('slug', $dosen->slug) }}" placeholder="otomatis dari nama">
+                            </div>
+                            <small class="text-muted">Kosongkan untuk tidak mengubah. Hanya huruf kecil, angka, dan tanda hubung.</small>
+                        </div>
+                        <div class="col-12">
                             <label class="form-label">Keahlian <small class="text-muted">(pisah dengan koma)</small></label>
                             <input type="text" name="keahlian" class="form-control" value="{{ old('keahlian', $dosen->keahlian) }}" placeholder="Mis: Manajemen SDM, Kepemimpinan Strategis">
                         </div>

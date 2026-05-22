@@ -9,7 +9,9 @@ class RisetUnggulan extends Model
     protected $table = 'riset_unggulan';
 
     protected $fillable = [
-        'judul', 'deskripsi', 'icon', 'warna', 'urutan', 'is_active',
+        'judul', 'deskripsi', 'warna',
+        'topik_a', 'topik_b', 'topik_c',
+        'urutan', 'is_active',
     ];
 
     protected $casts = [

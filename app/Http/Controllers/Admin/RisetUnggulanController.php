@@ -26,10 +26,12 @@ class RisetUnggulanController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'judul'     => 'required|string|max:150',
-            'deskripsi' => 'nullable|string',
-            'icon'      => 'required|string|max:80',
+            'judul'     => 'required|string|max:200',
+            'deskripsi' => 'nullable|string|max:300',
             'warna'     => 'required|string|max:20',
+            'topik_a'   => 'nullable|string|max:300',
+            'topik_b'   => 'nullable|string|max:300',
+            'topik_c'   => 'nullable|string|max:300',
             'urutan'    => 'integer|min:0',
             'is_active' => 'boolean',
         ]);
@@ -48,10 +50,12 @@ class RisetUnggulanController extends Controller
     public function update(Request $request, RisetUnggulan $risetUnggulan)
     {
         $validated = $request->validate([
-            'judul'     => 'required|string|max:150',
-            'deskripsi' => 'nullable|string',
-            'icon'      => 'required|string|max:80',
+            'judul'     => 'required|string|max:200',
+            'deskripsi' => 'nullable|string|max:300',
             'warna'     => 'required|string|max:20',
+            'topik_a'   => 'nullable|string|max:300',
+            'topik_b'   => 'nullable|string|max:300',
+            'topik_c'   => 'nullable|string|max:300',
             'urutan'    => 'integer|min:0',
             'is_active' => 'boolean',
         ]);
@@ -65,7 +69,6 @@ class RisetUnggulanController extends Controller
     public function destroy(RisetUnggulan $risetUnggulan)
     {
         $risetUnggulan->delete();
-
         return back()->with('success', 'Unggulan riset berhasil dihapus.');
     }
 }

@@ -19,18 +19,26 @@
             <p>PSMPD-FEB UNTAG berkomitmen pada penelitian berkualitas tinggi yang berdampak bagi masyarakat</p>
         </div>
 
-        <div class="row g-4 mb-5">
+        <div class="d-flex flex-column gap-4 mb-5">
             @foreach($riset as $r)
-            <div class="col-md-6" data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
-                <div class="card border-0 shadow-sm rounded-4 h-100" style="border-left:4px solid {{ $r->warna }}!important;">
-                    <div class="card-body p-4 d-flex gap-3">
-                        <div style="width:52px; height:52px; background:{{ $r->warna }}; border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:1.3rem; flex-shrink:0;">
-                            <i class="bi {{ $r->icon }}"></i>
+            <div class="card border-0 shadow-sm rounded-4" style="border-left:4px solid {{ $r->warna }}!important;"
+                 data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
+                <div class="card-body p-4">
+                    <h5 style="font-size:1rem; font-weight:700; color:var(--dark); margin-bottom:4px;">{{ $r->judul }}</h5>
+                    @if($r->deskripsi)
+                    <p class="text-muted mb-3" style="font-size:0.82rem;">{{ $r->deskripsi }}</p>
+                    @endif
+                    <div class="row g-2">
+                        @foreach([['a','Riset a'],['b','Riset b'],['c','Riset c']] as [$key,$lbl])
+                        @if($r->{'topik_'.$key})
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-3 h-100" style="background:#f8fafc; border:1px solid #e2e8f0;">
+                                <span class="badge mb-2" style="background:{{ $r->warna }}; font-size:.68rem;">{{ $lbl }}</span>
+                                <p class="mb-0" style="font-size:.82rem; color:#374151; line-height:1.5;">{{ $r->{'topik_'.$key} }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h5 style="font-size:1rem; font-weight:700; color:var(--dark); margin-bottom:8px;">{{ $r->judul }}</h5>
-                            <p class="text-muted mb-0" style="font-size:0.875rem; line-height:1.7;">{{ $r->deskripsi }}</p>
-                        </div>
+                        @endif
+                        @endforeach
                     </div>
                 </div>
             </div>

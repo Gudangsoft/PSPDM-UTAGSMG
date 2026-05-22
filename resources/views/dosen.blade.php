@@ -56,13 +56,15 @@
 .dosen-card:hover { transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.13); }
 .dosen-photo-wrap {
     position:relative; overflow:hidden;
-    height:220px; background:#f3f4f6; flex-shrink:0;
+    background:#f3f4f6; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    min-height:200px;
 }
 .dosen-photo-wrap img {
-    width:100%; height:100%; object-fit:cover; transition:transform .4s;
-    object-position: top center;
+    width:100%; height:auto; display:block;
+    object-fit:contain; transition:transform .35s;
 }
-.dosen-card:hover .dosen-photo-wrap img { transform:scale(1.06); }
+.dosen-card:hover .dosen-photo-wrap img { transform:scale(1.03); }
 .dosen-photo-overlay {
     position:absolute; inset:0;
     background:linear-gradient(to top, rgba(15,23,42,.88) 0%, transparent 55%);
@@ -114,7 +116,7 @@
     .filter-bar { top:56px; }
     .filter-scroll { overflow-x:auto; padding-bottom:2px; }
     .dosen-photo-overlay { opacity:1; }
-    .dosen-photo-wrap { height:190px; }
+    .dosen-photo-wrap { min-height:160px; }
 }
 </style>
 @endsection

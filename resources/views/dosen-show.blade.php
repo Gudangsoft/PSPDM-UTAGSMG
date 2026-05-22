@@ -18,21 +18,27 @@
     position: absolute; inset: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
 }
-.profile-photo {
-    width: 160px; height: 160px;
-    border-radius: 50%; object-fit: cover; object-position: top center;
-    border: 5px solid rgba(255,255,255,.2);
-    box-shadow: 0 12px 40px rgba(0,0,0,.4);
+.profile-photo-wrap {
+    flex-shrink: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 4px solid rgba(255,255,255,.15);
+    box-shadow: 0 16px 48px rgba(0,0,0,.45);
     background: #2d2d4e;
+    width: 200px;
+}
+.profile-photo {
+    width: 100%; height: auto;
+    display: block; object-fit: contain;
 }
 .profile-photo-fallback {
     width: 160px; height: 160px;
-    border-radius: 50%;
+    border-radius: 16px;
     background: linear-gradient(135deg, #C0304A, #8B1A2E);
     display: flex; align-items: center; justify-content: center;
     font-size: 3rem; font-weight: 900; color: #fff;
-    border: 5px solid rgba(255,255,255,.2);
-    box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    border: 4px solid rgba(255,255,255,.15);
+    box-shadow: 0 16px 48px rgba(0,0,0,.45);
     flex-shrink: 0;
 }
 .profile-nama { color: #fff; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; margin-bottom: 4px; }
@@ -160,7 +166,8 @@
 
 @media (max-width: 767px) {
     .profile-hero { padding: 36px 0 0; }
-    .profile-photo, .profile-photo-fallback { width: 120px; height: 120px; font-size: 2.2rem; }
+    .profile-photo-wrap { width: 140px; }
+    .profile-photo-fallback { width: 120px; height: 120px; font-size: 2.2rem; }
     .profile-nama { font-size: 1.35rem; }
     .profile-content { padding: 36px 0 60px; }
     .info-card-body { padding: 18px; }
@@ -180,13 +187,13 @@
 
         <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-4 pb-10">
             {{-- Photo --}}
-            <div style="flex-shrink:0;">
-                @if($dosen->foto)
+            @if($dosen->foto)
+            <div class="profile-photo-wrap">
                 <img src="{{ $dosen->foto_url }}" alt="{{ $dosen->nama }}" class="profile-photo">
-                @else
-                <div class="profile-photo-fallback">{{ strtoupper(substr($dosen->nama, 0, 1)) }}</div>
-                @endif
             </div>
+            @else
+            <div class="profile-photo-fallback">{{ strtoupper(substr($dosen->nama, 0, 1)) }}</div>
+            @endif
 
             {{-- Info --}}
             <div class="pb-4 pb-md-8" style="padding-bottom:32px;">

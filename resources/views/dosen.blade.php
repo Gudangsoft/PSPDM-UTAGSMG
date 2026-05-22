@@ -5,252 +5,456 @@
 
 @section('styles')
 <style>
-/* ── Hero ── */
-.dosen-hero {
-    background:
-        radial-gradient(ellipse 60% 80% at 100% 50%, rgba(192,48,74,.2) 0%, transparent 55%),
-        linear-gradient(148deg, #1a1a2e 0%, #16213e 40%, #0f172a 100%);
-    padding: 60px 0 50px; position: relative; overflow: hidden;
+:root {
+    --crimson: #B91C1C;
+    --crimson-dark: #7F1D1D;
+    --navy: #0F172A;
+    --navy-mid: #1E293B;
+    --gold: #D4A853;
+    --off-white: #F8F7F4;
 }
-.dosen-hero::before {
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.faculty-hero {
+    background: var(--navy);
+    padding: 72px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+/* Decorative diagonal red stripe */
+.faculty-hero::after {
+    content: '';
+    position: absolute;
+    top: 0; right: -80px;
+    width: 420px; height: 100%;
+    background: linear-gradient(160deg, transparent 30%, rgba(185,28,28,.08) 30%, rgba(185,28,28,.12) 70%, transparent 70%);
+    pointer-events: none;
+}
+/* Dot grid pattern */
+.faculty-hero::before {
     content: '';
     position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 28px 28px;
 }
-.dosen-hero h1 { color:#fff; font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; margin-bottom:10px; }
-.dosen-hero p  { color:rgba(255,255,255,.75); font-size:1rem; max-width:520px; }
-.hero-stat-pill {
-    display:inline-flex; align-items:center; gap:8px;
-    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
-    color:#fff; border-radius:50px; padding:6px 18px;
-    font-size:.82rem; font-weight:600;
-}
-.hero-stat-pill strong { color:#f87171; }
-.breadcrumb-dark .breadcrumb-item, .breadcrumb-dark .breadcrumb-item a { color:rgba(255,255,255,.55); font-size:.82rem; }
-.breadcrumb-dark .breadcrumb-item.active { color:#fff; }
-.breadcrumb-dark .breadcrumb-item+.breadcrumb-item::before { color:rgba(255,255,255,.35); }
 
-/* ── Filter bar ── */
-.filter-bar {
-    background:#fff; border-bottom:1px solid #f0f0f0;
-    padding:14px 0; position:sticky; top:62px; z-index:99;
-    box-shadow:0 2px 12px rgba(0,0,0,.06);
-}
-.filter-btn {
-    border:1.5px solid #e5e7eb; background:#fff; color:#6b7280;
-    border-radius:50px; padding:6px 18px;
-    font-size:.82rem; font-weight:600;
-    cursor:pointer; transition:all .2s; white-space:nowrap;
-    display:inline-block;
-}
-.filter-btn:hover { border-color:#C0304A; color:#C0304A; }
-.filter-btn.active { background:#C0304A; border-color:#C0304A; color:#fff; }
+.hero-inner { position: relative; z-index: 2; }
 
-/* ── Dosen card ── */
-.dosen-card {
-    background:#fff; border-radius:16px; overflow:hidden;
-    box-shadow:0 4px 20px rgba(0,0,0,.07); border:1px solid #f0f0f0;
-    transition:transform .25s, box-shadow .25s;
-    height:100%; display:flex; flex-direction:column;
+.hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--gold); font-size: .72rem; font-weight: 700;
+    letter-spacing: .2em; text-transform: uppercase;
+    margin-bottom: 20px;
 }
-.dosen-card:hover { transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.13); }
-.dosen-photo-wrap {
-    position:relative; overflow:hidden;
-    background:#f3f4f6; flex-shrink:0;
-    display:flex; align-items:center; justify-content:center;
-    min-height:200px;
+.hero-eyebrow::before {
+    content: '';
+    display: block; width: 36px; height: 2px;
+    background: var(--gold);
 }
-.dosen-photo-wrap img {
-    width:100%; height:auto; display:block;
-    object-fit:contain; transition:transform .35s;
-}
-.dosen-card:hover .dosen-photo-wrap img { transform:scale(1.03); }
-.dosen-photo-overlay {
-    position:absolute; inset:0;
-    background:linear-gradient(to top, rgba(15,23,42,.88) 0%, transparent 55%);
-    opacity:0; transition:opacity .3s;
-    display:flex; align-items:flex-end; justify-content:center;
-    padding-bottom:16px; gap:8px;
-}
-.dosen-card:hover .dosen-photo-overlay { opacity:1; }
-.dosen-photo-overlay a {
-    width:34px; height:34px; border-radius:50%;
-    background:rgba(255,255,255,.9); color:#1a1a2e;
-    display:flex; align-items:center; justify-content:center;
-    font-size:.85rem; text-decoration:none;
-    transition:background .2s, transform .2s;
-}
-.dosen-photo-overlay a:hover { background:#C0304A; color:#fff; transform:scale(1.12); }
-.dosen-card-top { height:4px; background:linear-gradient(90deg, #C0304A, #8B1A2E, #e84a6a); }
-.dosen-card-body { padding:20px; flex:1; display:flex; flex-direction:column; }
-.dosen-konsentrasi {
-    font-size:.67rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em;
-    color:#C0304A; background:#fff5f5; border:1px solid #fecaca;
-    padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:10px;
-}
-.dosen-card .nama { font-size:.97rem; font-weight:800; color:#1a1a2e; margin-bottom:2px; line-height:1.3; }
-.dosen-card .jabatan { font-size:.77rem; color:#6b7280; margin-bottom:10px; font-weight:500; }
-.dosen-card .bio-excerpt {
-    font-size:.8rem; color:#9ca3af; line-height:1.65; margin-bottom:14px; flex:1;
-    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
-}
-.dosen-links { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:14px; }
-.dosen-link-icon {
-    width:30px; height:30px; border-radius:8px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:.8rem; text-decoration:none;
-    background:#f3f4f6; color:#6b7280; transition:background .2s, color .2s;
-}
-.dosen-link-icon:hover { background:#C0304A; color:#fff; }
-.btn-profil {
-    display:flex; align-items:center; justify-content:center; gap:6px;
-    background:#1a1a2e; color:#fff; padding:9px 0; border-radius:10px;
-    font-size:.82rem; font-weight:700; text-decoration:none;
-    transition:background .2s; margin-top:auto;
-}
-.btn-profil:hover { background:#C0304A; color:#fff; }
-.no-result { display:none; text-align:center; padding:60px 20px; color:#9ca3af; }
 
-@media (max-width:767px) {
-    .dosen-hero { padding:36px 0 44px; }
-    .filter-bar { top:56px; }
-    .filter-scroll { overflow-x:auto; padding-bottom:2px; }
-    .dosen-photo-overlay { opacity:1; }
-    .dosen-photo-wrap { min-height:160px; }
+.faculty-hero h1 {
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -.02em;
+}
+.faculty-hero h1 em {
+    font-style: italic;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,.5);
+}
+
+.hero-desc {
+    color: rgba(255,255,255,.55);
+    font-size: .95rem; line-height: 1.8;
+    max-width: 480px; margin-bottom: 0;
+}
+
+/* Stats row */
+.hero-stats {
+    display: flex; gap: 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+    margin-top: 48px;
+}
+.hero-stat {
+    flex: 1; padding: 24px 0;
+    border-right: 1px solid rgba(255,255,255,.08);
+    text-align: center;
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: #fff; line-height: 1;
+    margin-bottom: 4px;
+}
+.hero-stat-num span { color: var(--gold); }
+.hero-stat-lbl { font-size: .7rem; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .1em; }
+
+/* ══════════════════════════════════════
+   FILTER / NAV TABS
+══════════════════════════════════════ */
+.faculty-filter {
+    background: var(--navy-mid);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    position: sticky; top: 62px; z-index: 99;
+}
+.faculty-filter-inner {
+    display: flex; gap: 0;
+    overflow-x: auto; scrollbar-width: none;
+}
+.faculty-filter-inner::-webkit-scrollbar { display: none; }
+.ftab {
+    padding: 14px 24px;
+    font-size: .8rem; font-weight: 600;
+    color: rgba(255,255,255,.45);
+    border: none; background: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color .2s, border-color .2s;
+    letter-spacing: .04em; text-transform: uppercase;
+}
+.ftab:hover { color: rgba(255,255,255,.8); }
+.ftab.active { color: #fff; border-bottom-color: var(--crimson); }
+
+/* ══════════════════════════════════════
+   GRID
+══════════════════════════════════════ */
+.faculty-grid-wrap {
+    background: var(--off-white);
+    padding: 64px 0 96px;
+}
+
+/* ── Card ── */
+.faculty-card {
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    height: 100%;
+    transition: box-shadow .3s, transform .3s;
+    position: relative;
+}
+.faculty-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--crimson);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+.faculty-card:hover::before { transform: scaleY(1); }
+.faculty-card:hover {
+    box-shadow: 0 24px 64px rgba(0,0,0,.13);
+    transform: translateY(-4px);
+}
+
+/* Photo */
+.fc-photo {
+    width: 100%;
+    background: #f1f1ef;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+.fc-photo img {
+    width: 100%; height: auto;
+    display: block; object-fit: contain;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.faculty-card:hover .fc-photo img { transform: scale(1.04); }
+
+/* Overlay on hover */
+.fc-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,23,42,.82) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity .3s;
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 18px; gap: 8px;
+}
+.faculty-card:hover .fc-overlay { opacity: 1; }
+.fc-overlay-link {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,.92);
+    color: var(--navy); display: flex; align-items: center; justify-content: center;
+    font-size: .85rem; text-decoration: none;
+    transition: background .2s, color .2s, transform .2s;
+}
+.fc-overlay-link:hover { background: var(--crimson); color: #fff; transform: scale(1.1); }
+
+/* Body */
+.fc-body { padding: 24px 24px 20px; flex: 1; display: flex; flex-direction: column; }
+
+.fc-jabatan {
+    font-size: .65rem; font-weight: 700;
+    color: var(--crimson); letter-spacing: .14em;
+    text-transform: uppercase; margin-bottom: 6px;
+}
+.fc-nama {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--navy); line-height: 1.3;
+    margin-bottom: 10px;
+}
+.fc-divider {
+    height: 1px; background: #e5e7eb;
+    margin-bottom: 12px;
+}
+.fc-kons {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: .66rem; font-weight: 600;
+    color: #6B7280; letter-spacing: .04em;
+    margin-bottom: 10px;
+}
+.fc-bio {
+    font-size: .8rem; color: #9CA3AF; line-height: 1.7;
+    margin-bottom: 18px; flex: 1;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.fc-links { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; }
+.fc-link {
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; text-decoration: none;
+    color: #9CA3AF; background: #F3F4F6;
+    transition: background .2s, color .2s;
+}
+.fc-link:hover { background: var(--crimson); color: #fff; }
+
+/* CTA */
+.fc-cta {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    border: 1px solid #E5E7EB;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--navy); font-size: .78rem; font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase;
+    transition: background .2s, border-color .2s, color .2s;
+    margin-top: auto;
+}
+.fc-cta:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
+.fc-cta .fc-cta-arrow {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .65rem;
+    transition: background .2s;
+}
+.fc-cta:hover .fc-cta-arrow { background: var(--crimson); }
+
+/* No result */
+.no-result { display:none; text-align:center; padding:80px 20px; color:#9CA3AF; }
+.no-result i { font-size:3rem; display:block; margin-bottom:16px; }
+
+/* ══════════════════════════════════════
+   MOBILE
+══════════════════════════════════════ */
+@media (max-width: 991px) {
+    .faculty-hero { padding: 48px 0 0; }
+    .faculty-hero h1 { font-size: 2.4rem; }
+    .hero-stats { flex-wrap: wrap; }
+    .hero-stat { flex: 0 0 50%; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .hero-stat:nth-child(2) { border-right: none; }
+}
+@media (max-width: 767px) {
+    .faculty-hero { padding: 36px 0 0; }
+    .faculty-hero h1 { font-size: 1.9rem; }
+    .hero-desc { font-size: .88rem; }
+    .faculty-filter { top: 56px; }
+    .ftab { padding: 12px 16px; font-size: .72rem; }
+    .hero-stat-num { font-size: 1.5rem; }
+    .faculty-grid-wrap { padding: 40px 0 64px; }
+    .fc-body { padding: 18px 18px 16px; }
+    .fc-overlay { opacity: 1; background: linear-gradient(to top, rgba(15,23,42,.75) 0%, transparent 45%); }
+}
+@media (max-width: 575px) {
+    .hero-stat { flex: 0 0 50%; }
+    .faculty-hero h1 { font-size: 1.65rem; }
 }
 </style>
 @endsection
 
 @section('content')
 
-{{-- HERO --}}
-<div class="dosen-hero">
-    <div class="container-xl position-relative">
-        <nav aria-label="breadcrumb" class="breadcrumb-dark mb-3">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                <li class="breadcrumb-item active">Tim Dosen</li>
-            </ol>
-        </nav>
-        <h1>Tim Dosen &amp; Peneliti</h1>
-        <p>Para akademisi dan peneliti terbaik yang membimbing perjalanan doktoral Anda menuju kontribusi ilmu manajemen yang orisinal.</p>
-        <div class="d-flex flex-wrap gap-2 mt-4">
-            <div class="hero-stat-pill"><strong>{{ $dosen->count() }}</strong>&nbsp;Dosen Aktif</div>
-            @php $guruBesar = $dosen->filter(fn($d) => str_contains(strtolower($d->jabatan), 'guru besar') || str_contains(strtolower($d->jabatan), 'profesor')); @endphp
-            @if($guruBesar->count())
-            <div class="hero-stat-pill"><strong>{{ $guruBesar->count() }}</strong>&nbsp;Guru Besar</div>
-            @endif
-            @if($dosen->whereNotNull('google_scholar')->count())
-            <div class="hero-stat-pill"><strong>{{ $dosen->whereNotNull('google_scholar')->count() }}</strong>&nbsp;Google Scholar</div>
-            @endif
-        </div>
-    </div>
-</div>
-
-{{-- FILTER BAR --}}
-@php $konsentrasiList = $dosen->pluck('konsentrasi')->filter()->unique()->values(); @endphp
-@if($konsentrasiList->count() > 1)
-<div class="filter-bar">
+{{-- ══ HERO ══ --}}
+<div class="faculty-hero">
     <div class="container-xl">
-        <div class="filter-scroll d-flex gap-2">
-            <button class="filter-btn active" data-filter="semua">Semua</button>
-            @foreach($konsentrasiList as $kons)
-            <button class="filter-btn" data-filter="{{ Str::slug($kons) }}">{{ $kons }}</button>
-            @endforeach
-        </div>
-    </div>
-</div>
-@endif
-
-{{-- GRID DOSEN --}}
-<section style="padding:56px 0 80px; background:#f8f9fb;">
-    <div class="container-xl">
-        @if($dosen->count() > 0)
-        <div class="row g-4" id="dosen-grid">
-            @foreach($dosen as $d)
-            <div class="col-sm-6 col-lg-4 dosen-item" data-konsentrasi="{{ Str::slug($d->konsentrasi) }}">
-                <div class="dosen-card">
-                    <div class="dosen-card-top"></div>
-                    <div class="dosen-photo-wrap">
-                        <img src="{{ $d->foto_url }}"
-                             alt="{{ $d->nama }}"
-                             loading="lazy"
-                             onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($d->nama) }}&background=C0304A&color=fff&size=220'">
-                        <div class="dosen-photo-overlay">
-                            @if($d->email)
-                            <a href="mailto:{{ $d->email }}" title="Email"><i class="bi bi-envelope-fill"></i></a>
-                            @endif
-                            @if($d->google_scholar)
-                            <a href="{{ $d->google_scholar }}" target="_blank" title="Google Scholar"><i class="bi bi-mortarboard-fill"></i></a>
-                            @endif
-                            @if(!empty($d->sinta_url))
-                            <a href="{{ $d->sinta_url }}" target="_blank" title="SINTA"><i class="bi bi-journal-richtext"></i></a>
-                            @endif
-                            <a href="{{ route('dosen.show', $d) }}" title="Lihat Profil"><i class="bi bi-person-fill"></i></a>
-                        </div>
-                    </div>
-                    <div class="dosen-card-body">
-                        @if($d->konsentrasi)
-                        <span class="dosen-konsentrasi">{{ Str::limit($d->konsentrasi, 32) }}</span>
-                        @endif
-                        <div class="nama">{{ $d->nama }}</div>
-                        <div class="jabatan"><i class="bi bi-patch-check-fill text-danger me-1" style="font-size:.65rem;"></i>{{ $d->jabatan }}</div>
-                        <p class="bio-excerpt">{{ $d->bio ?: 'Dosen Program Doktor Manajemen FEB UNTAG Semarang.' }}</p>
-                        <div class="dosen-links">
-                            @if($d->email)
-                            <a href="mailto:{{ $d->email }}" class="dosen-link-icon" title="Email"><i class="bi bi-envelope-fill"></i></a>
-                            @endif
-                            @if($d->google_scholar)
-                            <a href="{{ $d->google_scholar }}" target="_blank" class="dosen-link-icon" title="Google Scholar"><i class="bi bi-mortarboard-fill"></i></a>
-                            @endif
-                            @if(!empty($d->sinta_url))
-                            <a href="{{ $d->sinta_url }}" target="_blank" class="dosen-link-icon" title="SINTA"><i class="bi bi-journal-richtext"></i></a>
-                            @endif
-                            @if(!empty($d->scopus_url))
-                            <a href="{{ $d->scopus_url }}" target="_blank" class="dosen-link-icon" title="Scopus"><i class="bi bi-file-earmark-text-fill"></i></a>
-                            @endif
-                            @if(!empty($d->researchgate_url))
-                            <a href="{{ $d->researchgate_url }}" target="_blank" class="dosen-link-icon" title="ResearchGate"><i class="bi bi-people-fill"></i></a>
-                            @endif
-                        </div>
-                        <a href="{{ route('dosen.show', $d) }}" class="btn-profil">
-                            <i class="bi bi-person-lines-fill"></i> Lihat Profil Lengkap
+        <div class="hero-inner">
+            <div class="row align-items-end">
+                <div class="col-lg-7 pb-0">
+                    <div class="hero-eyebrow">Program Doktor Manajemen</div>
+                    <h1>Tim <em>Akademisi</em><br>&amp; Peneliti</h1>
+                    <p class="hero-desc">Para Guru Besar, Doktor, dan peneliti terbaik yang membimbing perjalanan ilmiah Anda menuju kontribusi nyata bagi ilmu manajemen.</p>
+                </div>
+                <div class="col-lg-5 d-none d-lg-flex justify-content-end align-items-end">
+                    <div style="text-align:right; padding-bottom:8px;">
+                        <a href="{{ route('halaman.show', 'pendaftaran') }}"
+                           style="display:inline-flex;align-items:center;gap:10px;background:var(--crimson);color:#fff;padding:14px 28px;border-radius:4px;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:background .2s;"
+                           onmouseover="this.style.background='var(--crimson-dark)'" onmouseout="this.style.background='var(--crimson)'">
+                            Daftar Sekarang <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    {{-- Stats bar --}}
+    @php
+        $totalDosen = $dosen->count();
+        $guruBesar  = $dosen->filter(fn($d)=>str_contains(strtolower($d->jabatan),'guru besar')||str_contains(strtolower($d->jabatan),'profesor'))->count();
+        $hasScholar = $dosen->whereNotNull('google_scholar')->count();
+        $konsCount  = $dosen->pluck('konsentrasi')->filter()->unique()->count();
+    @endphp
+    <div class="hero-stats">
+        <div class="hero-stat">
+            <div class="hero-stat-num">{{ $totalDosen }}<span>+</span></div>
+            <div class="hero-stat-lbl">Dosen Aktif</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-num">{{ $guruBesar }}</div>
+            <div class="hero-stat-lbl">Guru Besar</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-num">{{ $hasScholar }}</div>
+            <div class="hero-stat-lbl">Google Scholar</div>
+        </div>
+        <div class="hero-stat">
+            <div class="hero-stat-num">{{ $konsCount }}</div>
+            <div class="hero-stat-lbl">Konsentrasi</div>
+        </div>
+    </div>
+</div>
+
+{{-- ══ FILTER TABS ══ --}}
+@php $konsentrasiList = $dosen->pluck('konsentrasi')->filter()->unique()->values(); @endphp
+<div class="faculty-filter">
+    <div class="container-xl">
+        <div class="faculty-filter-inner">
+            <button class="ftab active" data-filter="semua">Semua Dosen</button>
+            @foreach($konsentrasiList as $kons)
+            <button class="ftab" data-filter="{{ Str::slug($kons) }}">{{ $kons }}</button>
             @endforeach
         </div>
+    </div>
+</div>
+
+{{-- ══ GRID ══ --}}
+<div class="faculty-grid-wrap">
+    <div class="container-xl">
+        @if($dosen->count() > 0)
+        <div class="row g-4" id="faculty-grid">
+            @foreach($dosen as $d)
+            <div class="col-sm-6 col-lg-4 faculty-item" data-konsentrasi="{{ Str::slug($d->konsentrasi) }}">
+                <div class="faculty-card">
+
+                    {{-- Photo --}}
+                    <div class="fc-photo">
+                        <img src="{{ $d->foto_url }}"
+                             alt="{{ $d->nama }}"
+                             loading="lazy"
+                             onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($d->nama) }}&background=1E293B&color=ffffff&size=400&bold=true'">
+                        <div class="fc-overlay">
+                            @if($d->email)
+                            <a href="mailto:{{ $d->email }}" class="fc-overlay-link" title="Email"><i class="bi bi-envelope-fill"></i></a>
+                            @endif
+                            @if($d->google_scholar)
+                            <a href="{{ $d->google_scholar }}" target="_blank" class="fc-overlay-link" title="Google Scholar"><i class="bi bi-mortarboard-fill"></i></a>
+                            @endif
+                            @if(!empty($d->sinta_url))
+                            <a href="{{ $d->sinta_url }}" target="_blank" class="fc-overlay-link" title="SINTA"><i class="bi bi-journal-richtext"></i></a>
+                            @endif
+                            <a href="{{ route('dosen.show', $d) }}" class="fc-overlay-link" title="Profil Lengkap"><i class="bi bi-person-fill"></i></a>
+                        </div>
+                    </div>
+
+                    {{-- Body --}}
+                    <div class="fc-body">
+                        <div class="fc-jabatan">{{ $d->jabatan }}</div>
+                        <div class="fc-nama">{{ $d->nama }}</div>
+                        <div class="fc-divider"></div>
+                        @if($d->konsentrasi)
+                        <div class="fc-kons"><i class="bi bi-bookmark-fill" style="font-size:.55rem;color:var(--crimson);"></i> {{ $d->konsentrasi }}</div>
+                        @endif
+                        <p class="fc-bio">{{ $d->bio ?: 'Dosen Program Doktor Manajemen FEB UNTAG Semarang dengan keahlian di bidang ' . ($d->keahlian ? Str::limit($d->keahlian, 60) : 'manajemen strategis.') }}</p>
+                        <div class="fc-links">
+                            @if($d->email)
+                            <a href="mailto:{{ $d->email }}" class="fc-link" title="Email"><i class="bi bi-envelope-fill"></i></a>
+                            @endif
+                            @if($d->google_scholar)
+                            <a href="{{ $d->google_scholar }}" target="_blank" class="fc-link" title="Google Scholar"><i class="bi bi-mortarboard-fill"></i></a>
+                            @endif
+                            @if(!empty($d->sinta_url))
+                            <a href="{{ $d->sinta_url }}" target="_blank" class="fc-link" title="SINTA"><i class="bi bi-journal-richtext"></i></a>
+                            @endif
+                            @if(!empty($d->scopus_url))
+                            <a href="{{ $d->scopus_url }}" target="_blank" class="fc-link" title="Scopus"><i class="bi bi-file-earmark-text-fill"></i></a>
+                            @endif
+                            @if(!empty($d->researchgate_url))
+                            <a href="{{ $d->researchgate_url }}" target="_blank" class="fc-link" title="ResearchGate"><i class="bi bi-people-fill"></i></a>
+                            @endif
+                        </div>
+                        <a href="{{ route('dosen.show', $d) }}" class="fc-cta">
+                            Lihat Profil
+                            <span class="fc-cta-arrow"><i class="bi bi-arrow-right"></i></span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            @endforeach
+        </div>
+
         <div class="no-result" id="no-result">
-            <i class="bi bi-search" style="font-size:2.5rem; display:block; margin-bottom:12px;"></i>
+            <i class="bi bi-search"></i>
             Tidak ada dosen pada konsentrasi ini.
         </div>
+
         @else
-        <div class="text-center py-5">
-            <i class="bi bi-people" style="font-size:4rem; color:#ddd;"></i>
-            <p class="text-muted mt-3">Data dosen belum tersedia.</p>
+        <div class="text-center py-5" style="color:#9CA3AF;">
+            <i class="bi bi-people" style="font-size:4rem; display:block; margin-bottom:16px;"></i>
+            <p>Data dosen belum tersedia.</p>
         </div>
         @endif
     </div>
-</section>
+</div>
 
 @endsection
 
 @section('scripts')
 <script>
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        const filter = this.dataset.filter;
-        let visible = 0;
-        document.querySelectorAll('.dosen-item').forEach(item => {
-            const match = filter === 'semua' || item.dataset.konsentrasi === filter;
-            item.style.display = match ? '' : 'none';
-            if (match) visible++;
+(function () {
+    const tabs  = document.querySelectorAll('.ftab');
+    const items = document.querySelectorAll('.faculty-item');
+    const noRes = document.getElementById('no-result');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            const filter = this.dataset.filter;
+            let visible  = 0;
+
+            items.forEach(item => {
+                const match = filter === 'semua' || item.dataset.konsentrasi === filter;
+                item.style.display = match ? '' : 'none';
+                if (match) visible++;
+            });
+
+            if (noRes) noRes.style.display = visible === 0 ? 'block' : 'none';
         });
-        document.getElementById('no-result').style.display = visible === 0 ? 'block' : 'none';
     });
-});
+})();
 </script>
 @endsection

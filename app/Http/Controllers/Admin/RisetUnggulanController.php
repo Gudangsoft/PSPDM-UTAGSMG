@@ -10,7 +10,11 @@ class RisetUnggulanController extends Controller
 {
     public function index()
     {
-        $items = RisetUnggulan::orderBy('urutan')->get();
+        try {
+            $items = RisetUnggulan::orderBy('urutan')->get();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Tabel belum ada. Jalankan: php artisan migrate');
+        }
         return view('admin.riset-unggulan.index', compact('items'));
     }
 

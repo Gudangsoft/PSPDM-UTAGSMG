@@ -73,7 +73,11 @@ class HomeController extends Controller
 
     public function penelitian()
     {
-        $riset = RisetUnggulan::aktif()->get();
+        try {
+            $riset = RisetUnggulan::aktif()->get();
+        } catch (\Exception $e) {
+            $riset = collect();
+        }
         return view('penelitian', compact('riset'));
     }
 

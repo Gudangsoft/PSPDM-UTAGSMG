@@ -158,14 +158,14 @@
 
 /* Photo */
 .fc-photo {
-    width: 100%;
+    width: 100%; height: 300px;
     background: #f1f1ef;
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
     position: relative;
 }
 .fc-photo img {
-    width: 100%; height: auto;
+    width: 100%; height: 100%;
     display: block; object-fit: contain;
     transition: transform .5s cubic-bezier(.4,0,.2,1);
 }
@@ -274,12 +274,14 @@
     .ftab { padding: 12px 16px; font-size: .72rem; }
     .hero-stat-num { font-size: 1.5rem; }
     .faculty-grid-wrap { padding: 40px 0 64px; }
+    .fc-photo { height: 260px; }
     .fc-body { padding: 18px 18px 16px; }
     .fc-overlay { opacity: 1; background: linear-gradient(to top, rgba(15,23,42,.75) 0%, transparent 45%); }
 }
 @media (max-width: 575px) {
     .hero-stat { flex: 0 0 50%; }
     .faculty-hero h1 { font-size: 1.65rem; }
+    .fc-photo { height: 220px; }
 }
 </style>
 @endsection

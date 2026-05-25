@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Profil Lulusan - PSMPD-FEB UNTAG Semarang')
+@section('title', 'Profil Lulusan - ' . ($site['singkatan']?->value ?? 'PSMPD'))
 @section('content')
 
 <div class="page-hero">
@@ -16,7 +16,7 @@
     <div class="container-xl">
         <div class="section-title" data-aos="fade-up">
             <h2>5 Profil Lulusan Unggulan</h2>
-            <p>Lulusan PSMPD-FEB UNTAG mampu berkiprah di berbagai sektor strategis pada level tertinggi</p>
+            <p>Lulusan {{ $site['singkatan']?->value ?? 'PSMPD' }} – {{ $site['singkatan_institusi']?->value ?? 'FEB Untag Semarang' }} mampu berkiprah di berbagai sektor strategis pada level tertinggi</p>
         </div>
 
         @php

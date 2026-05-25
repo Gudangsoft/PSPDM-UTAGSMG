@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @php
-        $adminFaviconPath = $site['favicon']->value ?? '';
-        $adminFaviconUrl  = $adminFaviconPath ? asset('storage/' . $adminFaviconPath) : asset('favicon.ico');
-        $adminLogoPath    = $site['logo']->value ?? '';
-        $adminLogoUrl     = $adminLogoPath ? asset('storage/' . $adminLogoPath) : null;
-        $adminSingkatan   = $site['singkatan']->value ?? 'S3';
-        $adminNamaProdi   = $site['nama_prodi']->value ?? 'PSMPD Admin';
+        $adminFaviconPath        = $site['favicon']->value ?? '';
+        $adminFaviconUrl         = $adminFaviconPath ? asset('storage/' . $adminFaviconPath) : asset('favicon.ico');
+        $adminLogoPath           = $site['logo']->value ?? '';
+        $adminLogoUrl            = $adminLogoPath ? asset('storage/' . $adminLogoPath) : null;
+        $adminSingkatan          = $site['singkatan']->value ?? 'S3';
+        $adminNamaProdi          = $site['nama_prodi']->value ?? 'Admin';
+        $adminSingkatanInstitusi = $site['singkatan_institusi']->value ?? 'FEB Untag Semarang';
+        $adminWarnaPrimer        = $site['warna_primer']->value ?? '#C0304A';
+        $adminWarnaSekunder      = $site['warna_sekunder']->value ?? '#8B1A2E';
     @endphp
     <title>@yield('title', 'Admin') - {{ $adminSingkatan }}</title>
     <link rel="icon" type="image/x-icon" href="{{ $adminFaviconUrl }}">
@@ -17,7 +20,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --red: #C0304A; --red-dark: #952035; --sidebar-w: 260px; }
+        :root { --red: {{ $adminWarnaPrimer }}; --red-dark: {{ $adminWarnaSekunder }}; --sidebar-w: 260px; }
         * { box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #f0f2f5; min-height: 100vh; }
 
@@ -113,7 +116,7 @@
             </div>
             <div>
                 <div class="brand-title">{{ $adminSingkatan }} Admin</div>
-                <div class="brand-sub">FEB UNTAG Semarang</div>
+                <div class="brand-sub">{{ $adminSingkatanInstitusi }}</div>
             </div>
         </a>
     </div>

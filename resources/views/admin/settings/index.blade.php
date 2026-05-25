@@ -102,6 +102,115 @@
                 </div>
             </div>
 
+            {{-- Identitas Institusi --}}
+            <div class="admin-card card mb-4">
+                <div class="card-header"><i class="bi bi-building me-2"></i>Identitas Institusi & SEO</div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Fakultas</label>
+                            <input type="text" name="nama_fakultas" class="form-control"
+                                value="{{ $settings['nama_fakultas']?->value ?? 'Fakultas Ekonomika dan Bisnis' }}"
+                                placeholder="Fakultas Ekonomika dan Bisnis">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Singkatan Institusi</label>
+                            <input type="text" name="singkatan_institusi" class="form-control"
+                                value="{{ $settings['singkatan_institusi']?->value ?? 'FEB Untag Semarang' }}"
+                                placeholder="FEB Untag Semarang">
+                            <small class="text-muted">Tampil di navbar, footer, dan meta tag.</small>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Nama Universitas</label>
+                            <input type="text" name="nama_universitas" class="form-control"
+                                value="{{ $settings['nama_universitas']?->value ?? 'Universitas 17 Agustus 1945 Semarang' }}"
+                                placeholder="Universitas 17 Agustus 1945 Semarang">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label"><i class="bi bi-clock me-1 text-danger"></i>Jam Layanan</label>
+                            <textarea name="jam_layanan" rows="2" class="form-control"
+                                placeholder="Senin – Jumat: 08.00 – 16.00 WIB&#10;Sabtu: 08.00 – 12.00 WIB">{{ $settings['jam_layanan']?->value ?? '' }}</textarea>
+                            <small class="text-muted">Tampil di footer. Pisahkan baris dengan Enter.</small>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label"><i class="bi bi-tags me-1 text-danger"></i>Meta Keywords</label>
+                            <input type="text" name="meta_keywords" class="form-control"
+                                value="{{ $settings['meta_keywords']?->value ?? '' }}"
+                                placeholder="program doktor manajemen, PSPDM, UNTAG Semarang">
+                            <small class="text-muted">Pisahkan dengan koma. Digunakan untuk SEO.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tema Warna Website --}}
+            <div class="admin-card card mb-4">
+                <div class="card-header"><i class="bi bi-palette me-2"></i>Tema Warna Website</div>
+                <div class="card-body p-4">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Warna Primer</label>
+                            <small class="text-muted d-block mb-2">Tombol, header kartu, badge utama</small>
+                            <div class="d-flex gap-2 align-items-center">
+                                <input type="color" name="warna_primer" id="wp-picker"
+                                    class="form-control form-control-color flex-shrink-0"
+                                    value="{{ $settings['warna_primer']?->value ?? '#C0304A' }}"
+                                    oninput="syncHex('wp-picker','wp-hex'); updatePreview()">
+                                <input type="text" id="wp-hex" class="form-control font-monospace"
+                                    value="{{ $settings['warna_primer']?->value ?? '#C0304A' }}"
+                                    maxlength="7" placeholder="#C0304A"
+                                    oninput="syncPicker('wp-hex','wp-picker'); updatePreview()">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Warna Sekunder</label>
+                            <small class="text-muted d-block mb-2">Hover, gradien kartu, aksen</small>
+                            <div class="d-flex gap-2 align-items-center">
+                                <input type="color" name="warna_sekunder" id="ws-picker"
+                                    class="form-control form-control-color flex-shrink-0"
+                                    value="{{ $settings['warna_sekunder']?->value ?? '#8B1A2E' }}"
+                                    oninput="syncHex('ws-picker','ws-hex'); updatePreview()">
+                                <input type="text" id="ws-hex" class="form-control font-monospace"
+                                    value="{{ $settings['warna_sekunder']?->value ?? '#8B1A2E' }}"
+                                    maxlength="7" placeholder="#8B1A2E"
+                                    oninput="syncPicker('ws-hex','ws-picker'); updatePreview()">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Warna Gelap</label>
+                            <small class="text-muted d-block mb-2">Page hero, sidebar gelap</small>
+                            <div class="d-flex gap-2 align-items-center">
+                                <input type="color" name="warna_gelap" id="wg-picker"
+                                    class="form-control form-control-color flex-shrink-0"
+                                    value="{{ $settings['warna_gelap']?->value ?? '#5C0E1C' }}"
+                                    oninput="syncHex('wg-picker','wg-hex'); updatePreview()">
+                                <input type="text" id="wg-hex" class="form-control font-monospace"
+                                    value="{{ $settings['warna_gelap']?->value ?? '#5C0E1C' }}"
+                                    maxlength="7" placeholder="#5C0E1C"
+                                    oninput="syncPicker('wg-hex','wg-picker'); updatePreview()">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div id="color-preview" class="rounded-3 p-4 mt-2" style="background:linear-gradient(135deg,#C0304A,#8B1A2E);">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div style="width:40px;height:40px;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                                        <i class="bi bi-palette" style="color:#C0304A;font-size:1.2rem;" id="preview-icon"></i>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 text-white fw-bold" style="font-size:1rem;">Preview Tema Warna</p>
+                                        <p class="mb-0 text-white" style="font-size:.78rem;opacity:.85;">Gradien primer → sekunder seperti tampil di website</p>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <span id="preview-badge" class="badge text-white rounded-pill px-3 py-2" style="background:rgba(255,255,255,0.2);font-size:.75rem;">Tombol CTA</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="text-muted d-block mt-2"><i class="bi bi-info-circle me-1"></i>Perubahan warna akan diterapkan ke seluruh halaman website setelah disimpan.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {{-- Tombol CTA --}}
             <div class="admin-card card mb-4">
                 <div class="card-header"><i class="bi bi-cursor-fill me-2"></i>Tombol CTA Navbar (Daftar Sekarang)</div>
@@ -278,6 +387,22 @@ document.getElementById('tentang-gambar-input').addEventListener('change', funct
     };
     reader.readAsDataURL(file);
 });
+
+// Theme color pickers
+function syncHex(pickerId, hexId) {
+    document.getElementById(hexId).value = document.getElementById(pickerId).value;
+}
+function syncPicker(hexId, pickerId) {
+    const v = document.getElementById(hexId).value;
+    if (/^#[0-9a-fA-F]{6}$/.test(v)) document.getElementById(pickerId).value = v;
+}
+function updatePreview() {
+    const p = document.getElementById('wp-picker').value;
+    const s = document.getElementById('ws-picker').value;
+    const preview = document.getElementById('color-preview');
+    preview.style.background = 'linear-gradient(135deg,' + p + ',' + s + ')';
+    document.getElementById('preview-icon').style.color = p;
+}
 
 // Live preview — favicon
 document.getElementById('favicon-input').addEventListener('change', function () {

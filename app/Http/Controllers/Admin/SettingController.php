@@ -30,10 +30,18 @@ class SettingController extends Controller
             'tentang_gambar'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
             'cta_label'       => 'nullable|string|max:60',
             'cta_url'         => 'nullable|string|max:500',
-            'maps_embed'      => 'nullable|string|max:2000',
-            'website'         => 'nullable|url|max:200',
-            'wa_api_key'      => 'nullable|string|max:200',
-            'wa_sender'       => 'nullable|string|max:20',
+            'maps_embed'          => 'nullable|string|max:2000',
+            'website'             => 'nullable|url|max:200',
+            'wa_api_key'          => 'nullable|string|max:200',
+            'wa_sender'           => 'nullable|string|max:20',
+            'nama_fakultas'       => 'nullable|string|max:200',
+            'nama_universitas'    => 'nullable|string|max:200',
+            'singkatan_institusi' => 'nullable|string|max:100',
+            'jam_layanan'         => 'nullable|string|max:500',
+            'meta_keywords'       => 'nullable|string|max:500',
+            'warna_primer'        => 'nullable|string|max:7',
+            'warna_sekunder'      => 'nullable|string|max:7',
+            'warna_gelap'         => 'nullable|string|max:7',
         ]);
 
         $textKeys = [
@@ -42,6 +50,9 @@ class SettingController extends Controller
             'visi', 'misi', 'facebook', 'instagram', 'youtube', 'twitter',
             'whatsapp', 'deskripsi_singkat', 'cta_label', 'cta_url',
             'info_akreditasi', 'info_durasi', 'info_sks', 'maps_embed',
+            'nama_fakultas', 'nama_universitas', 'singkatan_institusi',
+            'jam_layanan', 'meta_keywords',
+            'warna_primer', 'warna_sekunder', 'warna_gelap',
         ];
 
         Setting::set('cta_aktif', $request->has('cta_aktif') ? '1' : '0');

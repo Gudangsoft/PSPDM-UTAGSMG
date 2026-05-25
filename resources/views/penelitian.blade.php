@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Penelitian - PSMPD-FEB UNTAG Semarang')
+@section('title', 'Penelitian - ' . ($site['singkatan']?->value ?? 'PSMPD'))
 @section('content')
 
 <div class="page-hero">
@@ -16,7 +16,7 @@
     <div class="container-xl">
         <div class="section-title" data-aos="fade-up">
             <h2>Unggulan Riset</h2>
-            <p>PSMPD-FEB UNTAG berkomitmen pada penelitian berkualitas tinggi yang berdampak bagi masyarakat</p>
+            <p>{{ $site['singkatan']?->value ?? 'PSMPD' }}-{{ $site['singkatan_institusi']?->value ?? 'FEB UNTAG' }} berkomitmen pada penelitian berkualitas tinggi yang berdampak bagi masyarakat</p>
         </div>
 
         <div class="d-flex flex-column gap-4 mb-5">

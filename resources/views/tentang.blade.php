@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Tentang Program - PSMPD-FEB UNTAG Semarang')
+@section('title', 'Tentang Program - ' . ($site['singkatan']?->value ?? 'PSMPD'))
 @section('content')
 
 <div class="page-hero">
@@ -26,9 +26,15 @@
                          style="width:100%;height:auto;display:block;">
                 </div>
                 @endif
+                @php
+                    $tNamaProdi    = $site['nama_prodi']?->value ?? 'Program Studi Manajemen Program Doktor';
+                    $tFakultas     = $site['nama_fakultas']?->value ?? 'Fakultas Ekonomika dan Bisnis';
+                    $tUniversitas  = $site['nama_universitas']?->value ?? 'Universitas 17 Agustus 1945 Semarang';
+                    $tSingkatan    = $site['singkatan']?->value ?? 'PSMPD';
+                @endphp
                 <span class="badge" style="background:var(--red-primary); color:white; padding:6px 14px; border-radius:20px; font-size:0.8rem; margin-bottom:16px; display:inline-block;">Program Doktor</span>
-                <h2 style="font-size:1.8rem; font-weight:700; color:var(--dark); margin-bottom:16px;">Program Studi Manajemen Program Doktor FEB UNTAG Semarang</h2>
-                <p class="text-muted" style="line-height:1.8;">Program Studi Manajemen Program Doktor (PSMPD) Fakultas Ekonomi dan Bisnis Universitas 17 Agustus 1945 Semarang hadir sebagai pusat unggulan riset dan pengembangan teori manajemen berbasis nilai-nilai Pancasila.</p>
+                <h2 style="font-size:1.8rem; font-weight:700; color:var(--dark); margin-bottom:16px;">{{ $tNamaProdi }} {{ $tFakultas }}</h2>
+                <p class="text-muted" style="line-height:1.8;">{{ $tNamaProdi }} ({{ $tSingkatan }}) {{ $tFakultas }} {{ $tUniversitas }} hadir sebagai pusat unggulan riset dan pengembangan teori manajemen berbasis nilai-nilai Pancasila.</p>
                 <p class="text-muted" style="line-height:1.8;">Program ini berorientasi pada transformasi strategis organisasi dan kelembagaan, untuk melahirkan pemikiran manajemen Indonesia yang orisinal, inovatif, dan berdaya saing global.</p>
                 <div class="row g-3 mt-2">
                     <div class="col-4">

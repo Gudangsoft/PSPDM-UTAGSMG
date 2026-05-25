@@ -2,41 +2,50 @@
     // Helper closure untuk membaca setting dengan fallback
     $s = fn(string $key, string $default = '') => $site[$key]?->value ?? $default;
 
-    $namaProdi   = $s('nama_prodi',  'Program Studi Manajemen Program Doktor');
-    $singkatan   = $s('singkatan',   'PSMPD');
-    $telepon     = $s('telepon',     '(024) 8316405');
-    $email       = $s('email',       'psmpd@untag-smg.ac.id');
-    $alamat      = $s('alamat',      'Jl. Pawiyatan Luhur IV No.1, Semarang');
-    $facebook    = $s('facebook',    '#');
-    $instagram   = $s('instagram',   '#');
-    $youtube     = $s('youtube',     '#');
-    $twitter     = $s('twitter',     '#');
-    $whatsapp    = $s('whatsapp',    '');
-    $website     = $s('website',     'https://untag-smg.ac.id');
-    $deskripsi   = $s('deskripsi_singkat', 'Program Studi Manajemen Program Doktor FEB UNTAG Semarang menghasilkan doktor manajemen yang kompeten, berintegritas, dan berdaya saing global berlandaskan nilai-nilai Pancasila.');
-    $logoPath    = $s('logo',        '');
-    $faviconPath = $s('favicon',     '');
-    $logoUrl     = $logoPath  ? asset('storage/' . $logoPath)   : null;
-    $faviconUrl  = $faviconPath ? asset('storage/' . $faviconPath) : asset('favicon.ico');
-    $whatsappUrl = $whatsapp ? 'https://wa.me/' . preg_replace('/\D/', '', $whatsapp) : '#';
+    $namaProdi          = $s('nama_prodi',          'Program Studi Manajemen Program Doktor');
+    $singkatan          = $s('singkatan',           'PSMPD');
+    $namaFakultas       = $s('nama_fakultas',       'Fakultas Ekonomika dan Bisnis');
+    $namaUniversitas    = $s('nama_universitas',     'Universitas 17 Agustus 1945 Semarang');
+    $singkatanInstitusi = $s('singkatan_institusi',  'FEB Untag Semarang');
+    $jamLayanan         = $s('jam_layanan',          "Senin – Jumat: 08.00 – 16.00 WIB\nSabtu: 08.00 – 12.00 WIB");
+    $metaKeywords       = $s('meta_keywords',        'program doktor manajemen, UNTAG Semarang, FEB UNTAG, S3 manajemen');
+    $telepon            = $s('telepon',              '(024) 8316405');
+    $email              = $s('email',                'psmpd@untag-smg.ac.id');
+    $alamat             = $s('alamat',               'Jl. Pawiyatan Luhur IV No.1, Semarang');
+    $facebook           = $s('facebook',             '#');
+    $instagram          = $s('instagram',            '#');
+    $youtube            = $s('youtube',              '#');
+    $twitter            = $s('twitter',              '#');
+    $whatsapp           = $s('whatsapp',             '');
+    $website            = $s('website',              'https://untag-smg.ac.id');
+    $deskripsi          = $s('deskripsi_singkat',    "{$namaProdi} {$singkatanInstitusi} menghasilkan doktor manajemen yang kompeten, berintegritas, dan berdaya saing global.");
+    $logoPath           = $s('logo',                 '');
+    $faviconPath        = $s('favicon',              '');
+    $logoUrl            = $logoPath   ? asset('storage/' . $logoPath)   : null;
+    $faviconUrl         = $faviconPath ? asset('storage/' . $faviconPath) : asset('favicon.ico');
+    $whatsappUrl        = $whatsapp ? 'https://wa.me/' . preg_replace('/\D/', '', $whatsapp) : '#';
+    $warnaPrimer        = $s('warna_primer',   '#C0304A');
+    $warnaSekunder      = $s('warna_sekunder', '#8B1A2E');
+    $warnaGelap         = $s('warna_gelap',    '#5C0E1C');
+    $titleSuffix        = $singkatan . ' - ' . $singkatanInstitusi;
 @endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ $namaProdi }} - Fakultas Ekonomi dan Bisnis Universitas 17 Agustus 1945 Semarang">
-    <meta name="keywords" content="doktor manajemen, PSMPD, UNTAG Semarang, program doktor, FEB UNTAG">
+    <meta name="description" content="{{ $namaProdi }} - {{ $namaFakultas }} {{ $namaUniversitas }}">
+    <meta name="keywords" content="{{ $metaKeywords }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('og_title', $singkatan . ' - FEB UNTAG Semarang')">
+    <meta property="og:title" content="@yield('og_title', $titleSuffix)">
     <meta property="og:description" content="@yield('og_description', $deskripsi)">
     <meta property="og:image" content="@yield('og_image', $logoUrl ?? '')">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('og_title', $singkatan . ' - FEB UNTAG Semarang')">
+    <meta name="twitter:title" content="@yield('og_title', $titleSuffix)">
     <meta name="twitter:description" content="@yield('og_description', $deskripsi)">
     <meta name="twitter:image" content="@yield('og_image', $logoUrl ?? '')">
-    <title>@yield('title', $singkatan . ' - FEB UNTAG Semarang')</title>
+    <title>@yield('title', $titleSuffix)</title>
 
     {{-- Favicon: dari database, fallback ke default --}}
     <link rel="icon" type="image/x-icon" href="{{ $faviconUrl }}">
@@ -52,11 +61,12 @@
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    {{-- CSS theme variables dari settings --}}
     <style>
         :root {
-            --red-primary: #C0304A;
-            --red-dark: #952035;
-            --red-light: #ff4444;
+            --red-primary: {{ $warnaPrimer }};
+            --red-dark:    {{ $warnaSekunder }};
+            --red-light:   #ff4444;
             --white: #ffffff;
             --gray-light: #f8f9fa;
             --gray-mid: #e9ecef;
@@ -479,7 +489,7 @@
                     @endphp
                     <div class="logo-line1">{{ $line1 }}</div>
                     @if($line2)<div class="logo-line2">{{ $line2 }}</div>@endif
-                    <div class="logo-sub">Fakultas Ekonomi dan Bisnis &bull; Universitas 17 Agustus 1945 Semarang</div>
+                    <div class="logo-sub">{{ $namaFakultas }} &bull; {{ $namaUniversitas }}</div>
                 </a>
             </div>
         </div>
@@ -514,7 +524,7 @@
             <a href="{{ route('home') }}" class="d-lg-none me-auto text-decoration-none"
                style="font-size:.75rem;font-weight:700;color:var(--red-primary);letter-spacing:.5px;line-height:1.2;max-width:180px;">
                 {{ $singkatan }}<br>
-                <span style="font-weight:400;color:#666;font-size:.68rem;">FEB UNTAG Semarang</span>
+                <span style="font-weight:400;color:#666;font-size:.68rem;">{{ $singkatanInstitusi }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
                     style="padding:6px 10px;">
@@ -656,17 +666,19 @@
                         <li><i class="bi bi-whatsapp"></i><a href="{{ $whatsappUrl }}" target="_blank">{{ $whatsapp }}</a></li>
                         @endif
                     </ul>
+                    @if($jamLayanan)
                     <div class="mt-3">
                         <h5 style="font-size:0.875rem;">Jam Layanan</h5>
-                        <small style="opacity:0.8;">Senin – Jumat: 08.00 – 16.00 WIB<br>Sabtu: 08.00 – 12.00 WIB</small>
+                        <small style="opacity:0.8;">{!! nl2br(e($jamLayanan)) !!}</small>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
         <div class="footer-bottom mt-4">
             <div class="container-xl d-flex flex-wrap justify-content-between gap-2">
-                <span>&copy; {{ date('Y') }} {{ $singkatan }}-FEB UNTAG Semarang. Hak Cipta Dilindungi.</span>
-                <span>{{ $namaProdi }} &bull; Universitas 17 Agustus 1945 Semarang</span>
+                <span>&copy; {{ date('Y') }} {{ $singkatan }} – {{ $singkatanInstitusi }}. Hak Cipta Dilindungi.</span>
+                <span>{{ $namaProdi }} &bull; {{ $namaUniversitas }}</span>
             </div>
         </div>
     </footer>

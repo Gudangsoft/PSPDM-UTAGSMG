@@ -361,6 +361,17 @@
             <p>Jajaran pimpinan dan staf {{ $namaProdi }} FEB UNTAG Semarang</p>
         </div>
 
+        @php $kataPembuka = $site['struktur_kata_pembuka']?->value ?? ''; @endphp
+        @if($kataPembuka)
+        <div class="row justify-content-center mb-4" data-aos="fade-up">
+            <div class="col-lg-9">
+                <div style="background:#fff5f5; border-left:4px solid var(--red-primary); border-radius:0 12px 12px 0; padding:20px 24px;">
+                    <p style="color:#444; line-height:1.85; margin:0; font-size:.97rem;">{!! nl2br(e($kataPembuka)) !!}</p>
+                </div>
+            </div>
+        </div>
+        @endif
+
         @if($pejabat->count() > 0)
             <div class="row g-4 justify-content-center">
                 @foreach($pejabat as $i => $p)

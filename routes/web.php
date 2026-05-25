@@ -82,6 +82,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('dosen', AdminDosenController::class);
     Route::resource('jabatan', AdminJabatanController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('pejabat', AdminPejabatController::class);
+    Route::post('pejabat-kata-pembuka', [AdminPejabatController::class, 'saveKataPembuka'])->name('pejabat.kata-pembuka');
     Route::resource('halaman', AdminHalamanController::class);
     Route::resource('menu', MenuController::class)->except(['show']);
     Route::post('menu/{menu}/up',   [MenuController::class, 'moveUp'])->name('menu.moveUp');

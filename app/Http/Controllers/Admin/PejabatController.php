@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pejabat;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,8 +12,16 @@ class PejabatController extends Controller
 {
     public function index()
     {
-        $pejabat = Pejabat::orderBy('urutan')->get();
-        return view('admin.pejabat.index', compact('pejabat'));
+        $pejabat       = Pejabat::orderBy('urutan')->get();
+        $kataPembuka   = Setting::get('struktur_kata_pembuka', '');
+        return view('admin.pejabat.index', compact('pejabat', 'kataPembuka'));
+    }
+
+    public function saveKataPembuka(Request $request)
+    {
+        $request->validate(['kata_pembuka' => 'nullable|string|max:2000']);
+        Setting::set('struktur_kata_pembuka', $request->input('kata_pembuka', ''));
+        return back()->with('success', 'Kata pembuka berhasil disimpan.');
     }
 
     public function create()

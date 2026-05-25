@@ -3,6 +3,35 @@
 @section('page-title', 'Struktur & Pejabat')
 @section('content')
 
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+@endif
+
+{{-- KATA PEMBUKA --}}
+<div class="admin-card card mb-4">
+    <div class="card-header d-flex align-items-center gap-2">
+        <i class="bi bi-text-paragraph" style="color:var(--red);"></i>
+        <span style="font-weight:600;">Kata Pembuka Halaman Struktur</span>
+        <span class="text-muted ms-1" style="font-size:.8rem;">— teks yang tampil di atas daftar pejabat</span>
+    </div>
+    <div class="card-body p-4">
+        <form action="{{ route('admin.pejabat.kata-pembuka') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <textarea name="kata_pembuka" rows="4" class="form-control"
+                          placeholder="Tuliskan kata pengantar atau deskripsi singkat tentang struktur organisasi program studi...">{{ old('kata_pembuka', $kataPembuka) }}</textarea>
+                <small class="text-muted">Teks ini akan tampil di halaman publik /struktur, di atas daftar pejabat. Kosongkan jika tidak ingin ditampilkan.</small>
+            </div>
+            <button type="submit" class="btn btn-admin-primary btn-sm">
+                <i class="bi bi-save me-1"></i>Simpan Kata Pembuka
+            </button>
+        </form>
+    </div>
+</div>
+
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <p class="text-muted mb-0" style="font-size:.875rem;">Kelola data pejabat dan struktur organisasi program studi.</p>

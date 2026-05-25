@@ -11,6 +11,7 @@ use App\Models\Halaman;
 use App\Models\JadwalPmb;
 use App\Models\Konsentrasi;
 use App\Models\Pengumuman;
+use App\Models\Kurikulum;
 use App\Models\Pejabat;
 use Illuminate\Http\Request;
 
@@ -83,8 +84,9 @@ class HomeController extends Controller
 
     public function struktur()
     {
-        $pejabat = Pejabat::aktif()->get();
-        return view('struktur', compact('pejabat'));
+        $pejabat   = Pejabat::aktif()->get();
+        $kurikulum = Kurikulum::aktif()->get();
+        return view('struktur', compact('pejabat', 'kurikulum'));
     }
 
     public function biaya()

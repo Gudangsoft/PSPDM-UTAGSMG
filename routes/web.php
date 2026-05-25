@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialControll
 use App\Http\Controllers\Admin\AgendaController as AdminAgendaController;
 use App\Http\Controllers\Admin\PublikasiController as AdminPublikasiController;
 use App\Http\Controllers\Admin\RisetUnggulanController as AdminRisetController;
+use App\Http\Controllers\Admin\KurikulumController as AdminKurikulumController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\AgendaController;
@@ -90,6 +91,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::delete('pesan/{pesan}', [PesanController::class, 'destroy'])->name('pesan.destroy');
     Route::resource('jadwal-pmb', JadwalPmbController::class)->except(['show']);
     Route::resource('konsentrasi', AdminKonsentrasiController::class)->except(['show']);
+    Route::resource('kurikulum', AdminKurikulumController::class)->except(['show']);
     Route::get('beranda', [AdminBerandaController::class, 'index'])->name('beranda.index');
     Route::post('beranda', [AdminBerandaController::class, 'update'])->name('beranda.update');
     Route::post('beranda/hero-gambar/hapus', [AdminBerandaController::class, 'destroyHeroGambar'])->name('beranda.destroyHeroGambar');

@@ -50,6 +50,81 @@
 .sambutan-signature .sig-jabatan { font-size: 0.85rem; color: var(--red-primary); font-weight: 600; }
 .sambutan-signature .sig-instansi { font-size: 0.8rem; color: #888; }
 
+/* ===== KURIKULUM ===== */
+.kurikulum-section { padding: 80px 0; background: white; }
+.kurikulum-semester-card {
+    background: white; border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    overflow: hidden; margin-bottom: 24px;
+}
+.kurikulum-semester-header {
+    background: linear-gradient(135deg, #C0304A 0%, #8B1A2E 100%);
+    color: white; padding: 14px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.kurikulum-semester-header h5 { margin: 0; font-size: 1rem; font-weight: 700; }
+.kurikulum-semester-header .sks-badge {
+    background: rgba(255,255,255,0.2);
+    padding: 3px 12px; border-radius: 20px;
+    font-size: 0.82rem; font-weight: 600;
+}
+.kurikulum-table { width: 100%; border-collapse: collapse; }
+.kurikulum-table th {
+    background: #f8f9fa; padding: 10px 16px;
+    font-size: 0.78rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    color: #666; border-bottom: 1px solid #eee;
+}
+.kurikulum-table td {
+    padding: 12px 16px; border-bottom: 1px solid #f0f0f0;
+    font-size: 0.88rem; color: #444;
+}
+.kurikulum-table tr:last-child td { border-bottom: none; }
+.kurikulum-table tr:hover td { background: #fafafa; }
+.mk-kode { font-family: monospace; font-size: 0.82rem; color: #888; }
+.mk-nama { font-weight: 600; color: #1a1a2e; }
+.mk-sks {
+    display: inline-block;
+    background: #fff5f5; color: var(--red-primary);
+    border: 1px solid rgba(192,48,74,0.2);
+    padding: 2px 10px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 700;
+}
+.mk-jenis-wajib {
+    display: inline-block;
+    background: #eff6ff; color: #1d4ed8;
+    border: 1px solid rgba(29,78,216,0.2);
+    padding: 2px 10px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 600;
+}
+.mk-jenis-pilihan {
+    display: inline-block;
+    background: #f0fdfa; color: #0d9488;
+    border: 1px solid rgba(13,148,136,0.2);
+    padding: 2px 10px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 600;
+}
+.kurikulum-summary {
+    display: flex; gap: 24px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 40px;
+}
+.kurikulum-summary-item {
+    text-align: center; background: white;
+    border-radius: 14px; padding: 20px 28px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    min-width: 120px;
+}
+.kurikulum-summary-item .num {
+    font-size: 2rem; font-weight: 800; color: var(--red-primary); line-height: 1;
+}
+.kurikulum-summary-item .lbl {
+    font-size: 0.78rem; color: #888; margin-top: 4px;
+}
+@media (max-width: 575.98px) {
+    .kurikulum-table th, .kurikulum-table td { padding: 8px 10px; font-size: 0.78rem; }
+    .kurikulum-semester-header { padding: 10px 14px; }
+}
+
 /* ===== STRUKTUR ===== */
 .struktur-section { padding: 80px 0; background: #f8f9fa; }
 
@@ -195,6 +270,85 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+@endif
+
+{{-- ===== KURIKULUM ===== --}}
+@if($kurikulum->count() > 0)
+@php
+    $bySemester  = $kurikulum->groupBy('semester');
+    $totalSks    = $kurikulum->sum('sks');
+    $totalWajib  = $kurikulum->where('jenis','wajib')->count();
+    $totalPilihan= $kurikulum->where('jenis','pilihan')->count();
+@endphp
+<section class="kurikulum-section">
+    <div class="container-xl">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Kurikulum Program Studi</h2>
+            <p>Struktur mata kuliah dan beban studi {{ $namaProdi }}</p>
+        </div>
+
+        <div class="kurikulum-summary" data-aos="fade-up">
+            <div class="kurikulum-summary-item">
+                <div class="num">{{ $kurikulum->count() }}</div>
+                <div class="lbl">Total Mata Kuliah</div>
+            </div>
+            <div class="kurikulum-summary-item">
+                <div class="num">{{ $totalSks }}</div>
+                <div class="lbl">Total SKS</div>
+            </div>
+            <div class="kurikulum-summary-item">
+                <div class="num">{{ $totalWajib }}</div>
+                <div class="lbl">MK Wajib</div>
+            </div>
+            <div class="kurikulum-summary-item">
+                <div class="num">{{ $totalPilihan }}</div>
+                <div class="lbl">MK Pilihan</div>
+            </div>
+        </div>
+
+        @foreach($bySemester as $semester => $matkuls)
+        <div class="kurikulum-semester-card" data-aos="fade-up">
+            <div class="kurikulum-semester-header">
+                <h5><i class="bi bi-calendar3 me-2"></i>Semester {{ $semester }}</h5>
+                <span class="sks-badge">{{ $matkuls->sum('sks') }} SKS</span>
+            </div>
+            <div class="table-responsive">
+                <table class="kurikulum-table">
+                    <thead>
+                        <tr>
+                            <th style="width:110px">Kode MK</th>
+                            <th>Nama Mata Kuliah</th>
+                            <th style="width:70px" class="text-center">SKS</th>
+                            <th style="width:100px" class="text-center">Jenis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($matkuls->sortBy('urutan') as $mk)
+                        <tr>
+                            <td><span class="mk-kode">{{ $mk->kode_mk ?: '-' }}</span></td>
+                            <td>
+                                <span class="mk-nama">{{ $mk->nama_mk }}</span>
+                                @if($mk->keterangan)
+                                    <div style="font-size:.78rem; color:#aaa; margin-top:2px;">{{ $mk->keterangan }}</div>
+                                @endif
+                            </td>
+                            <td class="text-center"><span class="mk-sks">{{ $mk->sks }}</span></td>
+                            <td class="text-center">
+                                @if($mk->jenis === 'wajib')
+                                    <span class="mk-jenis-wajib">Wajib</span>
+                                @else
+                                    <span class="mk-jenis-pilihan">Pilihan</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endforeach
     </div>
 </section>
 @endif

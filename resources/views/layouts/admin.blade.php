@@ -137,6 +137,9 @@
         <a href="{{ route('admin.konsentrasi.index') }}" class="sidebar-link {{ request()->routeIs('admin.konsentrasi.*') ? 'active' : '' }}">
             <i class="bi bi-diagram-3"></i> Konsentrasi
         </a>
+        <a href="{{ route('admin.kurikulum.index') }}" class="sidebar-link {{ request()->routeIs('admin.kurikulum.*') ? 'active' : '' }}">
+            <i class="bi bi-book-half"></i> Kurikulum
+        </a>
         <a href="{{ route('admin.jabatan.index') }}" class="sidebar-link {{ request()->routeIs('admin.jabatan.*') ? 'active' : '' }}">
             <i class="bi bi-award"></i> Jabatan Akademik
         </a>

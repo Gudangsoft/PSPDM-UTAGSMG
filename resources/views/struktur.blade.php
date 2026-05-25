@@ -347,9 +347,9 @@
 @endphp
 <section class="kurikulum-section">
     <div class="container-xl">
-        <div class="section-title" data-aos="fade-up">
-            <h2>Kurikulum Program Studi</h2>
-            <p>Struktur mata kuliah dan beban studi {{ $namaProdi }}</p>
+        <div class="section-title text-center" data-aos="fade-up">
+            <h2>KURIKULUM BERBASIS OUTCOME-BASED EDUCATION (OBE)</h2>
+            <p>Fondasi Kompetensi Unggul Lulusan Program Doktor Manajemen FEB Untag Semarang</p>
         </div>
 
         <div class="kurikulum-summary" data-aos="fade-up">
@@ -426,10 +426,9 @@
                 <div class="kata-pembuka-wrap">
                     <div class="text-center">
                         <div class="kata-pembuka-label">
-                            <i class="bi bi-quote"></i> Kata Pembuka
+                            <i class="bi bi-mortarboard-fill"></i> KURIKULUM BERBASIS OUTCOME-BASED EDUCATION (OBE)
                         </div>
                     </div>
-                    <h3 class="kata-pembuka-title">Struktur Organisasi</h3>
                     <p class="kata-pembuka-text">{!! nl2br(e($kataPembuka)) !!}</p>
                     <div class="kata-pembuka-divider">
                         <span></span>
@@ -439,12 +438,12 @@
                 </div>
             </div>
         </div>
-        @else
+        @endif
+
         <div class="section-title" data-aos="fade-up">
             <h2>Struktur Organisasi</h2>
             <p>Jajaran pimpinan dan staf {{ $namaProdi }} FEB UNTAG Semarang</p>
         </div>
-        @endif
 
         @if($pejabat->count() > 0)
             <div class="row g-4 justify-content-center">

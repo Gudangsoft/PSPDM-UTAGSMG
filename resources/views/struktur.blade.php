@@ -356,11 +356,6 @@
 {{-- ===== STRUKTUR ORGANISASI ===== --}}
 <section class="struktur-section">
     <div class="container-xl">
-        <div class="section-title" data-aos="fade-up">
-            <h2>Struktur Organisasi</h2>
-            <p>Jajaran pimpinan dan staf {{ $namaProdi }} FEB UNTAG Semarang</p>
-        </div>
-
         @php $kataPembuka = $site['struktur_kata_pembuka']?->value ?? ''; @endphp
         @if($kataPembuka)
         <div class="row justify-content-center mb-4" data-aos="fade-up">
@@ -371,6 +366,11 @@
             </div>
         </div>
         @endif
+
+        <div class="section-title" data-aos="fade-up">
+            <h2>Struktur Organisasi</h2>
+            <p>Jajaran pimpinan dan staf {{ $namaProdi }} FEB UNTAG Semarang</p>
+        </div>
 
         @if($pejabat->count() > 0)
             <div class="row g-4 justify-content-center">

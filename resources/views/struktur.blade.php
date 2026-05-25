@@ -347,11 +347,6 @@
 @endphp
 <section class="kurikulum-section">
     <div class="container-xl">
-        <div class="section-title text-center" data-aos="fade-up">
-            <h2>KURIKULUM BERBASIS OUTCOME-BASED EDUCATION (OBE)</h2>
-            <p>Fondasi Kompetensi Unggul Lulusan Program Doktor Manajemen FEB Untag Semarang</p>
-        </div>
-
         <div class="kurikulum-summary" data-aos="fade-up">
             <div class="kurikulum-summary-item">
                 <div class="num">{{ $kurikulum->count() }}</div>
@@ -428,6 +423,9 @@
                         <div class="kata-pembuka-label">
                             <i class="bi bi-mortarboard-fill"></i> KURIKULUM BERBASIS OUTCOME-BASED EDUCATION (OBE)
                         </div>
+                        <p style="color:#888; font-size:.88rem; margin:8px 0 0; font-style:italic;">
+                            Fondasi Kompetensi Unggul Lulusan Program Doktor Manajemen FEB Untag Semarang
+                        </p>
                     </div>
                     <p class="kata-pembuka-text">{!! nl2br(e($kataPembuka)) !!}</p>
                     <div class="kata-pembuka-divider">

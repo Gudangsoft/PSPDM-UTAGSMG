@@ -140,6 +140,9 @@
         <a href="{{ route('admin.kurikulum.index') }}" class="sidebar-link {{ request()->routeIs('admin.kurikulum.*') ? 'active' : '' }}">
             <i class="bi bi-book-half"></i> Kurikulum
         </a>
+        <a href="{{ route('admin.jadwal-akademik.index') }}" class="sidebar-link {{ request()->routeIs('admin.jadwal-akademik.*') ? 'active' : '' }}">
+            <i class="bi bi-calendar3-week"></i> Jadwal Akademik
+        </a>
         <a href="{{ route('admin.jabatan.index') }}" class="sidebar-link {{ request()->routeIs('admin.jabatan.*') ? 'active' : '' }}">
             <i class="bi bi-award"></i> Jabatan Akademik
         </a>

@@ -50,6 +50,7 @@ Route::get('/dosen', [HomeController::class, 'dosen'])->name('dosen');
 Route::get('/dosen/{dosen}', [HomeController::class, 'dosenShow'])->name('dosen.show');
 Route::get('/penelitian', [HomeController::class, 'penelitian'])->name('penelitian');
 Route::get('/struktur', [HomeController::class, 'struktur'])->name('struktur');
+Route::get('/jadwal-akademik', [HomeController::class, 'jadwalAkademik'])->name('jadwal-akademik');
 Route::get('/biaya-pendidikan', [HomeController::class, 'biaya'])->name('biaya');
 
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');

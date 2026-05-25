@@ -11,6 +11,7 @@ use App\Models\Halaman;
 use App\Models\JadwalPmb;
 use App\Models\Konsentrasi;
 use App\Models\Pengumuman;
+use App\Models\JadwalAkademik;
 use App\Models\Kurikulum;
 use App\Models\Pejabat;
 use Illuminate\Http\Request;
@@ -87,6 +88,13 @@ class HomeController extends Controller
         $pejabat   = Pejabat::aktif()->get();
         $kurikulum = Kurikulum::aktif()->get();
         return view('struktur', compact('pejabat', 'kurikulum'));
+    }
+
+    public function jadwalAkademik()
+    {
+        $jadwal  = JadwalAkademik::aktif()->get();
+        $grouped = $jadwal->groupBy(fn($j) => $j->tahun_akademik . '|' . $j->semester);
+        return view('jadwal-akademik', compact('jadwal', 'grouped'));
     }
 
     public function biaya()

@@ -125,6 +125,69 @@
     .kurikulum-semester-header { padding: 10px 14px; }
 }
 
+/* ===== KATA PEMBUKA ===== */
+.kata-pembuka-wrap {
+    position: relative;
+    background: linear-gradient(135deg, #fff 0%, #fff5f6 100%);
+    border-radius: 20px;
+    padding: 44px 52px;
+    box-shadow: 0 8px 40px rgba(192,48,74,0.08);
+    margin-bottom: 48px;
+    overflow: hidden;
+}
+.kata-pembuka-wrap::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 6px; height: 100%;
+    background: linear-gradient(180deg, #C0304A 0%, #8B1A2E 100%);
+    border-radius: 6px 0 0 6px;
+}
+.kata-pembuka-wrap::after {
+    content: '\275D';
+    position: absolute; bottom: -10px; right: 28px;
+    font-size: 9rem; line-height: 1;
+    color: rgba(192,48,74,0.06);
+    font-family: Georgia, serif;
+    pointer-events: none;
+}
+.kata-pembuka-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff0f2; color: var(--red-primary);
+    border: 1px solid rgba(192,48,74,0.18);
+    padding: 5px 16px; border-radius: 30px;
+    font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+.kata-pembuka-title {
+    font-size: 1.45rem; font-weight: 800;
+    color: var(--dark, #1a1a2e); margin-bottom: 16px;
+    text-align: center;
+    line-height: 1.35;
+}
+.kata-pembuka-text {
+    font-size: 1rem; line-height: 1.95;
+    color: #4a4a5a; text-align: justify;
+    text-align-last: left;
+    margin: 0;
+}
+.kata-pembuka-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0 0;
+    justify-content: center;
+}
+.kata-pembuka-divider span {
+    width: 40px; height: 3px; border-radius: 2px;
+    background: linear-gradient(to right, #C0304A, #8B1A2E);
+    display: inline-block;
+}
+.kata-pembuka-divider i { color: var(--red-primary); font-size: 1rem; }
+@media (max-width: 767.98px) {
+    .kata-pembuka-wrap { padding: 28px 24px; }
+    .kata-pembuka-title { font-size: 1.15rem; }
+    .kata-pembuka-text { font-size: .9rem; }
+}
+
 /* ===== STRUKTUR ===== */
 .struktur-section { padding: 80px 0; background: #f8f9fa; }
 
@@ -358,19 +421,30 @@
     <div class="container-xl">
         @php $kataPembuka = $site['struktur_kata_pembuka']?->value ?? ''; @endphp
         @if($kataPembuka)
-        <div class="row justify-content-center mb-4" data-aos="fade-up">
-            <div class="col-lg-9">
-                <div style="background:#fff5f5; border-left:4px solid var(--red-primary); border-radius:0 12px 12px 0; padding:20px 24px;">
-                    <p style="color:#444; line-height:1.85; margin:0; font-size:.97rem;">{!! nl2br(e($kataPembuka)) !!}</p>
+        <div class="row justify-content-center" data-aos="fade-up">
+            <div class="col-lg-10">
+                <div class="kata-pembuka-wrap">
+                    <div class="text-center">
+                        <div class="kata-pembuka-label">
+                            <i class="bi bi-quote"></i> Kata Pembuka
+                        </div>
+                    </div>
+                    <h3 class="kata-pembuka-title">Struktur Organisasi</h3>
+                    <p class="kata-pembuka-text">{!! nl2br(e($kataPembuka)) !!}</p>
+                    <div class="kata-pembuka-divider">
+                        <span></span>
+                        <i class="bi bi-building"></i>
+                        <span></span>
+                    </div>
                 </div>
             </div>
         </div>
-        @endif
-
+        @else
         <div class="section-title" data-aos="fade-up">
             <h2>Struktur Organisasi</h2>
             <p>Jajaran pimpinan dan staf {{ $namaProdi }} FEB UNTAG Semarang</p>
         </div>
+        @endif
 
         @if($pejabat->count() > 0)
             <div class="row g-4 justify-content-center">

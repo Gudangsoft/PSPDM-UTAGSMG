@@ -371,43 +371,14 @@ $g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $defaul
         </div>
     </div>
     <div class="admin-card card">
-        <div class="card-header"><i class="bi bi-diagram-3 me-2"></i>3 Kartu Konsentrasi Program Studi</div>
         <div class="card-body p-4">
-            @php
-            $konsDefault = [
-                1 => ['bi-people-fill', 'Manajemen Modal Manusia Strategis', 'Mengkaji pengembangan, pengelolaan, dan optimalisasi sumber daya manusia secara strategis untuk meningkatkan kinerja organisasi dan daya saing institusi di era global.'],
-                2 => ['bi-graph-up-arrow', 'Manajemen Ekosistem Pasar Inovatif', 'Mempelajari dinamika pasar berbasis teknologi, transformasi bisnis, dan strategi pengelolaan ekosistem pasar yang inovatif, adaptif, dan kompetitif di tingkat nasional maupun internasional.'],
-                3 => ['bi-currency-exchange', 'Manajemen Keuangan Etis & Pengembangan Berkelanjutan', 'Mengintegrasikan prinsip etika, tata kelola keuangan yang bertanggung jawab, dan strategi pengembangan berkelanjutan untuk menciptakan nilai ekonomi yang berdampak sosial dan lingkungan positif.'],
-            ];
-            @endphp
-            <div class="row g-4">
-                @foreach([1,2,3] as $i)
-                <div class="col-lg-4">
-                    <div class="item-block">
-                        <div class="item-block-header">
-                            <span class="icon-preview-inline" id="kons-icon-preview-{{ $i }}">
-                                <i class="bi {{ $g('kons_'.$i.'_icon', $konsDefault[$i][0]) }}"></i>
-                            </span>
-                            Konsentrasi {{ $i }}
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-label" style="font-size:.8rem;">Icon</label>
-                            <input type="text" name="kons_{{ $i }}_icon" class="form-control form-control-sm kons-icon-input"
-                                data-target="{{ $i }}"
-                                value="{{ $g('kons_'.$i.'_icon', $konsDefault[$i][0]) }}">
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-label" style="font-size:.8rem;">Judul</label>
-                            <input type="text" name="kons_{{ $i }}_judul" class="form-control form-control-sm"
-                                value="{{ $g('kons_'.$i.'_judul', $konsDefault[$i][1]) }}">
-                        </div>
-                        <div>
-                            <label class="form-label" style="font-size:.8rem;">Deskripsi</label>
-                            <textarea name="kons_{{ $i }}_deskripsi" rows="3" class="form-control form-control-sm">{{ $g('kons_'.$i.'_deskripsi', $konsDefault[$i][2]) }}</textarea>
-                        </div>
-                    </div>
+            <div class="alert alert-info d-flex align-items-center gap-2 mb-0" style="font-size:.85rem;">
+                <i class="bi bi-info-circle-fill"></i>
+                <div>
+                    3 kartu konsentrasi yang tampil di beranda diambil otomatis dari data
+                    <strong>Konsentrasi Program Studi</strong> (3 teratas berdasarkan urutan). Kelola isi, ikon, dan urutannya di
+                    <a href="{{ route('admin.konsentrasi.index') }}">menu Konsentrasi</a>.
                 </div>
-                @endforeach
             </div>
         </div>
     </div>
@@ -674,7 +645,6 @@ function makeIconPreview(inputClass, previewIdPrefix) {
     });
 }
 makeIconPreview('stats-icon-input',  'stats-icon-preview-');
-makeIconPreview('kons-icon-input',   'kons-icon-preview-');
 makeIconPreview('unggul-icon-input', 'unggul-icon-preview-');
 
 // Live preview for hero image upload

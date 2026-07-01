@@ -33,10 +33,6 @@ class BerandaController extends Controller
         'stats_2_icon', 'stats_2_nilai', 'stats_2_desc',
         'stats_3_icon', 'stats_3_nilai', 'stats_3_desc',
         'stats_4_icon', 'stats_4_nilai', 'stats_4_desc',
-        // Konsentrasi
-        'kons_1_icon', 'kons_1_judul', 'kons_1_deskripsi',
-        'kons_2_icon', 'kons_2_judul', 'kons_2_deskripsi',
-        'kons_3_icon', 'kons_3_judul', 'kons_3_deskripsi',
         // Keunggulan
         'unggul_1_icon', 'unggul_1_judul', 'unggul_1_deskripsi',
         'unggul_2_icon', 'unggul_2_judul', 'unggul_2_deskripsi',

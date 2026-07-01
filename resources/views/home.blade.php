@@ -389,21 +389,6 @@ foreach([1,2,3,4] as $i) {
     ];
 }
 
-// ── Konsentrasi ───────────────────────────────────────────────────────────
-$konsDef = [
-    1 => ['bi-people-fill',      'Manajemen Modal Manusia Strategis',              'Mengkaji pengembangan, pengelolaan, dan optimalisasi sumber daya manusia secara strategis untuk meningkatkan kinerja organisasi dan daya saing institusi di era global.'],
-    2 => ['bi-graph-up-arrow',   'Manajemen Ekosistem Pasar Inovatif',             'Mempelajari dinamika pasar berbasis teknologi, transformasi bisnis, dan strategi pengelolaan ekosistem pasar yang inovatif, adaptif, dan kompetitif di tingkat nasional maupun internasional.'],
-    3 => ['bi-currency-exchange','Manajemen Keuangan Etis & Pengembangan Berkelanjutan','Mengintegrasikan prinsip etika, tata kelola keuangan yang bertanggung jawab, dan strategi pengembangan berkelanjutan untuk menciptakan nilai ekonomi yang berdampak sosial dan lingkungan positif.'],
-];
-$konsItems = [];
-foreach([1,2,3] as $i) {
-    $konsItems[$i] = [
-        'icon'      => $s('kons_'.$i.'_icon',      $konsDef[$i][0]),
-        'judul'     => $s('kons_'.$i.'_judul',     $konsDef[$i][1]),
-        'deskripsi' => $s('kons_'.$i.'_deskripsi', $konsDef[$i][2]),
-    ];
-}
-
 // ── Keunggulan ────────────────────────────────────────────────────────────
 $unggulDef = [
     1 => ['bi-award-fill',          'Terakreditasi Unggul',    'Akreditasi tertinggi BAN-PT menjamin kualitas pendidikan'],
@@ -616,22 +601,27 @@ $sliderImages = array_values(array_filter(array_map(
             <p>{{ $s('kons_section_desc', 'Tiga bidang unggulan yang dirancang untuk melahirkan pemimpin dan inovator manajemen tingkat doktoral') }}</p>
         </div>
         <div class="row g-4">
-            @foreach($konsItems as $i => $kons)
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="{{ ($i-1)*120 }}">
+            @foreach($konsentrasis as $i => $kons)
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="{{ $i*120 }}">
                 <div class="konsentrasi-card card position-relative">
-                    <span class="konsentrasi-card card-number">{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}</span>
+                    <span class="konsentrasi-card card-number">{{ str_pad($i+1, 2, '0', STR_PAD_LEFT) }}</span>
                     <div class="card-body">
                         <div class="konsentrasi-icon-wrap" style="background:#fff0f0; color:var(--red-primary);">
-                            <i class="bi {{ $kons['icon'] }}"></i>
+                            <i class="bi {{ $kons->ikon }}"></i>
                         </div>
-                        <h4>{{ $kons['judul'] }}</h4>
-                        <p>{{ $kons['deskripsi'] }}</p>
+                        <h4>{{ $kons->nama }}</h4>
+                        <p>{{ $kons->deskripsi }}</p>
                         <a href="{{ route('konsentrasi') }}" class="btn btn-outline-primary btn-sm mt-2">Selengkapnya <i class="bi bi-arrow-right ms-1"></i></a>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
+        @if($konsentrasis->isEmpty())
+        <div class="text-center py-4 text-muted">
+            <p>Konsentrasi belum tersedia.</p>
+        </div>
+        @endif
     </div>
 </section>
 

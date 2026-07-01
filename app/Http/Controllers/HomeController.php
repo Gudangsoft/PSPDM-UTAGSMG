@@ -25,8 +25,9 @@ class HomeController extends Controller
         $galeri         = Galeri::aktif()->take(8)->get();
         $dosen          = Dosen::aktif()->take(6)->get();
         $brosur         = Download::aktif()->where('kategori', 'Brosur')->terurut()->get();
+        $konsentrasis   = Konsentrasi::aktif()->take(3)->get();
 
-        return view('home', compact('berita_terbaru', 'pengumuman', 'galeri', 'dosen', 'brosur'));
+        return view('home', compact('berita_terbaru', 'pengumuman', 'galeri', 'dosen', 'brosur', 'konsentrasis'));
     }
 
     public function tentang()

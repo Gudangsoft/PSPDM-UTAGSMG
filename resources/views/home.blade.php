@@ -409,14 +409,11 @@ foreach([1,2,3,4,5,6] as $i) {
 
 // ── Profil Lulusan ────────────────────────────────────────────────────────
 $lulusanDef = [
-    1 => ['Eksekutif Strategis & Pemimpin Modal Manusia',       'Mampu memimpin pengembangan SDM secara strategis di level puncak pada institusi nasional maupun multinasional.'],
-    2 => ['Konsultan Transformasi Bisnis & Ekosistem Pasar',    'Mampu merancang dan mengimplementasikan strategi pemasaran inovatif serta pengelolaan ekosistem pasar yang adaptif.'],
-    3 => ['Pemimpin Keuangan Etis & Pengembangan Berkelanjutan','Mampu mengelola keuangan organisasi secara etis, bertanggung jawab, dan berorientasi pada nilai jangka panjang.'],
-    4 => ['Pengambil Kebijakan & Pemimpin Sektor Publik',       'Mampu merumuskan kebijakan strategis berbasis riset di bidang SDM, pasar, dan keuangan untuk pembangunan nasional.'],
-    5 => ['Akademisi, Ilmuwan & Peneliti Manajemen',            'Mampu menghasilkan karya ilmiah bereputasi internasional dan berkontribusi pada pengembangan ilmu manajemen.'],
+    1 => ['Pemimpin Profesional dan Penggerak Perubahan', 'Lulusan mampu memimpin organisasi secara strategis, etis, dan adaptif baik di sektor swasta, publik maupun akademik dengan mengintegrasikan keahlian Manajemen Human Capital, Transformasi Bisnis (Marketing), Keuangan Berkelanjutan berbasis Research untuk mendorong pertumbuhan jangka panjang yang berdampak.'],
+    2 => ['Akademisi, Ilmuwan & Peneliti Manajemen',      'Mampu menghasilkan karya ilmiah bereputasi internasional dan berkontribusi pada pengembangan ilmu manajemen Human Capital, Transformasi Bisnis (Marketing), dan Keuangan Berkelanjutan.'],
 ];
 $lulusanItems = [];
-foreach([1,2,3,4,5] as $i) {
+foreach([1,2] as $i) {
     $lulusanItems[$i] = [
         'judul'     => $s('lulusan_'.$i.'_judul',     $lulusanDef[$i][0]),
         'deskripsi' => $s('lulusan_'.$i.'_deskripsi', $lulusanDef[$i][1]),

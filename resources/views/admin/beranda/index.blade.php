@@ -474,19 +474,16 @@ $g = fn(string $key, string $default = '') => $settings[$key]?->value ?? $defaul
         </div>
     </div>
     <div class="admin-card card">
-        <div class="card-header"><i class="bi bi-mortarboard me-2"></i>5 Profil Lulusan</div>
+        <div class="card-header"><i class="bi bi-mortarboard me-2"></i>2 Profil Lulusan</div>
         <div class="card-body p-4">
             @php
             $lulusanDefault = [
-                1 => ['Eksekutif Strategis & Pemimpin Modal Manusia', 'Mampu memimpin pengembangan SDM secara strategis di level puncak pada institusi nasional maupun multinasional.'],
-                2 => ['Konsultan Transformasi Bisnis & Ekosistem Pasar', 'Mampu merancang dan mengimplementasikan strategi pemasaran inovatif serta pengelolaan ekosistem pasar yang adaptif.'],
-                3 => ['Pemimpin Keuangan Etis & Pengembangan Berkelanjutan', 'Mampu mengelola keuangan organisasi secara etis, bertanggung jawab, dan berorientasi pada nilai jangka panjang.'],
-                4 => ['Pengambil Kebijakan & Pemimpin Sektor Publik', 'Mampu merumuskan kebijakan strategis berbasis riset di bidang SDM, pasar, dan keuangan untuk pembangunan nasional.'],
-                5 => ['Akademisi, Ilmuwan & Peneliti Manajemen', 'Mampu menghasilkan karya ilmiah bereputasi internasional dan berkontribusi pada pengembangan ilmu manajemen.'],
+                1 => ['Pemimpin Profesional dan Penggerak Perubahan', 'Lulusan mampu memimpin organisasi secara strategis, etis, dan adaptif baik di sektor swasta, publik maupun akademik dengan mengintegrasikan keahlian Manajemen Human Capital, Transformasi Bisnis (Marketing), Keuangan Berkelanjutan berbasis Research untuk mendorong pertumbuhan jangka panjang yang berdampak.'],
+                2 => ['Akademisi, Ilmuwan & Peneliti Manajemen', 'Mampu menghasilkan karya ilmiah bereputasi internasional dan berkontribusi pada pengembangan ilmu manajemen Human Capital, Transformasi Bisnis (Marketing), dan Keuangan Berkelanjutan.'],
             ];
             @endphp
             <div class="row g-3">
-                @foreach([1,2,3,4,5] as $i)
+                @foreach([1,2] as $i)
                 <div class="col-md-6">
                     <div class="item-block">
                         <div class="item-block-header">

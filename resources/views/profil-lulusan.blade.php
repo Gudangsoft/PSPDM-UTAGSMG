@@ -15,7 +15,7 @@
 <section class="py-5">
     <div class="container-xl">
         <div class="section-title" data-aos="fade-up">
-            <h2>5 Profil Lulusan Unggulan</h2>
+            <h2>2 Profil Lulusan Unggulan</h2>
             <p>Lulusan {{ $site['singkatan']?->value ?? 'PSMPD' }} – {{ $site['singkatan_institusi']?->value ?? 'FEB Untag Semarang' }} mampu berkiprah di berbagai sektor strategis pada level tertinggi</p>
         </div>
 
@@ -23,32 +23,14 @@
         $lulusans = [
             [
                 'no' => '01', 'icon' => 'bi-person-badge-fill', 'color' => '#C0304A',
-                'judul' => 'Eksekutif Strategis & Pemimpin Modal Manusia',
-                'desc' => 'Lulusan mampu memimpin pengembangan dan pengelolaan sumber daya manusia secara strategis di level puncak pada institusi nasional maupun multinasional.',
-                'kompetensi' => ['Strategi SDM Level C-Suite', 'Kepemimpinan Transformasional', 'HR Analytics Lanjutan', 'Manajemen Talenta Global'],
+                'judul' => 'Pemimpin Profesional dan Penggerak Perubahan',
+                'desc' => 'Lulusan mampu memimpin organisasi secara strategis, etis, dan adaptif baik di sektor swasta, publik maupun akademik dengan mengintegrasikan keahlian Manajemen Human Capital, Transformasi Bisnis (Marketing), Keuangan Berkelanjutan berbasis Research untuk mendorong pertumbuhan jangka panjang yang berdampak.',
+                'kompetensi' => ['Kepemimpinan Strategis & Transformasional', 'Manajemen SDM & Talenta Global', 'Keuangan Etis & ESG Framework', 'Inovasi Bisnis & Analisis Ekosistem Pasar', 'Kebijakan Publik Berbasis Riset', 'Tata Kelola & Manajemen Risiko'],
             ],
             [
-                'no' => '02', 'icon' => 'bi-graph-up-arrow', 'color' => '#1a1a2e',
-                'judul' => 'Konsultan Transformasi Bisnis & Ekosistem Pasar',
-                'desc' => 'Lulusan mampu merancang dan mengimplementasikan strategi pemasaran inovatif serta pengelolaan ekosistem pasar yang adaptif dan kompetitif.',
-                'kompetensi' => ['Strategi Transformasi Digital', 'Analisis Ekosistem Pasar', 'Inovasi Bisnis', 'Manajemen Merek Global'],
-            ],
-            [
-                'no' => '03', 'icon' => 'bi-currency-exchange', 'color' => '#c8a84b',
-                'judul' => 'Pemimpin Keuangan Etis & Pengembangan Berkelanjutan',
-                'desc' => 'Lulusan mampu mengelola keuangan organisasi secara etis, bertanggung jawab, dan berorientasi pada nilai pengembangan ekonomi jangka panjang.',
-                'kompetensi' => ['Keuangan Berkelanjutan', 'ESG Framework', 'Tata Kelola Keuangan', 'Manajemen Risiko Strategis'],
-            ],
-            [
-                'no' => '04', 'icon' => 'bi-building', 'color' => '#2c7a4b',
-                'judul' => 'Pengambil Kebijakan & Pemimpin Sektor Publik',
-                'desc' => 'Lulusan mampu merumuskan kebijakan strategis berbasis riset ilmiah di bidang SDM, pasar, dan keuangan untuk pembangunan nasional yang efektif.',
-                'kompetensi' => ['Analisis Kebijakan Publik', 'Riset Berbasis Bukti', 'Manajemen Sektor Publik', 'Tata Kelola Pemerintahan'],
-            ],
-            [
-                'no' => '05', 'icon' => 'bi-journal-bookmark-fill', 'color' => '#6247aa',
+                'no' => '02', 'icon' => 'bi-journal-bookmark-fill', 'color' => '#6247aa',
                 'judul' => 'Akademisi, Ilmuwan & Peneliti Manajemen',
-                'desc' => 'Lulusan mampu menghasilkan karya ilmiah bereputasi internasional dan berkontribusi nyata pada pengembangan ilmu manajemen SDM, pemasaran, dan keuangan.',
+                'desc' => 'Mampu menghasilkan karya ilmiah bereputasi internasional dan berkontribusi pada pengembangan ilmu manajemen Human Capital, Transformasi Bisnis (Marketing), dan Keuangan Berkelanjutan.',
                 'kompetensi' => ['Riset Kuantitatif & Kualitatif', 'Publikasi Terindeks Scopus', 'Pengembangan Teori', 'Kolaborasi Riset Internasional'],
             ],
         ];

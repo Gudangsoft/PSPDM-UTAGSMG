@@ -43,9 +43,6 @@ class BerandaController extends Controller
         // Profil Lulusan
         'lulusan_1_judul', 'lulusan_1_deskripsi',
         'lulusan_2_judul', 'lulusan_2_deskripsi',
-        'lulusan_3_judul', 'lulusan_3_deskripsi',
-        'lulusan_4_judul', 'lulusan_4_deskripsi',
-        'lulusan_5_judul', 'lulusan_5_deskripsi',
         // CTA section
         'cta_section_judul', 'cta_section_teks',
         'cta_section_btn1_label', 'cta_section_btn1_url',

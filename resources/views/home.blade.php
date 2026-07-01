@@ -602,7 +602,7 @@ $sliderImages = array_values(array_filter(array_map(
         </div>
         <div class="row g-4">
             @foreach($konsentrasis as $i => $kons)
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="{{ $i*120 }}">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ $i*120 }}">
                 <div class="konsentrasi-card card position-relative">
                     <span class="konsentrasi-card card-number">{{ str_pad($i+1, 2, '0', STR_PAD_LEFT) }}</span>
                     <div class="card-body">

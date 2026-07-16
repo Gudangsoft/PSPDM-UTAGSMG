@@ -10,7 +10,7 @@
             <div class="card-body p-4">
                 <div class="alert alert-info" style="font-size:.85rem;">
                     <i class="bi bi-info-circle-fill me-1"></i>
-                    Tempel link video dari <strong>YouTube</strong>, <strong>Instagram</strong> (Reel/Post), atau <strong>TikTok</strong>. Gunakan link lengkap (bukan link pendek/shortlink) agar bisa terbaca otomatis.
+                    Tempel link video dari <strong>YouTube</strong>, <strong>Instagram</strong> (Reel/Post), atau <strong>TikTok</strong> &mdash; sistem otomatis mendeteksi platformnya.
                 </div>
                 <form action="{{ route('admin.galeri-video.store') }}" method="POST">
                     @csrf
@@ -26,6 +26,7 @@
                             <iframe id="preview-frame" src="" allowfullscreen></iframe>
                         </div>
                     </div>
+                    <div id="preview-note" class="alert alert-secondary mb-3" style="display:none; font-size:.8rem;"></div>
                     <div class="mb-3">
                         <label class="form-label">Judul Video <span class="text-danger">*</span></label>
                         <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul') }}">
@@ -59,11 +60,13 @@ function detectPlatform(url) {
     const wrap  = document.getElementById('preview-wrap');
     const ratio = document.getElementById('preview-ratio');
     const frame = document.getElementById('preview-frame');
+    const note  = document.getElementById('preview-note');
     badge.innerHTML = '';
     wrap.style.display = 'none';
+    note.style.display = 'none';
     frame.src = '';
 
-    let embedUrl = null, label = null, icon = null, portrait = false;
+    let label = null, icon = null;
 
     try {
         const host = new URL(url).hostname.toLowerCase();
@@ -71,27 +74,23 @@ function detectPlatform(url) {
         if (host.includes('youtube.com') || host.includes('youtu.be')) {
             label = 'YouTube'; icon = 'bi-youtube';
             const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/);
-            if (m) embedUrl = 'https://www.youtube.com/embed/' + m[1];
-        } else if (host.includes('instagram.com')) {
-            label = 'Instagram'; icon = 'bi-instagram'; portrait = true;
-            const clean = url.split('?')[0].replace(/\/$/, '');
-            if (clean) embedUrl = clean + '/embed';
-        } else if (host.includes('tiktok.com')) {
-            label = 'TikTok'; icon = 'bi-tiktok'; portrait = true;
-            const m = url.match(/\/video\/(\d+)/);
-            if (m) embedUrl = 'https://www.tiktok.com/embed/v2/' + m[1];
+            if (m) {
+                ratio.classList.add('ratio-16x9');
+                ratio.classList.remove('ratio-9x16');
+                ratio.style.maxWidth = '100%';
+                frame.src = 'https://www.youtube.com/embed/' + m[1];
+                wrap.style.display = 'block';
+            }
+        } else if (host.includes('instagram.com') || host.includes('tiktok.com')) {
+            label = host.includes('instagram.com') ? 'Instagram' : 'TikTok';
+            icon  = host.includes('instagram.com') ? 'bi-instagram' : 'bi-tiktok';
+            note.innerHTML = '<i class="bi bi-info-circle me-1"></i>Pratinjau langsung tidak tersedia untuk ' + label + ' di form ini. Setelah disimpan, video akan tampil di halaman <strong>Galeri Video</strong> publik.';
+            note.style.display = 'block';
         }
     } catch (e) { /* incomplete URL while typing */ }
 
     if (label) {
         badge.innerHTML = `<span class="badge rounded-pill" style="background:#f0f4ff;color:#1a1a2e;font-size:.78rem;"><i class="bi ${icon} me-1"></i>${label}</span>`;
-    }
-    if (embedUrl) {
-        ratio.classList.toggle('ratio-16x9', !portrait);
-        ratio.classList.toggle('ratio-9x16', portrait);
-        ratio.style.maxWidth = portrait ? '280px' : '100%';
-        frame.src = embedUrl;
-        wrap.style.display = 'block';
     }
 }
 @if(old('url'))

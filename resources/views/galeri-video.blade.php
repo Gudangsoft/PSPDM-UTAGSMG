@@ -31,9 +31,17 @@
             @foreach($videos as $v)
             <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 80 }}">
                 <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
-                    @if($v->embed_url)
-                    <div class="ratio {{ $v->platform === 'youtube' ? 'ratio-16x9' : 'ratio-9x16' }}" style="max-height:420px; background:#000;">
+                    @if($v->platform === 'youtube' && $v->embed_url)
+                    <div class="ratio ratio-16x9" style="background:#000;">
                         <iframe src="{{ $v->embed_url }}" title="{{ $v->judul }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    @elseif($v->platform === 'instagram')
+                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
+                        <blockquote class="instagram-media" data-instgrm-permalink="{{ $v->url }}" data-instgrm-version="14" style="width:100%; max-width:340px; margin:0;"></blockquote>
+                    </div>
+                    @elseif($v->platform === 'tiktok')
+                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
+                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" style="max-width:340px; min-width:280px; margin:0;"><section></section></blockquote>
                     </div>
                     @else
                     <div class="d-flex align-items-center justify-content-center text-muted" style="height:200px; background:#f5f5f5;">
@@ -60,4 +68,12 @@
         @endif
     </div>
 </section>
+@endsection
+@section('scripts')
+@if($videos->contains('platform', 'instagram'))
+<script async src="https://www.instagram.com/embed.js"></script>
+@endif
+@if($videos->contains('platform', 'tiktok'))
+<script async src="https://www.tiktok.com/embed.js"></script>
+@endif
 @endsection

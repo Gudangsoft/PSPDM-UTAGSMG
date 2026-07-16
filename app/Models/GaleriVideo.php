@@ -19,14 +19,13 @@ class GaleriVideo extends Model
         return $query->where('is_active', true)->orderBy('urutan');
     }
 
+    // Only YouTube supports a plain <iframe src="..."> embed. Instagram and
+    // TikTok block direct iframe framing (X-Frame-Options/CSP) unless loaded
+    // through their own blockquote + embed.js widget, so this is only used
+    // for the 'youtube' platform — see galeri-video.blade.php for the rest.
     public function getEmbedUrlAttribute(): ?string
     {
-        return match ($this->platform) {
-            'youtube'   => $this->youtubeEmbedUrl(),
-            'instagram' => $this->instagramEmbedUrl(),
-            'tiktok'    => $this->tiktokEmbedUrl(),
-            default     => null,
-        };
+        return $this->platform === 'youtube' ? $this->youtubeEmbedUrl() : null;
     }
 
     public function getPlatformLabelAttribute(): string
@@ -55,18 +54,6 @@ class GaleriVideo extends Model
         return $id ? "https://www.youtube.com/embed/{$id}" : null;
     }
 
-    private function instagramEmbedUrl(): ?string
-    {
-        $url = rtrim(strtok($this->url, '?'), '/');
-        return $url ? $url . '/embed' : null;
-    }
-
-    private function tiktokEmbedUrl(): ?string
-    {
-        $id = self::extractTiktokId($this->url);
-        return $id ? "https://www.tiktok.com/embed/v2/{$id}" : null;
-    }
-
     public static function detectPlatform(string $url): ?string
     {
         $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
@@ -82,14 +69,6 @@ class GaleriVideo extends Model
     public static function extractYoutubeId(string $url): ?string
     {
         if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/))([A-Za-z0-9_-]{11})/', $url, $m)) {
-            return $m[1];
-        }
-        return null;
-    }
-
-    public static function extractTiktokId(string $url): ?string
-    {
-        if (preg_match('/\/video\/(\d+)/', $url, $m)) {
             return $m[1];
         }
         return null;

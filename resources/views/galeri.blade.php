@@ -17,6 +17,10 @@
 
 <section class="py-5">
     <div class="container-xl">
+        <div class="text-center mb-4">
+            <a href="{{ route('galeri-video') }}" class="btn btn-sm btn-outline-primary rounded-pill"><i class="bi bi-play-circle me-1"></i>Lihat Galeri Video</a>
+        </div>
+
         {{-- Filter --}}
         <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center">
             <a href="{{ route('galeri') }}" class="btn btn-sm rounded-pill {{ !request('kategori') ? 'btn-primary' : 'btn-outline-secondary' }}">Semua</a>

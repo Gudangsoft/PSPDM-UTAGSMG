@@ -6,11 +6,13 @@ use App\Http\Controllers\HalamanController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\GaleriVideoController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BeritaController as AdminBeritaController;
 use App\Http\Controllers\Admin\PengumumanController as AdminPengumumanController;
 use App\Http\Controllers\Admin\GaleriController as AdminGaleriController;
+use App\Http\Controllers\Admin\GaleriVideoController as AdminGaleriVideoController;
 use App\Http\Controllers\Admin\DosenController as AdminDosenController;
 use App\Http\Controllers\Admin\PesanController;
 use App\Http\Controllers\Admin\SettingController;
@@ -60,6 +62,7 @@ Route::get('/pengumuman', [PengumumanController::class, 'index'])->name('pengumu
 Route::get('/pengumuman/{pengumuman}', [PengumumanController::class, 'show'])->name('pengumuman.show');
 
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
+Route::get('/galeri-video', [GaleriVideoController::class, 'index'])->name('galeri-video');
 
 Route::get('/download', [DownloadController::class, 'index'])->name('download.index');
 Route::get('/download/{download}/unduh', [DownloadController::class, 'unduh'])->name('download.unduh');
@@ -76,6 +79,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('berita', AdminBeritaController::class);
     Route::resource('pengumuman', AdminPengumumanController::class);
     Route::resource('galeri', AdminGaleriController::class);
+    Route::resource('galeri-video', AdminGaleriVideoController::class)->except(['show']);
     Route::resource('album', AdminAlbumController::class)->except(['show']);
     Route::post('album/{album}/bulk-upload', [AdminAlbumController::class, 'bulkUpload'])->name('album.bulk-upload');
     Route::post('album/{album}/upload-one', [AdminAlbumController::class, 'uploadOne'])->name('album.upload-one');
@@ -204,6 +208,7 @@ Route::get('/sitemap.xml', function () {
         ['loc' => url('/berita'),             'priority' => '0.9',  'freq' => 'daily'],
         ['loc' => url('/pengumuman'),         'priority' => '0.8',  'freq' => 'weekly'],
         ['loc' => url('/galeri'),             'priority' => '0.7',  'freq' => 'monthly'],
+        ['loc' => url('/galeri-video'),       'priority' => '0.7',  'freq' => 'monthly'],
         ['loc' => url('/dosen'),              'priority' => '0.7',  'freq' => 'monthly'],
         ['loc' => url('/download'),           'priority' => '0.6',  'freq' => 'weekly'],
         ['loc' => url('/agenda'),             'priority' => '0.7',  'freq' => 'weekly'],

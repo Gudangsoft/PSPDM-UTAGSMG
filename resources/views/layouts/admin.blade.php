@@ -202,6 +202,9 @@
         <a href="{{ route('admin.album.index') }}" class="sidebar-link {{ request()->routeIs('admin.album.*') ? 'active' : '' }}">
             <i class="bi bi-folder2-open"></i> Album
         </a>
+        <a href="{{ route('admin.galeri-video.index') }}" class="sidebar-link {{ request()->routeIs('admin.galeri-video.*') ? 'active' : '' }}">
+            <i class="bi bi-play-circle"></i> Galeri Video
+        </a>
         @endif
 
         @if($authUser->hasPermission('pmb'))

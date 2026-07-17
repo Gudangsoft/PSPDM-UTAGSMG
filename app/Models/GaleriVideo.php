@@ -54,6 +54,20 @@ class GaleriVideo extends Model
         return $id ? "https://www.youtube.com/embed/{$id}" : null;
     }
 
+    // A TikTok link with no /video/{id} segment is a profile link (e.g.
+    // tiktok.com/@user), not a single post — render TikTok's "Creator"
+    // embed (profile card) instead of the video embed in that case.
+    public function getTiktokIsProfileAttribute(): bool
+    {
+        return $this->platform === 'tiktok' && !str_contains($this->url, '/video/');
+    }
+
+    public function getTiktokUsernameAttribute(): ?string
+    {
+        if ($this->platform !== 'tiktok') return null;
+        return preg_match('/@([^\/?]+)/', $this->url, $m) ? $m[1] : null;
+    }
+
     public static function detectPlatform(string $url): ?string
     {
         $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');

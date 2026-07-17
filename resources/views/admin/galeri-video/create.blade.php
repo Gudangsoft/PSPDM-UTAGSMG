@@ -11,6 +11,7 @@
                 <div class="alert alert-info" style="font-size:.85rem;">
                     <i class="bi bi-info-circle-fill me-1"></i>
                     Tempel link video dari <strong>YouTube</strong>, <strong>Instagram</strong> (Reel/Post), atau <strong>TikTok</strong> &mdash; sistem otomatis mendeteksi platformnya.
+                    Khusus <strong>TikTok</strong>: tempel link satu video (<code>tiktok.com/@user/video/...</code>) untuk menampilkan video itu, atau tempel link <strong>profil akun</strong> (<code>tiktok.com/@user</code>) untuk menampilkan kartu profil TikTok tersebut.
                 </div>
                 <form action="{{ route('admin.galeri-video.store') }}" method="POST">
                     @csrf

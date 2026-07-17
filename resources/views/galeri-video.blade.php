@@ -39,6 +39,12 @@
                     <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
                         <blockquote class="instagram-media" data-instgrm-permalink="{{ $v->url }}" data-instgrm-version="14" style="width:100%; max-width:340px; margin:0;"></blockquote>
                     </div>
+                    @elseif($v->platform === 'tiktok' && $v->tiktok_is_profile)
+                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
+                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-unique-id="{{ $v->tiktok_username }}" data-embed-type="creator" style="max-width:340px; min-width:280px; margin:0;">
+                            <section><a target="_blank" href="{{ $v->url }}">@{{ $v->tiktok_username }}</a></section>
+                        </blockquote>
+                    </div>
                     @elseif($v->platform === 'tiktok')
                     <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
                         <blockquote class="tiktok-embed" cite="{{ $v->url }}" style="max-width:340px; min-width:280px; margin:0;"><section></section></blockquote>

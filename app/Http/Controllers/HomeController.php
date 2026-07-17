@@ -7,6 +7,7 @@ use App\Models\RisetUnggulan;
 use App\Models\Download;
 use App\Models\Dosen;
 use App\Models\Galeri;
+use App\Models\GaleriVideo;
 use App\Models\Halaman;
 use App\Models\JadwalPmb;
 use App\Models\Konsentrasi;
@@ -23,11 +24,12 @@ class HomeController extends Controller
         $berita_terbaru = Berita::published()->latest('published_at')->take(3)->get();
         $pengumuman     = Pengumuman::aktif()->latest()->take(5)->get();
         $galeri         = Galeri::aktif()->take(8)->get();
+        $galeriVideo    = GaleriVideo::aktif()->take(4)->get();
         $dosen          = Dosen::aktif()->take(6)->get();
         $brosur         = Download::aktif()->where('kategori', 'Brosur')->terurut()->get();
         $konsentrasis   = Konsentrasi::aktif()->get();
 
-        return view('home', compact('berita_terbaru', 'pengumuman', 'galeri', 'dosen', 'brosur', 'konsentrasis'));
+        return view('home', compact('berita_terbaru', 'pengumuman', 'galeri', 'galeriVideo', 'dosen', 'brosur', 'konsentrasis'));
     }
 
     public function tentang()

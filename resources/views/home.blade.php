@@ -716,6 +716,47 @@ $sliderImages = array_values(array_filter(array_map(
 </section>
 @endif
 
+{{-- GALERI VIDEO --}}
+@if($galeriVideo->count() > 0)
+<section class="section-pad" style="padding-bottom:40px;">
+    <div class="container-xl">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Galeri Video</h2>
+            <p>Cuplikan kegiatan {{ $singkatan }}-FEB UNTAG dari YouTube, Instagram &amp; TikTok</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            @foreach($galeriVideo as $v)
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
+                <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                    @if($v->platform === 'youtube' && $v->embed_url)
+                    <div class="ratio ratio-16x9" style="background:#000;">
+                        <iframe src="{{ $v->embed_url }}" title="{{ $v->judul }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    @elseif($v->platform === 'instagram')
+                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
+                        <blockquote class="instagram-media" data-instgrm-permalink="{{ $v->url }}" data-instgrm-version="14" style="width:100%; max-width:280px; margin:0;"></blockquote>
+                    </div>
+                    @elseif($v->platform === 'tiktok')
+                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
+                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" style="max-width:280px; min-width:240px; margin:0;"><section></section></blockquote>
+                    </div>
+                    @endif
+                    <div class="card-body p-2 text-center">
+                        <small class="fw-600" style="font-size:.8rem; color:var(--dark);">{{ Str::limit($v->judul, 40) }}</small>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{{ route('galeri-video') }}" class="btn btn-outline-primary">
+                <i class="bi bi-play-circle me-2"></i>Lihat Semua Video
+            </a>
+        </div>
+    </div>
+</section>
+@endif
+
 {{-- GALERI --}}
 @if($galeri->count() > 0)
 <section class="section-pad" style="background:#f8f8f8; padding-top:60px;">
@@ -830,6 +871,12 @@ $sliderImages = array_values(array_filter(array_map(
 @endsection
 
 @section('scripts')
+@if($galeriVideo->contains('platform', 'instagram'))
+<script async src="https://www.instagram.com/embed.js"></script>
+@endif
+@if($galeriVideo->contains('platform', 'tiktok'))
+<script async src="https://www.tiktok.com/embed.js"></script>
+@endif
 <script>
 (function () {
     const slides = document.querySelectorAll('.hero-slide');

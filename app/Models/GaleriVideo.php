@@ -68,6 +68,23 @@ class GaleriVideo extends Model
         return preg_match('/@([^\/?]+)/', $this->url, $m) ? $m[1] : null;
     }
 
+    // TikTok's official embed markup always pairs `cite` with an explicit
+    // `data-video-id` — without it, the widget can fail to resolve the video
+    // and falls back to "Video currently unavailable", even for valid links.
+    public function getTiktokVideoIdAttribute(): ?string
+    {
+        if ($this->platform !== 'tiktok') return null;
+        return self::extractTiktokId($this->url);
+    }
+
+    public static function extractTiktokId(string $url): ?string
+    {
+        if (preg_match('/\/video\/(\d+)/', $url, $m)) {
+            return $m[1];
+        }
+        return null;
+    }
+
     public static function detectPlatform(string $url): ?string
     {
         $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');

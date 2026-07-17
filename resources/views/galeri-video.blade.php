@@ -49,7 +49,7 @@
                     </div>
                     @elseif($v->platform === 'tiktok')
                     <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
-                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" style="max-width:340px; min-width:280px; margin:0;"><section></section></blockquote>
+                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-video-id="{{ $v->tiktok_video_id }}" style="max-width:340px; min-width:280px; margin:0;"><section></section></blockquote>
                     </div>
                     @else
                     <div class="d-flex align-items-center justify-content-center text-muted" style="height:200px; background:#f5f5f5;">

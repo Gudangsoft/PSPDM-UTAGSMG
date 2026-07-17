@@ -746,7 +746,7 @@ $sliderImages = array_values(array_filter(array_map(
                     </div>
                     @elseif($v->platform === 'tiktok')
                     <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
-                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" style="max-width:280px; min-width:240px; margin:0;"><section></section></blockquote>
+                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-video-id="{{ $v->tiktok_video_id }}" style="max-width:280px; min-width:240px; margin:0;"><section></section></blockquote>
                     </div>
                     @endif
                     <div class="card-body p-2 text-center">

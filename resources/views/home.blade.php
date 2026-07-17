@@ -212,6 +212,12 @@
 .news-card p { font-size: 0.82rem; color: #666; line-height: 1.65; }
 .news-card:hover h5 { color: var(--red-primary); }
 
+/* ===== GALERI VIDEO HOME ===== */
+/* Crop TikTok's own caption/description block below the video — the widget
+   renders inside a cross-origin iframe so this is an approximate height cut,
+   not a targeted removal, and may need adjusting if TikTok changes it. */
+.tiktok-crop-sm { height:540px; overflow:hidden; }
+
 /* ===== GALERI HOME ===== */
 .galeri-item { position: relative; overflow: hidden; border-radius: 12px; cursor: pointer; }
 .galeri-item img { width: 100%; height: 180px; object-fit: cover; transition: transform 0.4s; }
@@ -745,7 +751,7 @@ $sliderImages = array_values(array_filter(array_map(
                         </blockquote>
                     </div>
                     @elseif($v->platform === 'tiktok')
-                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
+                    <div class="d-flex justify-content-center tiktok-crop-sm" style="background:#fafafa; padding:8px 8px 0;">
                         <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-video-id="{{ $v->tiktok_video_id }}" style="max-width:280px; min-width:240px; margin:0;"><section></section></blockquote>
                     </div>
                     @endif

@@ -1,5 +1,13 @@
 @extends('layouts.app')
 @section('title', 'Galeri Video - PSMPD-FEB UNTAG Semarang')
+@section('styles')
+<style>
+/* Crop TikTok's own caption/description block below the video — the widget
+   renders inside a cross-origin iframe so this is an approximate height cut,
+   not a targeted removal, and may need adjusting if TikTok changes it. */
+.tiktok-crop { height:640px; overflow:hidden; }
+</style>
+@endsection
 @section('content')
 
 <div class="page-hero">
@@ -48,7 +56,7 @@
                         </blockquote>
                     </div>
                     @elseif($v->platform === 'tiktok')
-                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
+                    <div class="d-flex justify-content-center tiktok-crop" style="background:#fafafa; padding:8px 8px 0;">
                         <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-video-id="{{ $v->tiktok_video_id }}" style="max-width:340px; min-width:280px; margin:0;"><section></section></blockquote>
                     </div>
                     @else

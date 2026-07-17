@@ -726,7 +726,8 @@ $sliderImages = array_values(array_filter(array_map(
         </div>
         <div class="row g-4 justify-content-center">
             @foreach($galeriVideo as $v)
-            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
+            @php $isTiktokProfile = $v->platform === 'tiktok' && $v->tiktok_is_profile; @endphp
+            <div class="{{ $isTiktokProfile ? 'col-12 col-md-6' : 'col-6 col-md-3' }}" data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
                 <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                     @if($v->platform === 'youtube' && $v->embed_url)
                     <div class="ratio ratio-16x9" style="background:#000;">
@@ -736,9 +737,10 @@ $sliderImages = array_values(array_filter(array_map(
                     <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
                         <blockquote class="instagram-media" data-instgrm-permalink="{{ $v->url }}" data-instgrm-version="14" style="width:100%; max-width:280px; margin:0;"></blockquote>
                     </div>
-                    @elseif($v->platform === 'tiktok' && $v->tiktok_is_profile)
-                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
-                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-unique-id="{{ $v->tiktok_username }}" data-embed-type="creator" style="max-width:280px; min-width:240px; margin:0;">
+                    @elseif($isTiktokProfile)
+                    <div class="d-flex flex-column align-items-center" style="background:linear-gradient(135deg,#fff5f7,#fdeef1); padding:28px 20px;">
+                        <span class="badge rounded-pill mb-3" style="background:#1a1a2e; color:white; font-size:.78rem; padding:7px 16px;"><i class="bi bi-tiktok me-1"></i>Profil TikTok Resmi</span>
+                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-unique-id="{{ $v->tiktok_username }}" data-embed-type="creator" style="max-width:480px; min-width:320px; width:100%; margin:0; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.08);">
                             <section><a target="_blank" href="{{ $v->url }}">@{{ $v->tiktok_username }}</a></section>
                         </blockquote>
                     </div>
@@ -748,7 +750,11 @@ $sliderImages = array_values(array_filter(array_map(
                     </div>
                     @endif
                     <div class="card-body p-2 text-center">
+                        @if($isTiktokProfile)
+                        <a href="{{ $v->url }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm rounded-pill mt-2 px-4"><i class="bi bi-tiktok me-1"></i>Kunjungi Profil TikTok</a>
+                        @else
                         <small class="fw-600" style="font-size:.8rem; color:var(--dark);">{{ Str::limit($v->judul, 40) }}</small>
+                        @endif
                     </div>
                 </div>
             </div>

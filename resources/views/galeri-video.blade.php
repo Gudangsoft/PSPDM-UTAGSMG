@@ -29,7 +29,8 @@
         @if($videos->count() > 0)
         <div class="row g-4">
             @foreach($videos as $v)
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 80 }}">
+            @php $isTiktokProfile = $v->platform === 'tiktok' && $v->tiktok_is_profile; @endphp
+            <div class="{{ $isTiktokProfile ? 'col-12 col-md-8 col-lg-6 mx-auto' : 'col-md-6 col-lg-4' }}" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 80 }}">
                 <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
                     @if($v->platform === 'youtube' && $v->embed_url)
                     <div class="ratio ratio-16x9" style="background:#000;">
@@ -39,9 +40,10 @@
                     <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
                         <blockquote class="instagram-media" data-instgrm-permalink="{{ $v->url }}" data-instgrm-version="14" style="width:100%; max-width:340px; margin:0;"></blockquote>
                     </div>
-                    @elseif($v->platform === 'tiktok' && $v->tiktok_is_profile)
-                    <div class="d-flex justify-content-center" style="background:#fafafa; padding:8px;">
-                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-unique-id="{{ $v->tiktok_username }}" data-embed-type="creator" style="max-width:340px; min-width:280px; margin:0;">
+                    @elseif($isTiktokProfile)
+                    <div class="d-flex flex-column align-items-center" style="background:linear-gradient(135deg,#fff5f7,#fdeef1); padding:28px 20px;">
+                        <span class="badge rounded-pill mb-3" style="background:#1a1a2e; color:white; font-size:.78rem; padding:7px 16px;"><i class="bi bi-tiktok me-1"></i>Profil TikTok Resmi</span>
+                        <blockquote class="tiktok-embed" cite="{{ $v->url }}" data-unique-id="{{ $v->tiktok_username }}" data-embed-type="creator" style="max-width:480px; min-width:320px; width:100%; margin:0; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.08);">
                             <section><a target="_blank" href="{{ $v->url }}">@{{ $v->tiktok_username }}</a></section>
                         </blockquote>
                     </div>
@@ -54,11 +56,16 @@
                         <i class="bi bi-exclamation-triangle me-2"></i>Video tidak dapat dimuat
                     </div>
                     @endif
-                    <div class="card-body p-3">
+                    <div class="card-body p-3 {{ $isTiktokProfile ? 'text-center' : '' }}">
+                        @if(!$isTiktokProfile)
                         <span class="badge rounded-pill mb-2" style="background:#f0f4ff; color:#1a1a2e; font-size:.75rem;"><i class="bi {{ $v->platform_icon }} me-1"></i>{{ $v->platform_label }}</span>
-                        <h6 class="mb-1" style="font-weight:700;">{{ $v->judul }}</h6>
+                        @endif
+                        <h6 class="mb-1" style="font-weight:700; {{ $isTiktokProfile ? 'font-size:1.1rem;' : '' }}">{{ $v->judul }}</h6>
                         @if($v->deskripsi)
                         <p class="text-muted mb-0" style="font-size:.82rem;">{{ Str::limit($v->deskripsi, 100) }}</p>
+                        @endif
+                        @if($isTiktokProfile)
+                        <a href="{{ $v->url }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm rounded-pill mt-3 px-4"><i class="bi bi-tiktok me-1"></i>Kunjungi Profil TikTok</a>
                         @endif
                     </div>
                 </div>

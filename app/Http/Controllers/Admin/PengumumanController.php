@@ -35,6 +35,8 @@ class PengumumanController extends Controller
             $validated['file_lampiran'] = $request->file('file_lampiran')->store('pengumuman', 'public');
         }
 
+        $validated['is_active'] = $request->boolean('is_active');
+
         Pengumuman::create($validated);
 
         return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil ditambahkan.');
@@ -62,6 +64,8 @@ class PengumumanController extends Controller
             }
             $validated['file_lampiran'] = $request->file('file_lampiran')->store('pengumuman', 'public');
         }
+
+        $validated['is_active'] = $request->boolean('is_active');
 
         $pengumuman->update($validated);
 

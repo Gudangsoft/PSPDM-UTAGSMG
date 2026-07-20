@@ -29,7 +29,7 @@
                             @endif
                         </div>
                         <h1 style="font-size:1.6rem; font-weight:700; color:var(--dark); margin-bottom:24px;">{{ $pengumuman->judul }}</h1>
-                        <div style="font-size:0.95rem; line-height:1.85; color:#444;">{!! nl2br(e($pengumuman->konten)) !!}</div>
+                        <div style="font-size:0.95rem; line-height:1.85; color:#444;">{!! $pengumuman->konten !!}</div>
                         @if($pengumuman->file_lampiran)
                         <div class="mt-4 pt-4 border-top">
                             <a href="{{ asset('storage/'.$pengumuman->file_lampiran) }}" target="_blank" class="btn btn-primary">

@@ -36,7 +36,7 @@
                                     </a>
                                     @endif
                                 </div>
-                                <p class="text-muted mb-2" style="font-size:0.875rem; line-height:1.65;">{{ Str::limit($item->konten, 200) }}</p>
+                                <p class="text-muted mb-2" style="font-size:0.875rem; line-height:1.65;">{{ Str::limit(strip_tags($item->konten), 200) }}</p>
                                 @if($item->tanggal_selesai)
                                 <small class="text-muted"><i class="bi bi-calendar-range me-1"></i>Berlaku hingga: {{ $item->tanggal_selesai->isoFormat('D MMMM Y') }}</small>
                                 @endif

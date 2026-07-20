@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('title', 'Tambah Pengumuman')
 @section('page-title', 'Tambah Pengumuman')
+@section('styles')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+@endsection
 @section('content')
 <div class="mb-3"><a href="{{ route('admin.pengumuman.index') }}" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="bi bi-arrow-left me-1"></i>Kembali</a></div>
 <div class="row justify-content-center">
@@ -17,7 +20,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Isi Pengumuman <span class="text-danger">*</span></label>
-                        <textarea name="konten" rows="6" class="form-control @error('konten') is-invalid @enderror">{{ old('konten') }}</textarea>
+                        <textarea name="konten" id="konten" rows="6" class="form-control @error('konten') is-invalid @enderror">{{ old('konten') }}</textarea>
                         @error('konten')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="row g-3 mb-3">
@@ -49,4 +52,11 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script>
+$('#konten').summernote({ height: 250 });
+</script>
 @endsection
